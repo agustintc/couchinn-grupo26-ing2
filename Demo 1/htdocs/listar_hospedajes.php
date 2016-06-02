@@ -1,32 +1,9 @@
-<style type="text/css">
-.div-table{
-  display:table;
-  margin:auto;
-  width:auto;         
-  background-color:#eee;         
-  border:1px solid  #666666;         
-  border-spacing:5px;
-}
-
-.div-row{
-  display:table-row;
-  width:auto;
-  clear:both;
-}
-.div-col{
-  float:left;
-  display:table-column;         
-  width:200px;         
-  background-color:#ccc;  
-}
-
-
-.div-th{
-	float:left;
-	width:200px;
-}
-
-</style>
+<html>
+<head>
+	    <!-- Bootstrap core CSS -->
+    <link href="boots/css/bootstrap.min.css" rel="stylesheet">
+<head>
+<body>
 
 <?php
 
@@ -37,16 +14,30 @@
 		$mdb->set_charset('utf8');
 		$result=$mdb->query($sql);
 	
-		echo '<div class = "div-table">';
-		echo '<div class = "div-th">Nombre de Hospedaje</div>';
-		echo '<div class = "div-th">Descripcion</div>';
+	
+		echo '<table class="table table-hover">';
+		echo '<thead>';
+		echo '<tr>';
+		echo '<th scope="row">Nombre de Hospedaje</th>';
+		echo '<th scope="row">Descripcion</th>';
+		echo '</tr>';
+		echo '<thead>';
 		while($hospedaje=mysqli_fetch_assoc($result)){
-				echo '<div class = "div-row">';	
-				echo '<div class = "div-col">' . $hospedaje['nombre_hospedaje'] . '</div>';
-				echo '<div class = "div-col">' . $hospedaje['descripcion_hospedaje'] . '</div>';
-				echo '<a href=ver_detalle.php?id=' .$hospedaje["id_hospedaje"] . '><input type="button" value="Ver Detalle"></a>';
+			
+				echo '<tbody>';
+				echo '<tr>';
+				echo '<th>' . $hospedaje['nombre_tipo_hospedaje'] . '</th>';
+				echo '<th>' . $hospedaje['descripcion_hospedaje'] . '</th>';
+				echo '<th><a href=ver_detalle.php?id=' .$hospedaje["id_hospedaje"] . '>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></a></th>';
+				echo '</tr>';
+				echo '</tbody>';
 
-		}
-		echo '</div>';
-		echo '</div>';		
+		}	
+		echo '</table>';
+	
 ?>
+
+</body>
+
+</html>

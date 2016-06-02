@@ -101,25 +101,7 @@ $sql = 'SELECT email_usuario FROM pagos WHERE email_usuario="'.$_SESSION["sessio
 
 </ul>
 <?php
-		require_once('conexion.php');
-		$mdb = connectDB();
-		$sql = "SELECT * FROM hospedajes";
-
-		$mdb->set_charset('utf8');
-		$result=$mdb->query($sql);
-	
-		echo '<div class = "div-table">';
-		echo '<div class = "div-th">Nombre de Hospedaje</div>';
-		echo '<div class = "div-th">Descripcion</div>';
-		while($hospedaje=mysqli_fetch_assoc($result)){
-				echo '<div class = "div-row">';	
-				echo '<div class = "div-col">' . $hospedaje['nombre_hospedaje'] . '</div>';
-				echo '<div class = "div-col">' . $hospedaje['descripcion_hospedaje'] . '</div>';
-				echo '<a href=ver_detalle.php?id=' .$hospedaje["id_hospedaje"] . '><input type="button" value="Ver Detalle"></a>';
-
-		}
-		echo '</div>';
-		echo '</div>';		
+		require("listar_hospedajes.php");	
 ?>
 </body>
 </html>

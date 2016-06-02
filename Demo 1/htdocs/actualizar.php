@@ -1,7 +1,32 @@
 
 <?php
 
-
+	function validar($nombre,$apellido,$direccion,$edad,$ocupacion){
+		
+		if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/",$nombre)) {
+			echo ("Nombre invalido"); 
+			echo '<a href="editar.php">Volver</a>';
+			exit ();
+		}
+		if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/",$apellido)) {
+			echo ("Apellido invalido");
+			echo '<a href="editar.php">Volver</a>';
+			exit ();
+		}
+		
+	
+		if (preg_match('/^[A-Z]-[0-9]$/',$direccion)) {
+			echo ("Direccion invalida");
+			echo '<a href="editar.php">Volver</a>';
+			exit ();
+		}	
+		
+		if ($edad > 99 & $edad < 0){
+			echo ("Edad erronea");
+			echo '<a href="editar.php">Volver</a>';
+			exit ();
+		}
+	}
 	session_start();
 	require ("conexion.php");
 	$mdb = connectDB();
@@ -17,61 +42,53 @@
 	$pass2 = $_POST['pass2'];
 	$edad = $_POST['edad'];
 	$ocupacion = $_POST['ocupacion'];
+
+	if (empty($pass) && !empty($pass2)){		
+		echo ("Ingrese la contraseña en los dos campos");
+		echo '<a href="editar.php">Volver</a>';
+		exit ();
+	}
+	if (!empty($pass) && empty($pass2)){
+		echo ("Ingrese la contraseña en los dos campos");
+		echo '<a href="editar.php">Volver</a>';
+		exit ();
+	}
 	
-	if (!empty($nombre) && !empty($apellido) && !empty($direccion) && !empty($pass) && !empty($pass2) && !empty($edad) && !empty($ocupacion)){
-		if (!preg_match("/^[a-zA-Z ]*$/",$nombre)) {
-			echo ("Nombre invalido"); 
+	if (!empty($pass) && !empty($pass2)){
+	
+		validar($nombre,$apellido,$direccion,$pass,$pass2,$edad,$ocupacion);
+		
+		if ((strlen($pass) < 6) || (strlen($pass2) < 6)){
+			echo "Contraseña invalida. Minimo 6 caracteres";
+			echo '<a href="editar.php">Volver</a>';
+			exit ();
 		}
-		if (!preg_match("/^[a-zA-Z ]*$/",$apellido)) {
-			echo ("Apellido invalido");
-		}
-		if (!preg_match("/^[a-zA-Z ]*$/",$pass)) {
-			echo ("Contraseña invalida");
-		}
-		if ($pass == $pass2){
-			echo ("Las contraseñas no coinciden"); 
-		}
-		if (!preg_match("/^[a-zA-Z ]*$/",$direccion)) {
-			echo ("Direccion invalida");
-		}
+		
 		$result=$mdb->query($sql= "UPDATE usuarios SET nombre_usuario='$nombre', apellido_usuario='$apellido',
 		pass_usuario='$pass', direccion_usuario='$direccion', edad_usuario='$edad', ocupacion_usuario='$ocupacion' WHERE email_usuario = '$session_mail'");
 		
 		if (!$result){
-			echo "Error al actualizar";
+			echo ("Error al actualizar");
 		}
 		else{
-			header('Location:perfil.php');
+			echo ("Datos Actualizados");
+			header("Location:perfil.php");
+
 		}
 	}
-	if (!empty ($nombre) && !empty($apellido) && !empty($direccion) && empty($pass) && empty($pass2)&& !empty($edad) && !empty($ocupacion)){
-		
-		if (!preg_match("/^[a-zA-Z ]*$/",$nombre)) {
-			echo ("Nombre invalido"); 
-		}
-		if (!preg_match("/^[a-zA-Z ]*$/",$apellido)) {
-			echo ("Apellido invalido");
-		}
-		if (!preg_match("/^[a-zA-Z ]*$/",$pass)) {
-			echo ("Contraseña invalida");
-		}
-		if ($pass == $pass2){
-			echo ("Las contraseñas no coinciden"); 
-		}
-		if (!preg_match("/^[a-zA-Z ]*$/",$direccion)) {
-			echo ("Direccion invalida");
-		}
+	if (empty($pass) && empty($pass2)){
+		validar($nombre,$apellido,$direccion,$pass,$pass2,$edad,$ocupacion);
 		$result=$mdb->query($sql= "UPDATE usuarios SET nombre_usuario='$nombre', apellido_usuario='$apellido',
 		direccion_usuario='$direccion', edad_usuario='$edad', ocupacion_usuario='$ocupacion' WHERE email_usuario = '$session_mail'");
 		
 		if (!$result){
-			echo "Error al actualizar";
+			echo ("Error al actualizar");
 		}
 		else{
-			header('Location:perfil.php');
-		
+			echo ("Datos Actualizados");
+			header("Location:perfil.php");
 		}
 	}
-	
 
 ?>
+

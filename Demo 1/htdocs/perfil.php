@@ -3,6 +3,9 @@
   <!-- JavaScript --> 
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script  type="text/javascript" src="js/funciones.js"></script>
+	
+	<!-- Bootstrap core CSS -->
+    <link href="boots/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <?php
@@ -17,24 +20,47 @@
 	
 ?> 
 
-	<div>
-	<h1> Perfil </h1>
+	<div align="center"><h1>Perfil</h1></div>
+
+	<table class="table table-striped">
 	
-	<b>Nombre: </b><?php echo $usuario['nombre_usuario']; ?>
-	<br>
-	<b>Apellido: </b><?php echo $usuario['apellido_usuario']; ?>
-	<br>
-	<b>Email: </b><?php echo $usuario['email_usuario']; ?>
-	<br>
-	<b>Direccion: </b><?php echo $usuario['direccion_usuario']; ?>
-	<br>
-	<b>Edad: </b><?php echo $usuario['edad_usuario']==0 ? '' : $usuario['edad_usuario'];?>
-	<br>
-	<b>Ocupacion:</b><?php echo $usuario['ocupacion_usuario'];?>
-	<br>
+		<tbody>
+			<tr>
+				<th>Nombre: </th>
+					<td><?php echo $usuario['nombre_usuario'];?></td>
+				</th>
+			</tr>
+			<tr>
+				<th>Apellido: </th>
+					<td><?php echo $usuario['apellido_usuario'];?></td>
+				</th>
+			</tr>
+			<tr>
+				<th>Email: </th>
+					<td><?php echo $usuario['email_usuario'];?></td>
+				</th>
+			</tr>
+			<tr>
+				<th>Direccion: </th>
+					<td><?php echo $usuario['direccion_usuario'];?></td>
+				</th>
+			</tr>
+			<tr>
+				<th>Edad: </th>
+					<td><?php echo $usuario['edad_usuario']==0 ? '' : $usuario['edad_usuario'];?></td>
+				</th>
+			</tr>
+			<tr>
+				<th>Ocupacion: </th>
+					<td><?php echo $usuario['ocupacion_usuario'];?></td>
+				</th>
+			</tr>
+		</tbody>
+	</table>
+	
 	<input type="button" onclick="window.location.replace('inicio.php')" value="Home"/>
 	<input type="button" onclick="window.location.replace('editar.php')" value="Editar Perfil" />
-	</div>
+	
 
 </body>
 </html>

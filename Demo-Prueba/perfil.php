@@ -81,8 +81,6 @@
 		</tbody>
 	</table>
 	
-	
-	<input type="button" onclick="window.location.replace('inicio.php')" value="Home"/>
 	<input type="button" onclick="window.location.replace('editar.php')" value="Editar Perfil" />
 </body>
 </html>	

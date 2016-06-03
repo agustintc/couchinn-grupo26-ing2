@@ -48,8 +48,45 @@
 		else{
 			$tipo = '4';
 		}
-	}	
-	
+	}
+	if ($tipo == '4'){
+	?>
+	<ul>
+	<li><a href="inicio.php">Inicio</a></li>
+	<li><a href="bienvenida.php">Iniciar Sesion</a> </li>
+	<li><a href="registrar.php">Registrarse</a> </li>
+	</ul>
+	<?php
+	}
+	if ($tipo == '1'){
+	?>
+	<ul> <li><a href="inicio.php">Inicio</a></li>
+	<li><a href="perfil.php">Perfil</a> </li>
+	<li><a href="premiun.php">Premium</a></li>
+	<li><a href="logout.php">Cerrar Session</a> </li>
+	</ul>
+	<?php
+	}
+	if ($tipo == '2'){
+	?>
+	<ul>
+	<li><a href="inicio.php">Inicio</a></li>
+	<li><a href="perfil.php">Perfil</a> </li>
+	<li><a href="logout.php">Cerrar Session</a> </li>
+	</ul>
+	<?php
+	}
+	if ($tipo == '3'){
+	?>
+	<ul>
+		<li><a href="inicio.php">Inicio</a></li>
+		<li><a href="perfil.php">Perfil</a> </li>
+		<li><a href="alta_tipo_hospedaje.php">Alta Tipo de Hospedaje</a></li>
+		<li><a href="listar_tipo_hospedajes.php"> Listar Tipo de Hospedajes</a></li>
+		<li><a href="logout.php">Cerrar Session</a> </li>
+	</ul>
+	<?php
+	}
 	$id = $_GET['id'];
 	$sql="SELECT * FROM hospedajes WHERE id_hospedaje = $id";
 	$result= $mdb->query($sql);

@@ -137,8 +137,9 @@ function validarRepeatPassword ()
     }
     else {
 		
-        $("#ErrorRPassword").text("Error. La Contraseña debe ser iguales");
+        $("#ErrorRPassword").text("Error. Las Contraseñas deben ser iguales");
         $("#ErrorRPassword").css('color','#d32e12');
+		 return false;
     }
     
 }

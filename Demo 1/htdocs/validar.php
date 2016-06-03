@@ -42,10 +42,22 @@ if(!empty($_POST['mail']) && !empty($_POST['password']))
 						<?php
 					}
 					else{
-						echo "La cuenta no existe o se ingreso mal la contraseña";
+							?>
+							<div class="texto" >
+							<h2> <span> La cuenta no existe o se ingreso mal la contraseña</span></h2>
+							</div>
+							<?php
 						}
 			}
-			echo "La cuenta no existe o se ingreso mal la contraseña";
+		else{
+			?>
+							<div class="texto" >
+							<h2> <span> La cuenta no existe o se ingreso mal la contraseña</span></h2>
+							</div>
+							<?php
+			
+			
+		}
 			?>
 			<a href="bienvenida.php">Volver a Intentar</a>
  

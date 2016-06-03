@@ -81,8 +81,7 @@
 		</tbody>
 	</table>
 	
-	
-	<input type="button" onclick="window.location.replace('inicio.php')" value="Home"/>
-	<input type="button" onclick="window.location.replace('editar.php')" value="Editar Perfil" />
+<div text-align="center" style="margin:0 auto;">	<input type="button" style=" height:30px;   width:100px;    margin: -20px -50px;   position:relative; top:60%; 
+						left:50%;" onclick="window.location.replace('editar.php')" value="Editar Perfil" /> </div>
 </body>
 </html>	

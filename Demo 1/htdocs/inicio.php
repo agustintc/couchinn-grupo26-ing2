@@ -1,4 +1,4 @@
-<html>
+<<html>
 
 <?php
 
@@ -70,6 +70,9 @@ li a:hover:not(.active) {
 </style>
 </head>
 <body>
+		<div class="text-xs-center">
+			<img src="imagenes/logo/logo.png"" class="img-responsive" width=420px alt="couchinn">
+		</div>
 <ul>
   <li><a class="active" href="#home">Inicio</a></li>
   <?php
@@ -78,10 +81,21 @@ li a:hover:not(.active) {
 	<li><a href="registrar.php">Registrarse</a> </li>
 <?php
 } else {
-?>
-  <li><a href="perfil.php">Perfil</a></li>
-  <li><a href="logout.php">Cerrar Sesion</a> </li>
+	
+  echo '<li><a href="perfil.php">Perfil</a></li>';
+  echo '<li><a href="logout.php">Cerrar Sesion</a> </li>';
   
+?>
+  
+  <?php
+		$sql= "SELECT * FROM USUARIOS WHERE email_usuario = '" . $_SESSION['session_username']. "'";
+		$result= $mdb->query($sql);
+		$usuario = mysqli_fetch_assoc($result);
+		if($usuario['tipo_usuario'] == 3) {
+			echo "<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>";
+		}
+	
+  ?>
 <?php
 
 $sql = 'SELECT email_usuario FROM pagos WHERE email_usuario="'.$_SESSION["session_username"].'"'; 

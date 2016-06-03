@@ -108,11 +108,7 @@
 			echo ("Direccion invalida");
 			exit ();
 		}	
-		
-		if ($edad > 99 || $edad < 0){
-			echo ("Edad erronea");
-			exit ();
-		}
+	
 	}
 	if(isset($_POST['enviar'])){
 	

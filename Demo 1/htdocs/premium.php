@@ -26,7 +26,7 @@ $fecha_actual=date("Y-m-d");
 			<input type="text" id="etarjeta" name="etarjeta" required></div>
 			<div><label> codigo de tarjeta de credito:</label>
 			<input type="text" id="ctarjeta" name="ctarjeta" required></div>
-			<div><input type="submit" id="enviar" name="enviar" value=" ser premium"> <input type="reset" value="Cancelar"></div> 
+			<div><input type="submit" id="enviar" name="enviar" value=" ser premium"> <input type="reset" value="Borrar"><input type="button" onclick="window.location.replace('inicio.php')" value="volver"/></div> 
 			</fieldset>
 			</form> 
 <?php
@@ -46,6 +46,6 @@ $fecha_actual=date("Y-m-d");
 	}    
 
 ?>
-<a href="inicio.php">volver</a>
+
 
 </html>

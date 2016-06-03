@@ -35,10 +35,10 @@ $mdb = connectDB();
  <div id="ErrorPassword2"></div>
 <div><label> Direccion:</label>
 <input type="text" id="direccion" name="direccion"></div>
-<div><input type="submit" id="enviar" name="enviar" value="Registrar"> <input type="reset" value="Cancelar"></div>
+<div><input type="submit" id="enviar" name="enviar" value="Registrar"> <input type="reset" value="Cancelar"><input type="button" onclick="window.location.replace('bienvenida.php')" value="volver"/></div>
  </fieldset>	
 </form> 
-<a href="bienvenida.php">Volver</a>
+
 
 
 

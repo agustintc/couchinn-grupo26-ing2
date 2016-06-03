@@ -13,12 +13,25 @@ if(!empty($_POST['mail']) && !empty($_POST['password']))
 					{
 						$dbmail=$row['email_usuario'];
 						$dbpassword=$row['pass_usuario'];
+						
+						
+						
 					}
  
 				if(($_POST['mail']) == $dbmail && ($_POST['password']) == $dbpassword)
 					{
+						
 						session_start();
 						$_SESSION['session_username']=($_POST['mail']);
+						
+						$sql= "SELECT * FROM USUARIOS WHERE email_usuario = '" . $_SESSION['session_username']. "'";
+						$result= $mdb->query($sql);
+						$usuario = mysqli_fetch_assoc($result);
+						$_SESSION['nombre']=$usuario['nombre_usuario'];
+						$_SESSION['apellido']=$usuario['apellido_usuario'];
+						$_SESSION['tipo']=$usuario['tipo_usuario'];
+						$_SESSION['clave']=$usuario['pass_usuario'];
+
 ?>
 		
 						<script type="text/javascript">

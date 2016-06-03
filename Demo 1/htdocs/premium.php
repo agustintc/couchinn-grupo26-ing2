@@ -6,6 +6,7 @@ $mdb = connectDB();
 $monto=60;
 $fecha_actual=date("Y-m-d");
 ?>
+
 <head>
 <!-- JavaScript --> 
     <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
@@ -16,7 +17,9 @@ $fecha_actual=date("Y-m-d");
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
-	<h2>hola, <span><?php echo $_SESSION['session_username'];?>, usted esta por ser premium, si desea continuar, debera ingresar los siguientes datos, ya que se le cobrara un monto de <?php echo $monto;?> por los beneficios adquiridos. </span></h2>
+			<div class="texto" >
+			<h2>hola, <span><?php echo $_SESSION['session_username'];?>, usted esta por ser premium, si desea continuar, debera ingresar los siguientes datos, ya que se le cobrara un monto de <?php echo $monto;?> por los beneficios adquiridos. </span></h2>
+			</div>
 			<form name= "premium" class="form" action="" id="formulario" method="post" > 
 			<fieldset>
 			<legend>Ingresar Datos</legend>
@@ -29,6 +32,7 @@ $fecha_actual=date("Y-m-d");
 			<div><input type="submit" id="enviar" name="enviar" value=" ser premium"> <input type="reset" value="Borrar"><input type="button" onclick="window.location.replace('inicio.php')" value="volver"/></div> 
 			</fieldset>
 			</form> 
+			
 <?php
 	if(isset($_POST['enviar']))//para saber si el botón registrar fue presionado. 
 	{	 
@@ -39,8 +43,11 @@ $fecha_actual=date("Y-m-d");
 		 mysqli_query($mdb,$sql);
 		 $sql ="UPDATE usuarios SET tipo_usuario = '2' WHERE usuarios.email_usuario ='".$_SESSION['session_username']."'";
 		 mysqli_query($mdb,$sql);
-         echo 'Usted es premium.'; 
-		 
+         ?>
+		 <div class="texto" >
+			<h2> <span> Usted es premium </span></h2>
+			</div>
+		 <?php
 		 
 		 
 	}    

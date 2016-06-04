@@ -9,7 +9,10 @@ if((isset($_SESSION['session_username']))&&($_SESSION['tipo']==3))
 	//echo $_SESSION['tipo'];
 	if (isset($_POST['Guardar']))
 	{
-		
+	$sql="select * from tipos_hospedajes where nombre_tipo_hospedaje='".$_POST['nombreTipo']."'";
+	$result=$mdb->query($sql);
+	$total= mysqli_num_rows($result);
+	if($total==0){
 	//echo $_POST['nombreTipo'];
 	//echo $_POST["descTipo"];
 	$sql = "INSERT INTO tipos_hospedajes (id_tipo_hospedaje, nombre_tipo_hospedaje, descripcion_tipo_hospedaje, estado_tipo_hospedaje) VALUES(null,'".$_POST['nombreTipo']."','".$_POST["descTipo"]."','0')";
@@ -26,6 +29,8 @@ if((isset($_SESSION['session_username']))&&($_SESSION['tipo']==3))
 			echo 'erroneo'; // 
 			}
 	}
+	else {$errorTipo="El Tipo Ya Existe. Ingrese Otro";}
+}
 }
 else {header("location:acceso-indebido.php");}
 ?>
@@ -73,7 +78,7 @@ else {header("location:acceso-indebido.php");}
 			<label> Nombre de Tipo: </label>	
 			<input tipe="text" id="nombreTipo" name="nombreTipo"> 
 			</br>
-			<div id="errorNombreTipo"></div>
+			<div id="errorNombreTipo"><?php if(isset($errorTipo)){echo $errorTipo;}?></div>
 			</br>
 			<label> Descripcion de Tipo: </label> 
 			<input tipe="text" id="descTipo" name="descTipo">

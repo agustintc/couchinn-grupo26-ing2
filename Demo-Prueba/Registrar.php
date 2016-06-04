@@ -84,7 +84,7 @@ if(isset($_POST['enviar']))//para saber si el botón registrar fue presionado.
 				$apellido = $_POST['apellido'];
 				$direccion = $_POST['direccion'];
                 $password = $_POST['password']; 
-                $sql = "INSERT INTO usuarios (email_usuario,nombre_usuario,apellido_usuario,pass_usuario,direccion_usuario,tipo_usuario) VALUES ('$mail','$nombre','$apellido','$password','$direccion','1')";//Se insertan los datos a la base de datos y el usuario ya fue registrado con exito.
+                $sql = "INSERT INTO usuarios (email_usuario,nombre_usuario,apellido_usuario,pass_usuario,direccion_usuario,tipo_usuario,tipo_clave) VALUES ('$mail','$nombre','$apellido','$password','$direccion','1','0')";//Se insertan los datos a la base de datos y el usuario ya fue registrado con exito.
                 mysqli_query($mdb,$sql); 
   
                 ?>

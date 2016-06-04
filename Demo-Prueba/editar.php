@@ -23,7 +23,7 @@
 	echo '<ul> 	<li><a href="inicio.php">Inicio</a></li>
 	<li><a href="perfil.php">Perfil</a> </li>
 	<li><a href="premiun.php">Premiun</a></li>
-	<li><a href="logout.php">Cerrar Session</a> </li>
+	<li><a href="logout.php">Cerrar Sesion</a> </li>
 </ul>';
 	}
 	else if($usuario['tipo_usuario']=='2')
@@ -31,16 +31,15 @@
 		echo '<ul>
 	<li><a href="inicio.php">Inicio</a></li>
 	<li><a href="perfil.php">Perfil</a> </li>
-	<li><a href="logout.php">Cerrar Session</a> </li>
+	<li><a href="logout.php">Cerrar Sesion</a> </li>
 </ul>';
 		}
 		else {
 	echo '<ul>
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a> </li>
-		<li><a class= href="alta_tipo_hospedaje.php">Alta Tipo de Hospedaje</a></li>
-		<li><a href="listar_tipo_hospedajes.php"> Listar Tipo de Hospedajes</a></li>
-		<li><a href="logout.php">Cerrar Session</a> </li>
+		
+		<li><a href="logout.php">Cerrar Sesion</a> </li>
 		</ul>';
 			}
 

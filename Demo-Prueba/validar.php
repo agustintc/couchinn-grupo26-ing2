@@ -52,6 +52,11 @@ if(!empty($_POST['mail']) && !empty($_POST['password']))
 						$_SESSION['apellido']=$usuario['apellido_usuario'];
 						$_SESSION['tipo']=$usuario['tipo_usuario'];
 						$_SESSION['clave']=$usuario['pass_usuario'];
+						$_SESSION['tipo_clave']=$usuario['tipo_clave'];
+						if($_SESSION['tipo_clave']== '1')
+						{
+							header("location: cambiar-contrasenia.php");
+							}
 
 ?>
 		

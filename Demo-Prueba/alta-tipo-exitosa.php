@@ -51,11 +51,11 @@ else {header("acceso-indebido.php");}
 	<li><a href="alta_tipo_hospedaje.php">Alta Tipo de Hospedaje</a></li>
 	<li><a href="listar_tipo_hospedajes.php"> Listar Tipo de Hospedajes</a></li>
 </ul> 
-	<?php 
-	echo $nombre;
-	echo '<br>';
-	echo $desc;
-	?>
+	<div id="noLink"> 
+		Alta Exitosa
+		<br>
+		<a href="inicio.php">Ir al Inicio</a>
+	</div>
 </body>
 
 </html>

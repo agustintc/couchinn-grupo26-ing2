@@ -27,12 +27,15 @@ if (isset($_GET['id']))
 		$user=mysqli_fetch_assoc($result);
 		$email=$user['email_usuario'];
 		$id=$user['id_usuario'];
+		//echo $id;
+		//echo $email;
 		//$pass=$user['pass_usuario'];
 		$passTemporal = generateRandomString();
 		/*echo $email;
 		echo '<br>';
 		echo $passTemporal;*/
-		$sql = "UPDATE usuarios SET pass_usuario = '".$passTemporal."' WHERE id_usuario = ".$id ;
+		$sql = "UPDATE usuarios SET pass_usuario='".$passTemporal."',tipo_clave='1' WHERE id_usuario =".$id;
+		//$sql = "UPDATE usuarios SET pass_usuario ='".$passTemporal."',SET tipo_clave ='1' WHERE email_usuario ='".$email."'" ;
 		$result=$mdb->query($sql);
 		
 	}	
@@ -66,11 +69,13 @@ else {
   <li><a href="bienvenida.php">Iniciar Sesion</a></li>
   <li><a href="registrar.php">Registrarse</a> </li>
 </ul> 
+<div id="noLink">
 	<?php 
 	echo $email;
 	echo '<br>';
 	echo $passTemporal;
 	?>
+	</div>
 	
 </body>
 

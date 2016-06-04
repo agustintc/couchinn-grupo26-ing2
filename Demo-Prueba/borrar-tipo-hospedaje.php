@@ -25,7 +25,7 @@ if((isset($_SESSION['session_username']))&&($_SESSION['tipo']==3)){
 				//delete final del tipo
 				$sql="DELETE FROM tipos_hospedajes WHERE id_tipo_hospedaje=".$_GET['id'];
 				$result=$mdb->query($sql);
-				echo 'Borrado Definitivo';				
+				//echo 'Borrado Definitivo';				
 				/*$TipoHosp=mysqli_fetch_assoc($result);
 				$tipo = $TipoHosp['nombre_tipo_hospedaje'];
 				$descripcion = $TipoHosp['descripcion_tipo_hospedaje'];
@@ -36,7 +36,7 @@ if((isset($_SESSION['session_username']))&&($_SESSION['tipo']==3)){
 				// baja logica con update poniendo en 1
 				$sql="UPDATE tipos_hospedajes SET estado_tipo_hospedaje='1' WHERE id_tipo_hospedaje=".$_GET['id'];
 				$result=$mdb->query($sql);
-				echo 'baja Logica';
+				//echo 'baja Logica';
 			}
 				
 			}
@@ -66,10 +66,11 @@ else {header("location: acceso-indebido.php");}
 	<li><a href="logout.php">Cerrar Session</a> </li>
 	<li><a href="alta_tipo_hospedaje.php">Alta Tipo de Hospedaje</a></li>
 	<li><a href="listar_tipo_hospedajes.php"> Listar Tipo de Hospedajes</a></li>
-</ul> 
-	<?php 
-	
-	?>
+</ul>
+	<div id="noLink">
+		El Tipo de Hospedaje ha sido Borrado Exitosamente
+		<a href="inicio.php"> Volver al Inicio</a>
+	</div>
 </body>
 
 </html>

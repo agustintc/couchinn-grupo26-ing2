@@ -18,6 +18,45 @@ $fecha_actual=date("Y-m-d");
 
 </head>
 <header></header>
+<?php
+		if(isset($_SESSION["session_username"])) {
+			
+			if(($_SESSION["tipo"])==2){
+				?>
+				<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted posee  privilegios premium</h2>
+				<?php	
+				}
+			else{
+					if(($_SESSION["tipo"])==1) {
+					?>
+						<h2>Bienvenido, <?php echo $_SESSION['nombre'];?></h2>
+					<?php	
+					}
+					else {
+						if(($_SESSION["tipo"])==3){
+						?>
+							<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
+						<?php	
+						}
+					}	
+				}		
+		}
+		?>
+<?php
+if(($_SESSION["tipo"])==2 or ($_SESSION["tipo"])==3){
+?>	
+						<script type="text/javascript">
+						window.location="inicio.php";
+						</script>
+<?php	
+}
+
+?>
+
+
+
+
+		
 <ul>
   <li><a class="active" href="inicio.php">Inicio</a></li>
   <?php
@@ -113,6 +152,7 @@ $sql = 'SELECT email_usuario FROM pagos WHERE email_usuario="'.$_SESSION["sessio
 				mysqli_query($mdb,$sql);
 				$sql ="UPDATE usuarios SET tipo_usuario = '2' WHERE usuarios.email_usuario ='".$_SESSION['session_username']."'";
 				mysqli_query($mdb,$sql);
+				$_SESSION['tipo']=2;
 				?>
 				<div class="texto" >
 				<h2> <span> Usted es premium </span></h2>

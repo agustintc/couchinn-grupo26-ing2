@@ -6,7 +6,33 @@
 	<title> Listar Tipo De Hospedajes</title>
 <head>
 <body>
-<header></header>
+
+<header>
+</header>
+<?php
+		if(isset($_SESSION["session_username"])) {
+			
+			if(($_SESSION["tipo"])==2){
+				?>
+				<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted posee  privilegios premium</h2>
+				<?php	
+				}
+			else{
+					if(($_SESSION["tipo"])==1) {
+					?>
+						<h2>Bienvenido, <?php echo $_SESSION['nombre'];?></h2>
+					<?php	
+					}
+					else {
+						if(($_SESSION["tipo"])==3){
+						?>
+							<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
+						<?php	
+						}
+					}	
+				}		
+		}
+		?>
 <ul>
 	<li><a href="inicio.php">Inicio</a></li>
 	<li><a href="perfil.php">Perfil</a></li>
@@ -14,6 +40,7 @@
 	<li><a href="alta_tipo_hospedaje.php">Alta Tipo De Hospedaje</a></li>
 	<li><a class="active" href="listar_tipo_hospedajes.php">Listar Tipo De Hospedaje</a></li>
 	</ul>
+	
 <?php
 		require_once('conexion.php');
 		$mdb = connectDB();

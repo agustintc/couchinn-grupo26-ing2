@@ -91,19 +91,16 @@
 	$sql="SELECT * FROM hospedajes WHERE id_hospedaje = $id";
 	$result= $mdb->query($sql);
 	
-		$hospedaje=mysqli_fetch_assoc($result)
+	$hospedaje=mysqli_fetch_assoc($result)
 		
 	
 ?>
 	<h1 align="center"><?php echo $hospedaje['nombre_hospedaje'];?></h1>
 	
 	<?php
-		if ($tipo == 1 || $tipo == 4){
-			$directory="imagenes/logo/";
-		}
-		else{
-			$directory="imagenes/hospedajes/" .$hospedaje['id_hospedaje']."";
-		}
+		
+		$directory="imagenes/hospedajes/" .$hospedaje['id_hospedaje']."";
+		
 		if (!file_exists($directory)){
 			$directory="imagenes/logo/";
 		}

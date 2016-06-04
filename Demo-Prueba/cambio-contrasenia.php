@@ -27,13 +27,8 @@ if (isset($_GET['id']))
 		$user=mysqli_fetch_assoc($result);
 		$email=$user['email_usuario'];
 		$id=$user['id_usuario'];
-<<<<<<< HEAD
 		//echo $id;
 		//echo $email;
-=======
-		echo $id;
-		echo $email;
->>>>>>> origin/master
 		//$pass=$user['pass_usuario'];
 		$passTemporal = generateRandomString();
 		/*echo $email;

@@ -24,21 +24,23 @@
 				$tipo = '4';
 			}
 		
-	
-		echo '<table class="table table-hover">';
-		echo '<thead>';
-		echo '<tr>';
-		echo '<th scope="row">Nombre de Hospedaje</th>';
-		echo '<th scope="row">Descripcion</th>';
-		echo '</tr>';
-		echo '<thead>';
+		?>
+		<table class="table table-hover">
+		<thead>
+		<tr>
+		<th scope="row">Nombre de Hospedaje</th>
+		<th scope="row">Descripcion</th>
+		</tr>
+		<thead>
+		<?php
 		while($hospedaje=mysqli_fetch_assoc($result)){
-			
-				echo '<tbody>';
-				echo '<tr>';
-				echo '<th>' . $hospedaje['nombre_hospedaje'] . '</th>';
-				echo '<th>' . $hospedaje['descripcion_hospedaje'] . '</th>';
-				echo '<th>';
+				?>
+				<tbody>
+				<tr>
+				<th> <?php echo $hospedaje['nombre_hospedaje'];?></th>
+				<th> <?php echo $hospedaje['descripcion_hospedaje'];?></th>
+				<th>
+				<?php
 				if ($tipo == 1 || $tipo == 4){
 					$directory="imagenes/logo/";
 				}
@@ -48,20 +50,35 @@
 				$isDirEmpty = !(new \FilesystemIterator($directory))->valid();
 				if (! $isDirEmpty){
 				$scanned_directory = array_diff(scandir($directory), array('..', '.'));
-						echo '<div class="col-sm-2 col-md-4 img-hover">';
-						echo '<div class="thumbnail">
-							<img src="'.$directory."/".$scanned_directory[2].'"  height=340px; width=500px"></img>
-							</div>';	
-						echo '</div>';
-					
+						?>
+						<div class="col-sm-2 col-md-4 img-hover">
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>	
+						</div>
+						<?php
 				}
-				echo '<th><a href=ver_detalle.php?id=' .$hospedaje["id_hospedaje"] . '>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></a></th>';
-				echo '</tr>';
-				echo '</tbody>';
-
+				else{
+					$directory="imagenes/logo/";
+					$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+					?>
+						<div class="col-sm-2 col-md-4 img-hover">
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>			
+						</div>
+						<?php
+				}
+				?>
+				<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></a></th>
+				</tr>
+				</tbody>
+			<?php
 		}	
-		echo '</table>';
+		?>
+		</table>
+		<?php
 	
 ?>
 

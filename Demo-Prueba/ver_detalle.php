@@ -1,15 +1,53 @@
 <head> <title> Detalle </title></head>
 <style type="text/css">
 
+#images {
+    width: 520px;
+    height: 340px;
+    overflow: hidden;
+    position: relative;
 
-.img-hover img {
-    -webkit-transition: all .3s ease;
-  	-moz-transition: all .3s ease;
-  	-o-transition: all .3s ease; 
-  	-ms-transition: all .3s ease; 
-  	transition: all .3s ease;
+    margin: 20px auto;
 }
-.img-hover img:hover {
+#images img {
+    width: 520px;
+    height: 340px;
+
+    position: absolute;
+    top: 0;
+    left: -400px;
+    z-index: 1;
+    opacity: 0;
+
+    transition: all linear 500ms;
+    -o-transition: all linear 500ms;
+    -moz-transition: all linear 500ms;
+    -webkit-transition: all linear 500ms;
+}
+#images img:target {
+    left: 0;
+    z-index: 9;
+    opacity: 1;
+}
+#images img:first-child {
+left: 0;
+opacity: 1;
+}
+#slider a {
+
+    text-decoration: none;
+    background: #E3F1FA;
+    border: 1px solid #C6E4F2;
+    padding: 4px 6px;
+    color: #222;
+}
+#slider a:hover {
+    background: #C6E4F2;
+}
+#slider{
+	text-align:center;
+}
+.image:hover img {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform:translateZ(0) scale(1.20);
@@ -18,16 +56,8 @@
     -o-transform:translatZ(0) scale(1.20);
     transform:translatZ(0) scale(1.20);
 }
-  
-  
-.grayscale {
-  -webkit-filter: brightness(1.10) grayscale(100%) contrast(90%);
-  -moz-filter: brightness(1.10) grayscale(100%) contrast(90%);
-  filter: brightness(1.10) grayscale(100%); 
-}
 
-
-
+ 
 </style>
 <!-- Bootstrap core CSS -->
     <link href="boots/css/bootstrap.min.css" rel="stylesheet">
@@ -38,9 +68,23 @@
 
 	require_once('conexion.php');
 	$mdb = connectDB();
-	if(!isset($_SESSION["session_username"])){
-		session_start();
+	session_start();
 		if (isset($_SESSION['session_username'])){
+			if(($_SESSION["tipo"])==2){
+				?>
+				<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted posee  privilegios premium</h2>
+				<?php	
+			}
+			if(($_SESSION["tipo"])==1) {
+					?>
+						<h2>Bienvenido, <?php echo $_SESSION['nombre'];?></h2>
+					<?php	
+			}
+			if(($_SESSION["tipo"])==3){
+						?>
+							<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
+						<?php	
+			}
 			$query = "SELECT * FROM usuarios WHERE email_usuario = '" . $_SESSION['session_username']. "'";
 			$result_query = $mdb->query($query);
 			$tipo = (mysqli_fetch_assoc($result_query)['tipo_usuario']);
@@ -48,7 +92,8 @@
 		else{
 			$tipo = '4';
 		}
-	}
+	
+	
 	if ($tipo == '4'){
 	?>
 	<ul>
@@ -98,36 +143,64 @@
 	<h1 align="center"><?php echo $hospedaje['nombre_hospedaje'];?></h1>
 	
 	<?php
-		
+		 
+		function isEmptyDir($dir){ 
+			return (($files = @scandir($dir)) && count($files) <= 2); 
+		} 
+
 		$directory="imagenes/hospedajes/" .$hospedaje['id_hospedaje']."";
 		
-		if (!file_exists($directory)){
+		if (!file_exists($directory) || (isEmptyDir($directory))){
 			$directory="imagenes/logo/";
 		}
 		$dirint = dir($directory);
-		echo '<div align="center">';
-		echo '<div class="container" style="padding-top: 1em;">';
-		echo '<div class="row">';
-
+		?>
+		<div id="images">
+		<?php
+			
 		while (($archivo = $dirint->read()) !== false)
 		{
-			if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){
-				echo '<div class="col-sm-2 col-md-4 img-hover">';
-					echo '<div class="thumbnail">
-							<img src="'.$directory."/".$archivo.'"  height=340px; width=500px"></img>
-						</div>';	
-				echo '</div>';
+			if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){?>
+				<div class="image">
+				<img id="<?php echo $archivo;?>" src="<?php echo ''.$directory .'/' . $archivo ; ?>" ></img>
+				</div>
+			<?php
 			}
 		}
-		
-		echo '</div>';
-		echo '</div>';
-		echo'<p>Tipo de Hospedaje:' . $hospedaje["nombre_tipo_hospedaje"] . '</p>';
-		echo'<p>Descripcion: ' . $hospedaje["descripcion_hospedaje"] . '</p>';
-		echo'<p>Capacidad: ' . $hospedaje["capacidad_hospedaje"] . ' Personas</p>';
-		echo'<p>Direccion: ' . $hospedaje["direccion_hospedaje"] . '</p>';
-		echo '<a href=><input type="button" value="Reservar"></a>';
-		echo '</div>';
+		?>
+		</div>
+		<div id="slider"><?php
+			$dirint = dir($directory);
+			$i=1;
+			while (($archivo = $dirint->read()) !== false){
+				if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){?>
+					<a href="<?php echo '#' . $archivo;?>"><?php echo $i;?></a>
+				<?php
+				$i++;
+				}
+			}
+			?>
+		</div>
+		<br>
+	<div style="text-align:center;">
+		<p>Tipo de Hospedaje: <?php echo $hospedaje["nombre_tipo_hospedaje"];?></p>
+		<p>Descripcion: <?php echo $hospedaje["descripcion_hospedaje"];?></p>
+		<p>Capacidad: <?php echo $hospedaje["capacidad_hospedaje"];?> Personas</p>
+		<p>Direccion: <?php echo $hospedaje["direccion_hospedaje"];?>  </p>
+		<?php
+			if ($tipo == 4){
+				?>
+				<a href="registrar.php"><input type="button" value="Reservar"></a>
+				<?php
+			}
+			else{?>
+				<a href=""><input type="button" value="Reservar"></a>
+				<?php
+			}
+			?>
+			
+	</div>
+		<?php
 		$dirint->close();
 	?>
 

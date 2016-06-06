@@ -42,6 +42,9 @@
 					}	
 				}		
 		}
+		else{
+			 header("location:acceso-indebido.php");
+		}
 		
 	
 	if ($usuario['tipo_usuario']=='1')

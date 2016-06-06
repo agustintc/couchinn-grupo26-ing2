@@ -9,30 +9,30 @@
 
 <header>
 </header>
+<div>
 <?php
+		session_start();
 		if(isset($_SESSION["session_username"])) {
 			
 			if(($_SESSION["tipo"])==2){
 				?>
 				<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted posee  privilegios premium</h2>
 				<?php	
-				}
-			else{
-					if(($_SESSION["tipo"])==1) {
+			}
+			if(($_SESSION["tipo"])==1) {
 					?>
 						<h2>Bienvenido, <?php echo $_SESSION['nombre'];?></h2>
 					<?php	
-					}
-					else {
-						if(($_SESSION["tipo"])==3){
+			}
+			if(($_SESSION["tipo"])==3){
 						?>
 							<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
 						<?php	
-						}
-					}	
-				}		
+			}
+						
 		}
 		?>
+	
 <ul>
 	<li><a href="inicio.php">Inicio</a></li>
 	<li><a href="perfil.php">Perfil</a></li>
@@ -44,10 +44,7 @@
 <?php
 		require_once('conexion.php');
 		$mdb = connectDB();
-		session_start();
 		$mdb->set_charset('utf8');
-
-		
 		if((isset($_SESSION['session_username']))&&($_SESSION['tipo']==3)){
 			
 			$sql = "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";

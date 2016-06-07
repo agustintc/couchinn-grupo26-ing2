@@ -72,17 +72,17 @@ opacity: 1;
 		if (isset($_SESSION['session_username'])){
 			if(($_SESSION["tipo"])==2){
 				?>
-				<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted posee  privilegios premium</h2>
+				<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted posee  privilegios premium</h2>
 				<?php	
 			}
 			if(($_SESSION["tipo"])==1) {
 					?>
-						<h2>Bienvenido, <?php echo $_SESSION['nombre'];?></h2>
+						<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?></h2>
 					<?php	
 			}
 			if(($_SESSION["tipo"])==3){
 						?>
-							<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
+							<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
 						<?php	
 			}
 			$query = "SELECT * FROM usuarios WHERE email_usuario = '" . $_SESSION['session_username']. "'";

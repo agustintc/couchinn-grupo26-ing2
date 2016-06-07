@@ -36,32 +36,9 @@ session_start();
 
 <body>
 	<header></header>
-	<?php
-		if(isset($_SESSION["session_username"])) {
-			
-			if(($_SESSION["tipo"])==2){
-				?>
-				<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted posee  privilegios premium</h2>
-				<?php	
-				}
-			else{
-					if(($_SESSION["tipo"])==1) {
-					?>
-						<h2>Bienvenido, <?php echo $_SESSION['nombre'];?></h2>
-					<?php	
-					}
-					else {
-						if(($_SESSION["tipo"])==3){
-						?>
-							<h2>Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
-						<?php	
-						}
-					}	
-				}		
-		}
-		?>
+	
 	<ul>
-	<li>Agregar</li>
+	<li>i</li>
 	</ul>
 	<form method="post" class="form" id="cambiar-contrasenia" name="cambiar-contrasenia" action="cambiar-contrasenia.php">
 		<fieldset>

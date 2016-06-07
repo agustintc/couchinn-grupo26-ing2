@@ -42,6 +42,17 @@ $(document).ready(function () {
 		return false;
     });
     //alert("chau");
+    
+    $("#cambiar-contrasenia").submit( function() {
+		
+		if(validarPassword() && validarRepeatPassword())
+		{
+			return true;
+			}
+		return false;		
+		
+		});
+    
 });
 
 //Funcion de Validacion de Campos de Formulario de Registro de Usuario

@@ -11,6 +11,7 @@
 </header>
 <div>
 <?php
+		session_start();
 		if(isset($_SESSION["session_username"])) {
 			
 			if(($_SESSION["tipo"])==2){

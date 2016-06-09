@@ -220,5 +220,120 @@ opacity: 1;
 	</div>
 		<?php
 		$dirint->close();
+		if(isset($_SESSION["session_username"])){
+					if($_SESSION['session_username']!=$hospedaje["id_usuario"]){
+						?>	
+						<form name= "" class="form" id = "preg" action="" method="post" > 
+						<fieldset>
+						<div><label>Pregunta:</label>
+						<input type="text" id="pregunta" name="pregunta"> </div>
+						<div id="ErrorEmail"></div>
+						<div><input type="submit" id="enviar" name="enviar" value="Preguntar"></div>
+						</fieldset>	
+						</form> 
+						<?php
+						$fecha_actual=date("Y-m-d");
+						if(isset($_POST['enviar'])){
+							$sql = "INSERT INTO pregunta (comentario,fecha,id_hospedaje,id_inquilino) VALUES ('".$_POST['pregunta']."','".$fecha_actual."','".$hospedaje['id_hospedaje']."','".$_SESSION['session_username']."')";
+							$mdb->set_charset('utf8');
+							mysqli_query($mdb,$sql); 
+							$sql = "INSERT INTO respuesta (id_hospedaje,id_inquilino) VALUES ('".$hospedaje['id_hospedaje']."','".$_SESSION['session_username']."')";
+							$mdb->set_charset('utf8');
+							mysqli_query($mdb,$sql); 
+					
+						}
+					}	
+
+					$sql = "SELECT * FROM pregunta INNER JOIN respuesta ON pregunta.id = respuesta.id  WHERE pregunta.id_hospedaje = '".$hospedaje['id_hospedaje']."'";
+					$result=$mdb->query($sql);
+		
+					while($pregunta=mysqli_fetch_assoc($result)){
+							
+							if($pregunta['id_inquilino']==$_SESSION['session_username']){
+							?>
+					
+								<tbody>
+								<tr>
+								<th> vos comentaste</th>
+								<th><?php echo $pregunta['comentario'];?></th>
+								<th><?php echo $pregunta['id_inquilino'];?></th>
+								<br> 
+								<th><?php echo $pregunta['comentarior'];?></th>
+								<br> 
+								
+								</tr>
+								</tbody>
+					
+								<?php
+							}
+							else {
+									if($hospedaje['id_usuario']==$_SESSION['session_username']){
+										?>
+										<tbody>
+										<tr>
+										<th> podes responder</th>
+										<th><?php echo $pregunta['comentario'];?></th>
+										<th><?php echo $pregunta['id_inquilino'];?></th>
+										<?php if($pregunta['comentario']!=null  ){ ?>
+															<form name= "" class="form" id = "resp" action="" method="post" > 
+															<fieldset>
+															<div><label>Respuesta:</label>
+															<input type="text" id="respuesta" name="respuesta"> </div>
+															<div><input type="submit" id="resp" name="resp" value="Responder"></div>
+															</fieldset>	
+															</form> 
+															<?php
+															$fecha_actual=date("Y-m-d");
+															if(isset($_POST['resp']) ){
+																	
+																	$sql = "UPDATE respuesta SET comentarior='".$_POST['respuesta']."', fechar='".$fecha_actual."' WHERE respuesta.id ='".$pregunta['id']."'";
+																	$mdb->set_charset('utf8');
+																	mysqli_query($mdb,$sql); 
+
+															}
+															
+												}
+												?>
+										<br> 
+										</tr>
+										</tbody>
+										<?php
+									}
+								else{
+									?>
+									<tbody>
+									<tr>
+									<th> solo mira</th>
+									<th><?php echo $pregunta['comentario'];?></th>
+									<th><?php echo $pregunta['id_inquilino'];?></th>
+									<br> 
+									</tr>
+									</tbody>
+									<?php
+						
+								}
+							}
+					}
+		
+
+		}
+		else{
+									$sql = "SELECT * FROM pregunta WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."'";
+									$result=$mdb->query($sql);
+		
+								while($pregunta=mysqli_fetch_assoc($result)){
+										?>
+										<tbody>
+										<tr>
+										<th> no logueo</th>
+										<th><?php echo $pregunta['comentario'];?></th>
+										<th><?php echo $pregunta['id_inquilino'];?></th>
+										<br> 
+										</tr>
+										</tbody>
+										<?php
+							}
+			
+		}
 	?>
 

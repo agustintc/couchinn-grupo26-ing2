@@ -34,14 +34,15 @@
 					}	
 				}		
 		}
+		
 		?>
 	
 <ul>
 	<li><a href="inicio.php">Inicio</a></li>
 	<li><a href="perfil.php">Perfil</a></li>
-	<li><a href="logout.php">Cerrar Sesion</a> </li>
 	<li><a href="alta_tipo_hospedaje.php">Alta Tipo De Hospedaje</a></li>
 	<li><a class="active" href="listar_tipo_hospedajes.php">Listar Tipo De Hospedaje</a></li>
+	<li><a href="logout.php">Cerrar Sesion</a> </li>
 	</ul>
 	
 <?php

@@ -107,8 +107,10 @@ opacity: 1;
 	?>
 	<ul> <li><a href="inicio.php">Inicio</a></li>
 	<li><a href="perfil.php">Perfil</a> </li>
-	<li><a href="logout.php">Cerrar Sesion</a> </li>
+	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+	<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 	<li><a href="premium.php">Premium</a></li>
+	<li><a href="logout.php">Cerrar Sesion</a> </li>
 	</ul>
 	<?php
 	}
@@ -117,6 +119,8 @@ opacity: 1;
 	<ul>
 	<li><a href="inicio.php">Inicio</a></li>
 	<li><a href="perfil.php">Perfil</a> </li>
+	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+	<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 	<li><a href="logout.php">Cerrar Sesion</a> </li>
 	</ul>
 	<?php
@@ -188,17 +192,31 @@ opacity: 1;
 		<p>Capacidad: <?php echo $hospedaje["capacidad_hospedaje"];?> Personas</p>
 		<p>Direccion: <?php echo $hospedaje["direccion_hospedaje"];?>  </p>
 		<?php
-			if ($tipo == 4){
+			if (isset($_SESSION['session_username'])){
+				if ($hospedaje['id_usuario'] == $_SESSION['session_username']){
+					?>
+					<a href=modificar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>><input type="button" value="Modificar Hospedaje"></a>
+					<a href=borrar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>><input type="button" value="Borrar Hospedaje"></a>
+					<?php
+					$dirint->close();
+					die();
+					?>
+					<?php
+				}
+				else{
+					if ($tipo == 1 || $tipo == 2){?>
+						<a href=""><input type="button" value="Reservar"></a>
+						<?php
+					}
+				}
+			}
+			else{
 				?>
 				<a href="registrar.php"><input type="button" value="Reservar"></a>
 				<?php
-			}
-			else{?>
-				<a href=""><input type="button" value="Reservar"></a>
-				<?php
+				
 			}
 			?>
-			
 	</div>
 		<?php
 		$dirint->close();

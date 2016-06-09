@@ -47,21 +47,36 @@
 					}	
 				}		
 		}
+		else{
+			 header("location:acceso-indebido.php");
+		}
 		?>
 
 		
-	
 	<ul>
-		<li><a  href="inicio.php">Inicio</a></li>
+		<li><a href="inicio.php">Inicio</a></li>
 		<li><a class="active" href="perfil.php">Perfil</a></li>
-			<li><a href="logout.php">Cerrar Sesion</a> </li>
 		<?php 
-			if($usuario['tipo_usuario'] == 3) {
-				echo "<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>";
-				echo "<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>";
+			if($_SESSION['tipo'] == 3) {?>
+				<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>
+				<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
 			}
-			else if($usuario['tipo_usuario']==1)
-			{echo"<li><a href='premium.php'>Premium</a></li>";}
+			else if($_SESSION['tipo']==1)
+			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href='premium.php'>Premium</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+			else {?>
+				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+		
 		?>
 	
 	</ul>

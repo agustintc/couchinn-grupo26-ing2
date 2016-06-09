@@ -28,7 +28,17 @@ $(document).ready(function () {
           return false;
     
     });
-
+	 $("#form-alta").submit( function () {
+		
+		if ( validarName() && validarFechas() )
+		{	
+			return true;
+			/*$('#email').val("");
+			$('#password').val("");
+			alert("Sin Implementar");*/
+		}    
+		return false;
+    });
 });
 
 //Funcion de Validacion de Campos de Formulario de Registro de Usuario
@@ -140,6 +150,24 @@ function validarRepeatPassword ()
         $("#ErrorPassword2").css('color','#d32e12');
     }
     
+}
+
+function validarFechas(){
+	
+	var fechaComienzo = $("#comienzo").val();
+	var fechaFinalizacion = $("#finalizacion").val();
+
+	if ((fechaComienzo !== fechaFinalizacion) && (fechaComienzo < fechaFinalizacion) && ( ((new Date()).toJSON().slice(0,10)) <= fechaComienzo) ){
+	
+		return true;
+	
+	}
+	else{
+		$("#ErrorFecha").text("Error. La fechas son invalidas");
+        $("#ErrorFecha").css('color','#d32e12');
+		return false;
+	}
+	
 }
 
 

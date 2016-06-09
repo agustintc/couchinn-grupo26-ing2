@@ -58,49 +58,28 @@ if(($_SESSION["tipo"])==2 or ($_SESSION["tipo"])==3){
 
 		
 <ul>
-  <li><a class="active" href="inicio.php">Inicio</a></li>
-  <?php
-  if(!isset($_SESSION["session_username"])) {
-  ?>
-	<li><a href="bienvenida.php">Iniciar Sesion</a> </li>
-	<li><a href="registrar.php">Registrarse</a> </li>
-<?php
-} else {
-	
-  echo '<li><a href="perfil.php">Perfil</a></li>';
-  echo '<li><a href="logout.php">Cerrar Sesion</a> </li>';
-  
-?>
-  
-  <?php
-		$sql= "SELECT * FROM USUARIOS WHERE email_usuario = '" . $_SESSION['session_username']. "'";
-		$result= $mdb->query($sql);
-		$usuario = mysqli_fetch_assoc($result);
-		$tipousuario = $usuario['tipo_usuario'];
-		if($usuario['tipo_usuario'] == 3) {
-			echo"<li><a href=alta_tipo_hospedaje.php>Alta Tipo Hospedaje</a></li>";
-			echo "<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>";
-		}
-	
-  ?>
-<?php
-
-$sql = 'SELECT email_usuario FROM pagos WHERE email_usuario="'.$_SESSION["session_username"].'"'; 
-        $mdb->set_charset('utf8');
-		$result=$mdb->query($sql);
-       
-				
-        if(mysqli_num_rows($result)==0 and $tipousuario != 3) 
-        { 
-?>
-		<li><a href="premium.php">Premium</a></li>
- 
-<?php
-		}
-}
-?>
-
-</ul>
+		<li><a href="inicio.php">Inicio</a></li>
+		<li><a href="perfil.php">Perfil</a></li>
+		<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+		<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+		<?php 
+			if($_SESSION['tipo'] == 3) {?>
+				<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>
+				<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+			else if($_SESSION['tipo']==1)
+			{?>	<li><a class="active" href='premium.php'>Premium</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+			else {?>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+		?>
+	</ul>
 
 
 
@@ -137,7 +116,7 @@ $sql = 'SELECT email_usuario FROM pagos WHERE email_usuario="'.$_SESSION["sessio
 			<div><label> codigo de tarjeta de credito:</label>
 			<input type="password" id="ctarjeta" name="ctarjeta" required></div>
 			<div id="ErrorPassword"></div>
-			<div><input type="submit" id="enviar" name="enviar" value=" ser premium"> <input type="reset" value="Borrar"><input type="button" onclick="window.location.replace('inicio.php')" value="volver"/></div> 
+			<div><input type="submit" id="enviar" name="enviar" value="Ser premium"> <input type="reset" value="Borrar"></div> 
 			</fieldset>
 			</form> 
 			

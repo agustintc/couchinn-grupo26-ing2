@@ -198,8 +198,8 @@ opacity: 1;
 					<a href=modificar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>><input type="button" value="Modificar Hospedaje"></a>
 					<a href=borrar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>><input type="button" value="Borrar Hospedaje"></a>
 					<?php
-					$dirint->close();
-					die();
+					
+					
 					?>
 					<?php
 				}
@@ -219,7 +219,7 @@ opacity: 1;
 			?>
 	</div>
 		<?php
-		$dirint->close();
+		
 		if(isset($_SESSION["session_username"])){
 					if($_SESSION['session_username']!=$hospedaje["id_usuario"]){
 						?>	
@@ -246,9 +246,9 @@ opacity: 1;
 
 					$sql = "SELECT * FROM pregunta INNER JOIN respuesta ON pregunta.id = respuesta.id  WHERE pregunta.id_hospedaje = '".$hospedaje['id_hospedaje']."'";
 					$result=$mdb->query($sql);
-		
+					echo "aca";
 					while($pregunta=mysqli_fetch_assoc($result)){
-							
+							echo "hola";
 							if($pregunta['id_inquilino']==$_SESSION['session_username']){
 							?>
 					
@@ -274,6 +274,8 @@ opacity: 1;
 										<th> podes responder</th>
 										<th><?php echo $pregunta['comentario'];?></th>
 										<th><?php echo $pregunta['id_inquilino'];?></th>
+										<br> 
+										<th><?php echo $pregunta['comentarior'];?></th>
 										<?php if($pregunta['comentario']!=null  ){ ?>
 															<form name= "" class="form" id = "resp" action="" method="post" > 
 															<fieldset>
@@ -307,6 +309,8 @@ opacity: 1;
 									<th><?php echo $pregunta['comentario'];?></th>
 									<th><?php echo $pregunta['id_inquilino'];?></th>
 									<br> 
+									<th><?php echo $pregunta['comentarior'];?></th>
+									<br> 
 									</tr>
 									</tbody>
 									<?php
@@ -328,6 +332,8 @@ opacity: 1;
 										<th> no logueo</th>
 										<th><?php echo $pregunta['comentario'];?></th>
 										<th><?php echo $pregunta['id_inquilino'];?></th>
+										<br> 
+										<th><?php echo $pregunta['comentarior'];?></th>
 										<br> 
 										</tr>
 										</tbody>

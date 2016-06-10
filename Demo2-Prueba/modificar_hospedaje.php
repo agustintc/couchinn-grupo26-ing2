@@ -179,7 +179,6 @@
 	
 		//var_dump($_POST);
 		$allowed = array("jpg", "jpeg", "png","JPG","JPEG","PNG");
-		if (isset($_POST["files"])){
 			for($i=0; $i<count($_FILES['file']['name']); $i++) {
 				$tmpFilePath = $_FILES['file']['tmp_name'][$i];
 				$filename = $_FILES['file']['name'][$i];
@@ -193,7 +192,7 @@
 					die();
 				}
 			}
-		}
+		
 		$hospedaje=mysqli_fetch_assoc($result);
 		$dir = "imagenes/hospedajes/" . $_POST['id'];
 		$directory="imagenes/hospedajes/" . $_POST['id'];

@@ -153,8 +153,7 @@
 	
 		// Chequeo que los formatos de los archivos sean validos
 		$allowed = array("jpg", "jpeg", "png","JPG","JPEG","PNG");
-		if (isset($_POST["files"])){
-			for($i=0; $i<count($_FILES['file']['name']); $i++) {
+		for($i=0; $i<count($_FILES['file']['name']); $i++) {
 				$tmpFilePath = $_FILES['file']['tmp_name'][$i];
 				$filename = $_FILES['file']['name'][$i];
 				$ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -166,8 +165,8 @@
 					<?php
 					die();
 				}
-			}
 		}
+		
 		$sql = "INSERT INTO hospedajes (id_hospedaje,nombre_hospedaje,descripcion_hospedaje,direccion_hospedaje,capacidad_hospedaje,nombre_tipo_hospedaje,id_usuario,comienzo,finalizacion)
 			VALUES (NULL, '" . $_POST["nombre"] . "', '" . $_POST['descripcionHospedaje'] . "', '" . $_POST['direccionHospedaje'] . "', '" . $_POST['capacidadHospedaje'] ."',
 			'" . $_POST['tiposHospedaje'] . "', '" . $_SESSION['session_username'] . "', '" . $_POST['comienzo'] . "','" . $_POST['finalizacion'] . "')";

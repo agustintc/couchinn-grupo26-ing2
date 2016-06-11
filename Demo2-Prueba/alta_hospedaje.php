@@ -190,7 +190,9 @@
 				$i++;
 			}
 		
-		}	}
+		}
+		header("location: mis_hospedajes.php");
+	}
 ?>
 
 </body>

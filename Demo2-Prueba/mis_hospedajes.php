@@ -89,7 +89,7 @@
 	$result = $mdb->query($sql);
 	if (mysqli_num_rows($result) == 0){
 		?>
-		<div style="text-align:center;"><span>Aun no ha creado ningun hospedaje</span></div>
+		<div style="text-align:center;"><h1>Aun no ha creado ningun hospedaje</h1></div>
 			<?php
 
 			die();

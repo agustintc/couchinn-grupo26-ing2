@@ -62,6 +62,7 @@ opacity: 1;
 <!-- Bootstrap core CSS -->
     <link href="boots/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" TYPE="text/css" href="style/style.css">
+	<link rel="stylesheet" TYPE="text/css" href="style/style.css">
  <header></header>   
 
 <?php
@@ -234,85 +235,76 @@ opacity: 1;
 						<?php
 						$fecha_actual=date("Y-m-d");
 						if(isset($_POST['enviar'])){
-							$sql = "INSERT INTO pregunta (comentario,fecha,id_hospedaje,id_inquilino) VALUES ('".$_POST['pregunta']."','".$fecha_actual."','".$hospedaje['id_hospedaje']."','".$_SESSION['session_username']."')";
-							$mdb->set_charset('utf8');
-							mysqli_query($mdb,$sql); 
-							$sql = "INSERT INTO respuesta (id_hospedaje,id_inquilino) VALUES ('".$hospedaje['id_hospedaje']."','".$_SESSION['session_username']."')";
-							$mdb->set_charset('utf8');
-							mysqli_query($mdb,$sql); 
-					
+							if($_POST['pregunta']!=null){
+								$sql = "INSERT INTO pregunta_respuesta (comentariop,fecha,id_inquilino,id_hospedaje) VALUES ('".$_POST['pregunta']."','".$fecha_actual."','".$_SESSION['session_username']."','".$hospedaje['id_hospedaje']."')";
+								$mdb->set_charset('utf8');
+								mysqli_query($mdb,$sql); 
+							}
+							else {
+								?><th class=><?php echo "Pregunte algo ";?></th><?php
+							}
 						}
 					}	
 
-					$sql = "SELECT * FROM pregunta INNER JOIN respuesta ON pregunta.id = respuesta.id  WHERE pregunta.id_hospedaje = '".$hospedaje['id_hospedaje']."'";
+					$sql = "SELECT * FROM pregunta_respuesta   WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."'";
 					$result=$mdb->query($sql);
-					echo "aca";
 					while($pregunta=mysqli_fetch_assoc($result)){
-							echo "hola";
 							if($pregunta['id_inquilino']==$_SESSION['session_username']){
 							?>
-					
-								<tbody>
-								<tr>
-								<th> vos comentaste</th>
-								<th><?php echo $pregunta['comentario'];?></th>
-								<th><?php echo $pregunta['id_inquilino'];?></th>
-								<br> 
-								<th><?php echo $pregunta['comentarior'];?></th>
-								<br> 
-								
-								</tr>
-								</tbody>
-					
+										<div class=texto style="border:1px solid green;">
+										
+										<tbody>
+										<tr  >
+										<th><?php echo $pregunta['comentariop'];?></th>
+										<th><?php echo $pregunta['id_inquilino'];?></th>
+										<br> 
+										<th><?php echo $pregunta['comentarior'];?></th>
+										<br> 
+										</tr>
+										</tbody>
+										
+										</div>
 								<?php
 							}
 							else {
 									if($hospedaje['id_usuario']==$_SESSION['session_username']){
 										?>
-										<tbody>
+										<div class=texto style="border:1px solid green;">
+										<tbody >
+										
 										<tr>
-										<th> podes responder</th>
-										<th><?php echo $pregunta['comentario'];?></th>
+										<th ><?php echo $pregunta['comentariop'];?></th>
 										<th><?php echo $pregunta['id_inquilino'];?></th>
 										<br> 
 										<th><?php echo $pregunta['comentarior'];?></th>
-										<?php if($pregunta['comentario']!=null  ){ ?>
-															<form name= "" class="form" id = "resp" action="" method="post" > 
-															<fieldset>
-															<div><label>Respuesta:</label>
-															<input type="text" id="respuesta" name="respuesta"> </div>
-															<div><input type="submit" id="resp" name="resp" value="Responder"></div>
-															</fieldset>	
-															</form> 
-															<?php
-															$fecha_actual=date("Y-m-d");
-															if(isset($_POST['resp']) ){
-																	
-																	$sql = "UPDATE respuesta SET comentarior='".$_POST['respuesta']."', fechar='".$fecha_actual."' WHERE respuesta.id ='".$pregunta['id']."'";
-																	$mdb->set_charset('utf8');
-																	mysqli_query($mdb,$sql); 
+										<br>
+										
+										<?php if($pregunta['comentariop']!=null && $pregunta['comentarior']==null  ){ ?>
+															<th ><a align="center"  href=responder_pregunta.php?id=<?php echo  $pregunta["id"];?>>
+															<button  type="button" class="btn btn-success">Responder</button></a></th>
 
-															}
-															
-												}
-												?>
+											  </tr>
+											  </tbody>
+										
+											  <?php
+										}
+										?></div><?php
+									}	
+								else{
+									?>
+									<div class=texto style="border:1px solid green;">
+										
+										<tbody>
+										<tr  >
+										<th><?php echo $pregunta['comentariop'];?></th>
+										<th><?php echo $pregunta['id_inquilino'];?></th>
+										<br> 
+										<th><?php echo $pregunta['comentarior'];?></th>
 										<br> 
 										</tr>
 										</tbody>
-										<?php
-									}
-								else{
-									?>
-									<tbody>
-									<tr>
-									<th> solo mira</th>
-									<th><?php echo $pregunta['comentario'];?></th>
-									<th><?php echo $pregunta['id_inquilino'];?></th>
-									<br> 
-									<th><?php echo $pregunta['comentarior'];?></th>
-									<br> 
-									</tr>
-									</tbody>
+										
+										</div>
 									<?php
 						
 								}
@@ -322,21 +314,24 @@ opacity: 1;
 
 		}
 		else{
-									$sql = "SELECT * FROM pregunta WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."'";
+									$sql = "SELECT * FROM pregunta_respuesta WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."'";
 									$result=$mdb->query($sql);
 		
 								while($pregunta=mysqli_fetch_assoc($result)){
 										?>
+										<div class=texto style="border:1px solid green;">
+										
 										<tbody>
-										<tr>
-										<th> no logueo</th>
-										<th><?php echo $pregunta['comentario'];?></th>
+										<tr  >
+										<th><?php echo $pregunta['comentariop'];?></th>
 										<th><?php echo $pregunta['id_inquilino'];?></th>
 										<br> 
 										<th><?php echo $pregunta['comentarior'];?></th>
 										<br> 
 										</tr>
 										</tbody>
+										
+										</div>
 										<?php
 							}
 			

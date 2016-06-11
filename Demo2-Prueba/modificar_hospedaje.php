@@ -1,25 +1,24 @@
-
+<?php
+ob_start();
+?>
 <html>
 <head>
-<title>Modificar Hospedaje</title>
+	<title>Modificar Hospedaje</title>
 	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script  type="text/javascript" src="js/funciones.js"></script>
 	<link rel="stylesheet" TYPE="text/css" href="style/style.css">
 	<link href="boots/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-		#imglist img {
-			width: 100px;
-			height: 100px;
-		}
-		.selected { border: 1px solid red; }
+	<style>
+			#imglist img {
+				width: 100px;
+				height: 100px;
+			}
+			.selected { border: 1px solid red; }
 	</style>
 
 </head>
-
 <body>
-	<header></header>
-	
+	<header></header>	
 	<?php
 		session_start();
 		if (isset($_SESSION['session_username'])){
@@ -62,28 +61,28 @@
 			}?>
 	</ul>
 	<?php
-	require_once('conexion.php');
-	$mdb= connectDB();
-	$mdb->set_charset('utf8');
-	$sql = "SELECT * FROM hospedajes WHERE  id_hospedaje = ".$_GET['id'] ;
-	$result=$mdb->query($sql);
-	$hospedaje= mysqli_fetch_assoc($result);
-	$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
-	$result_tipos = $mdb->query($sql);
+		require_once('conexion.php');
+		$mdb= connectDB();
+		$mdb->set_charset('utf8');
+		$sql = "SELECT * FROM hospedajes WHERE  id_hospedaje = ".$_GET['id'] ;
+		$result=$mdb->query($sql);
+		$hospedaje= mysqli_fetch_assoc($result);
+		$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
+		$result_tipos = $mdb->query($sql);
 	?>
 	<?php
-	function mostrar_imagenes($hospedaje){
-		$directory="imagenes/hospedajes/" . $hospedaje['id_hospedaje']."";
-		$dirint = dir($directory);
-		?>
+		function mostrar_imagenes($hospedaje){
+			$directory="imagenes/hospedajes/" . $hospedaje['id_hospedaje']."";
+			$dirint = dir($directory);
+			?>
 			<div id="imglist">
-		<?php
+			<?php
 			$id=1;
 			while (($archivo = $dirint->read()) !== false)
 			{
 				if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){?>
 					<img class="imgClick" id="<?php echo $archivo;?>" src="<?php echo ''.$directory .'/' . $archivo ; ?>"/>
-					<input type="radio" id="images[<?php echo $archivo;?>]" name="images[<?php echo $archivo;?>]"/>
+					<input type="checkbox" id="images[<?php echo $archivo;?>]" name="images[<?php echo $archivo;?>]"/>
 				<?php
 					$id++;
 				}
@@ -175,24 +174,21 @@
 	</div>
 </div>
 <?php
-	if (isset($_POST['enviar'])){
-	
-		//var_dump($_POST);
+	if (isset($_POST['enviar'])){	
 		$allowed = array("jpg", "jpeg", "png","JPG","JPEG","PNG");
-			for($i=0; $i<count($_FILES['file']['name']); $i++) {
-				$tmpFilePath = $_FILES['file']['tmp_name'][$i];
-				$filename = $_FILES['file']['name'][$i];
-				$ext = pathinfo($filename, PATHINFO_EXTENSION);
-				if(!in_array($ext, $allowed)){?>
-					<script>
-						$("#ErrorSubida").text("Error. Formatos validos: .jpg/.png");
-						$("#ErrorSubida").css('color','#d32e12');
-					</script>
-					<?php
-					die();
-				}
+		for($i=0; $i<count($_FILES['file']['name']); $i++) {
+			$tmpFilePath = $_FILES['file']['tmp_name'][$i];
+			$filename = $_FILES['file']['name'][$i];
+			$ext = pathinfo($filename, PATHINFO_EXTENSION);
+			if(!in_array($ext, $allowed)){?>
+				<script>
+					$("#ErrorSubida").text("Error. Formatos validos: .jpg/.png");
+					$("#ErrorSubida").css('color','#d32e12');
+				</script>
+				<?php
+				die();
 			}
-		
+		}
 		$hospedaje=mysqli_fetch_assoc($result);
 		$dir = "imagenes/hospedajes/" . $_POST['id'];
 		$directory="imagenes/hospedajes/" . $_POST['id'];
@@ -204,7 +200,6 @@
 			while (($archivo = $dirint->read()) !== false){
 				if ($archivo !== '.' && $archivo !== '..'){
 					if (isset($array[$archivo])){
-
 						chmod($dir . '/' . $archivo, 0750);
 						unlink($dir . '/' . $archivo);
 					}
@@ -216,24 +211,25 @@
 			nombre_tipo_hospedaje = '".$_POST['tiposHospedaje']."', comienzo = '".$_POST['comienzo']."', finalizacion='".$_POST['finalizacion']."' 
 			WHERE id_hospedaje = ".$_POST['id'] ;
 		$result=$mdb->query($sql);
-		$pathfile = "imagenes/hospedajes/" . $_POST['id'];
-		if (!file_exists($pathfile)) {
-			mkdir($pathfile, 0777, true);
-		}
-		
-
-		foreach ($_FILES["file"]["error"] as $key => $error) {
+		if ($result != 0){
+			$pathfile = "imagenes/hospedajes/" . $_POST['id'];
+			if (!file_exists($pathfile)) {
+				mkdir($pathfile, 0777, true);
+			}	
+			foreach ($_FILES["file"]["error"] as $key => $error) {
 				if ($error == UPLOAD_ERR_OK) {
-				$tmp_name = $_FILES["file"]["tmp_name"][$key];
-				$name = $_FILES["file"]["name"][$key];
-				$extension = pathinfo($name, PATHINFO_EXTENSION);
-				move_uploaded_file($tmp_name, "$pathfile/$name.$extension");
+					$tmp_name = $_FILES["file"]["tmp_name"][$key];
+					$name = $_FILES["file"]["name"][$key];
+					$extension = pathinfo($name, PATHINFO_EXTENSION);
+					move_uploaded_file($tmp_name, "$pathfile/$name.$extension");
+				}
 			}
+			header("location:ver_detalle.php?id=" . $_POST['id']);
 		}
-
 	}
-
 ?>
-			
 </body>
 </head>
+<?php
+ob_end_flush();
+?>

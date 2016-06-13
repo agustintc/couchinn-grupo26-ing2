@@ -73,22 +73,24 @@ ob_start();
 	<?php
 		function mostrar_imagenes($hospedaje){
 			$directory="imagenes/hospedajes/" . $hospedaje['id_hospedaje']."";
-			$dirint = dir($directory);
-			?>
-			<div id="imglist">
-			<?php
-			$id=1;
-			while (($archivo = $dirint->read()) !== false)
-			{
-				if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){?>
-					<img class="imgClick" id="<?php echo $archivo;?>" src="<?php echo ''.$directory .'/' . $archivo ; ?>"/>
-					<input type="checkbox" id="images[<?php echo $archivo;?>]" name="images[<?php echo $archivo;?>]"/>
+			if (file_exists($directory)){
+				$dirint = dir($directory);
+				?>
+				<div id="imglist">
 				<?php
-					$id++;
-				}
-			}?>
-			</div>
+				$id=1;
+				while (($archivo = $dirint->read()) !== false)
+			{
+					if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){?>
+						<img class="imgClick" id="<?php echo $archivo;?>" src="<?php echo ''.$directory .'/' . $archivo ; ?>"/>
+						<input type="checkbox" id="images[<?php echo $archivo;?>]" name="images[<?php echo $archivo;?>]"/>
+					<?php
+						$id++;
+					}
+				}?>
+				</div>
 			<?php
+			}
 		}
 ?>
 	<h1 align="center">Modificacion de Hospedaje</h1>

@@ -1,3 +1,7 @@
+<?php
+
+	error_reporting(1);
+?>
 <head> <title> Detalle </title></head>
 <style type="text/css">
 
@@ -66,7 +70,6 @@ opacity: 1;
  <header></header>   
 
 <?php
-
 	require_once('conexion.php');
 	$mdb = connectDB();
 	session_start();
@@ -165,7 +168,7 @@ opacity: 1;
 			
 		while (($archivo = $dirint->read()) !== false)
 		{
-			if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){?>
+			if( preg_match('/\.(jpg|jpeg|png|gif)(?:[\?\#].*)?$/i', $archivo)){?>
 				<div class="image">
 				<img id="<?php echo $archivo;?>" src="<?php echo ''.$directory .'/' . $archivo ; ?>" ></img>
 				</div>
@@ -178,7 +181,7 @@ opacity: 1;
 			$dirint = dir($directory);
 			$i=1;
 			while (($archivo = $dirint->read()) !== false){
-				if (eregi("gif", $archivo) || eregi("jpg", $archivo) || eregi("png", $archivo)){?>
+				if (preg_match('/\.(jpg|jpeg|png|gif)(?:[\?\#].*)?$/i', $archivo)){?>
 					<a href="<?php echo '#' . $archivo;?>"><?php echo $i;?></a>
 				<?php
 				$i++;

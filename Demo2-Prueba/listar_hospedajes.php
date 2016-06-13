@@ -10,10 +10,9 @@
 
 		require_once('conexion.php');
 		$mdb = connectDB();
-		$sql = "SELECT * FROM tipos_hospedajes INNER JOIN hospedajes ON tipos_hospedajes.nombre_tipo_hospedaje=hospedajes.nombre_tipo_hospedaje;";
+		$sql = "SELECT * FROM tipos_hospedajes INNER JOIN hospedajes ON tipos_hospedajes.nombre_tipo_hospedaje=hospedajes.nombre_tipo_hospedaje";
 		$mdb->set_charset('utf8');
 		$result=$mdb->query($sql);
-		
 		if(isset($_SESSION["session_username"])){
 			if (isset($_SESSION['session_username'])){
 			$query = "SELECT * FROM usuarios WHERE email_usuario = '" . $_SESSION['session_username']. "'";
@@ -47,6 +46,9 @@
 					}
 					else{
 						$directory="imagenes/hospedajes/" .$hospedaje['id_hospedaje']."";
+					}
+					if (!file_exists($directory)){
+						$directory="imagenes/logo/";
 					}
 					$isDirEmpty = !(new \FilesystemIterator($directory))->valid();
 					if (! $isDirEmpty){

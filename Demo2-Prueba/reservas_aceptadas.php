@@ -65,7 +65,7 @@
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a> </li>
 		<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-		<li><a href="mis_hospedajes.php" class="active" >Mis Hospedajes</a></li>
+		<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 		<li><a href="mis_reservas.php">Mis Reservas</a></li>
 		<li><a href="logout.php">Cerrar Sesion</a> </li>
 	</ul>
@@ -82,47 +82,36 @@
 		<?php
 		}
 ?>
-
-<?php
-
-	$sql = "SELECT * FROM Hospedajes WHERE id_usuario = '" . $_SESSION['session_username']. "'";
-	$result = $mdb->query($sql);
-	if (mysqli_num_rows($result) == 0){
+		<?php
+		$sql= "SELECT * FROM reservas WHERE id_hospedaje = '" . $_GET['id']. "'";
+		$result= $mdb->query($sql);
 		?>
-		<div style="text-align:center;"><h1>Aun no ha creado ningun hospedaje</h1></div>
-			<?php
-
-			die();
-		
-	}
-	?>
-			<table class="table table-hover">
+		<h1 style="text-align:center;">Reservas Aceptadas</h1>
+		<br>
+		<table class="table table-hover">
 				<thead>
 					<tr>
-						<th scope="row">Hospedajes</th>
+						<th scope="row">Usuario</th>
+						<th scope="row">Fecha Comienzo</th>
+						<th scope="row">Fecha Finalizacion</th>
 					</tr>
 				<thead>
 				<?php
-				while($hospedaje=mysqli_fetch_assoc($result)){
+				while($reservas=mysqli_fetch_assoc($result)){
 				?>
 					<tbody>
-						<tr>
-							<th><?php echo $hospedaje['nombre_hospedaje'];?></th>
-							<th><a href=modificar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a></th>
-							<th><a href=borrar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></a></th>
-							<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button></a></th>
-							<th><a href=reservas.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Reservas</span></button></a></th>								
+						<tr><?php
+							if ($reservas['estado'] == 2){?>
+								<th><?php echo $reservas['id_huesped'];?></th>
+								<th><?php echo $reservas['comienzo'];?></th>
+								<th><?php echo $reservas['finalizacion'];?></th>	
+							<?php
+							}?>
 						</tr>
 					</tbody>
 				<?php
 				}
 				?>
-			</table>
-	<?php
-?>
+		</table>
 </body>
 </html>

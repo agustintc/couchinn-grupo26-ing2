@@ -65,7 +65,7 @@
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a> </li>
 		<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-		<li><a href="mis_hospedajes.php" class="active" >Mis Hospedajes</a></li>
+		<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 		<li><a href="mis_reservas.php">Mis Reservas</a></li>
 		<li><a href="logout.php">Cerrar Sesion</a> </li>
 	</ul>
@@ -82,47 +82,37 @@
 		<?php
 		}
 ?>
-
+	<h1 style="text-align:center;">Para rechazar la reserva, por favor escriba porque no ha querido aceptarla</h1>
+	<div class="container">
+		<form action="" method="POST" id="form-comentario" name="form-comentario" >
+		<div class="form-group row">
+				<label  class="col-sm-3 form-control-label"></label>
+				<div class="col-sm-6">
+					<textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
+				</div>
+		</div>
+			<div  style="text-align:center;" >
+			<input type="submit" id="enviar" name="enviar" value="Enviar">
+			</div>	
+		</form>
+	</div>
 <?php
-
-	$sql = "SELECT * FROM Hospedajes WHERE id_usuario = '" . $_SESSION['session_username']. "'";
-	$result = $mdb->query($sql);
-	if (mysqli_num_rows($result) == 0){
-		?>
-		<div style="text-align:center;"><h1>Aun no ha creado ningun hospedaje</h1></div>
-			<?php
-
-			die();
+	if (isset($_POST['enviar'])){
 		
+		$sql = "UPDATE reservas SET estado = 1, comentario = '" . $_POST['comentario'] . "' WHERE id_reserva = '" . $_GET['id']. "'";
+		$result= $mdb->query($sql);
+		
+		if($result){?>
+			
+			<h1 style="text-align:center;">Reserva rechazada exitosamente!</h1>
+		<?php
+		}
+		else{?>
+			<h1 style="text-align:center;">Error al rechazar la reserva!</h1>
+		<?php
+		}
 	}
-	?>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="row">Hospedajes</th>
-					</tr>
-				<thead>
-				<?php
-				while($hospedaje=mysqli_fetch_assoc($result)){
-				?>
-					<tbody>
-						<tr>
-							<th><?php echo $hospedaje['nombre_hospedaje'];?></th>
-							<th><a href=modificar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a></th>
-							<th><a href=borrar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></a></th>
-							<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button></a></th>
-							<th><a href=reservas.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Reservas</span></button></a></th>								
-						</tr>
-					</tbody>
-				<?php
-				}
-				?>
-			</table>
-	<?php
 ?>
+
 </body>
 </html>

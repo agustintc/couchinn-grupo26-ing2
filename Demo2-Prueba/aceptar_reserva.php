@@ -65,7 +65,7 @@
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a> </li>
 		<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-		<li><a href="mis_hospedajes.php" class="active" >Mis Hospedajes</a></li>
+		<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 		<li><a href="mis_reservas.php">Mis Reservas</a></li>
 		<li><a href="logout.php">Cerrar Sesion</a> </li>
 	</ul>
@@ -82,47 +82,41 @@
 		<?php
 		}
 ?>
-
 <?php
-
-	$sql = "SELECT * FROM Hospedajes WHERE id_usuario = '" . $_SESSION['session_username']. "'";
-	$result = $mdb->query($sql);
-	if (mysqli_num_rows($result) == 0){
-		?>
-		<div style="text-align:center;"><h1>Aun no ha creado ningun hospedaje</h1></div>
-			<?php
-
-			die();
-		
-	}
-	?>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="row">Hospedajes</th>
-					</tr>
-				<thead>
-				<?php
-				while($hospedaje=mysqli_fetch_assoc($result)){
-				?>
-					<tbody>
-						<tr>
-							<th><?php echo $hospedaje['nombre_hospedaje'];?></th>
-							<th><a href=modificar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a></th>
-							<th><a href=borrar_hospedaje.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></a></th>
-							<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button></a></th>
-							<th><a href=reservas.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
-							<button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Reservas</span></button></a></th>								
-						</tr>
-					</tbody>
-				<?php
+	$sql = "UPDATE reservas SET estado = 2 WHERE id_reserva = '" . $_GET['id']. "'";
+	$result= $mdb->query($sql);
+	if($result){
+		$sql = "SELECT * FROM reservas WHERE id_reserva = '" . $_GET['id'] . "'";
+		$result = $mdb->query($sql);
+		$reserva = mysqli_fetch_assoc($result);
+		$comienzo = $reserva['comienzo'];
+		$finalizacion = $reserva['finalizacion'];
+		$sql = "SELECT * FROM reservas WHERE id_hospedaje = '" . $reserva['id_hospedaje']. "'";
+		$result_reservas= $mdb->query($sql);
+		if ($result){
+			while($reservas=mysqli_fetch_assoc($result_reservas)){
+				if ($reservas['comienzo'] >= $comienzo && $reservas['finalizacion'] <= $finalizacion || $reservas['finalizacion'] == $finalizacion || 
+				$reservas['comienzo'] == $comienzo){
+					if ($reservas['id_reserva'] != $_GET['id']){
+						$sql = "UPDATE reservas SET estado = 1 WHERE id_reserva = '" . $reservas['id_reserva']. "'";
+						$result_update = $mdb->query($sql);
+						if (!$result_update){
+							echo "Fallo al actualizar reservas";
+						}
+					}
 				}
-				?>
-			</table>
-	<?php
+			}
+			?>
+			<h1 style="text-align:center;">Reserva Aceptada con Exito!</h1>
+			<div style="text-align:center;"><a href=mis_hospedajes.php>Volver</a></div>
+			<?php
+		}
+
+	}
+	else{
+		echo "Error";
+	}
+	
 ?>
 </body>
 </html>

@@ -149,8 +149,6 @@
 	
 	
 	if(isset($_POST['enviar'])){
-
-	
 		// Chequeo que los formatos de los archivos sean validos
 		$allowed = array("jpg", "jpeg", "png","JPG","JPEG","PNG");
 		for($i=0; $i<count($_FILES['file']['name']); $i++) {
@@ -159,7 +157,7 @@
 				$ext = pathinfo($filename, PATHINFO_EXTENSION);
 				if(!in_array($ext, $allowed)){?>
 					<script>
-						$("#ErrorSubida").text("Error. Formatos validos: .jpg/.png");
+						$("#ErrorSubida").text("Error. Formatos validos: .jpg/.png/.gif");
 						$("#ErrorSubida").css('color','#d32e12');
 					</script>
 					<?php

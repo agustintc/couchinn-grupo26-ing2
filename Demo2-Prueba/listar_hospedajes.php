@@ -33,7 +33,7 @@
 		<thead>
 		<?php
 		while($hospedaje=mysqli_fetch_assoc($result)){
-				if ($hospedaje['estado_tipo_hospedaje'] == 0){	
+				if ($hospedaje['estado_tipo_hospedaje'] == 0 && $hospedaje['estado_hospedaje'] == 0){	
 					?>
 					<tbody>
 					<tr>

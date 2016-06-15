@@ -71,16 +71,31 @@
 			die();
 		}
 		else{
-			$sql= "SELECT * FROM RESERVAS WHERE id_hospedaje = " .$_GET['id'];
+			$sql= "SELECT * FROM RESERVAS WHERE id_hospedaje = " . $_GET['id'];
 			$result = $mdb->query($sql);
 			$total= mysqli_num_rows($result);
 			if ($total == 0){
+				echo "hola";
 				$sql="DELETE FROM hospedajes WHERE id_hospedaje = ".$_GET['id'];
 				$result=$mdb->query($sql);
 			}
 			else{
-				$sql= "UPDATE tipos_hospedajes SET estado_hospedaje = '1' WHERE id_hospedaje= " .$_GET['id'];
-				$result=$mdb->query($sql);
+				$boolean = 0;
+				while ($reservas = mysqli_fetch_assoc($result)){
+					if ($reservas['estado'] == 2){
+						$boolean = 1;
+					}
+				}
+				if ($boolean == 1){
+					$sql= "UPDATE hospedajes SET estado_hospedaje = '1' WHERE id_hospedaje= " .$_GET['id'];
+					$result=$mdb->query($sql);
+					
+				}
+				else{
+				
+					$sql="DELETE FROM hospedajes WHERE id_hospedaje = ".$_GET['id'];
+					$result=$mdb->query($sql);
+				}
 			}
 		}
 	}

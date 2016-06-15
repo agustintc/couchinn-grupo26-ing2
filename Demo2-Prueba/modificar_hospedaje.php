@@ -184,7 +184,7 @@ ob_start();
 			$ext = pathinfo($filename, PATHINFO_EXTENSION);
 			if(!in_array($ext, $allowed)){?>
 				<script>
-					$("#ErrorSubida").text("Error. Formatos validos: .jpg/.png");
+					$("#ErrorSubida").text("Error. Formatos validos:  .jpg/.png/.gif");
 					$("#ErrorSubida").css('color','#d32e12');
 				</script>
 				<?php

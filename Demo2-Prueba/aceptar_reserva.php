@@ -95,8 +95,9 @@
 		$result_reservas= $mdb->query($sql);
 		if ($result){
 			while($reservas=mysqli_fetch_assoc($result_reservas)){
-				if ($reservas['comienzo'] >= $comienzo && $reservas['finalizacion'] <= $finalizacion || $reservas['finalizacion'] == $finalizacion || 
-				$reservas['comienzo'] == $comienzo){
+				
+				if (($reservas['comienzo'] >= $comienzo && $reservas['finalizacion'] <= $finalizacion) || 
+					(($reservas['comienzo'] >= $comienzo) && ($reservas['comienzo'] <= $finalizacion))){
 					if ($reservas['id_reserva'] != $_GET['id']){
 						$sql = "UPDATE reservas SET estado = 1 WHERE id_reserva = '" . $reservas['id_reserva']. "'";
 						$result_update = $mdb->query($sql);

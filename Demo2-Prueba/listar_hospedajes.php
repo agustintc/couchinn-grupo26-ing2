@@ -55,19 +55,21 @@
 					$scanned_directory = array_diff(scandir($directory), array('..', '.'));
 							?>
 							<div class="col-sm-2 col-md-4 img-hover">
-								<img class="imagen" src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
-							</div>
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>			
+						</div>
 							<?php
 					}
 					else{
 						$directory="imagenes/logo/";
 						$scanned_directory = array_diff(scandir($directory), array('..', '.'));
 						?>
-							<div class="col-sm-2 col-md-4 img-hover">
-								<div class="thumbnail">
-									<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
-								</div>			
-							</div>
+								<div class="col-sm-2 col-md-4 img-hover">
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>	
+						</div>
 						<?php
 					}
 				?>

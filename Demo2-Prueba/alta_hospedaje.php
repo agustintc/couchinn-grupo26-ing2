@@ -114,20 +114,6 @@
 					</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-3 form-control-label" for="comienzo">Comienzo</label>
-				<div class="col-sm-6">
-					<input type="date" class="form-control" name="comienzo" id="comienzo" required>
-				</div>
-				<div class="col-sm-8"  id="ErrorFecha"></div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-3 form-control-label" for="finalizacion">Terminacion</label>
-				<div class="col-sm-6">
-					<input type="date" class="form-control" name="finalizacion" id="finalizacion" required>
-				</div>
-				<div class="col-sm-8" id="ErrorFecha"></div>
-			</div>
-			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label" for="descripcionHospedaje">Descripcion del Hospedaje</label>
 				<div class="col-sm-6">
 					<textarea class="form-control" id="descripcionHospedaje" name="descripcionHospedaje" rows="3" required></textarea>
@@ -165,10 +151,10 @@
 				}
 		}
 		
-		$sql = "INSERT INTO hospedajes (id_hospedaje,nombre_hospedaje,descripcion_hospedaje,direccion_hospedaje,capacidad_hospedaje,nombre_tipo_hospedaje,id_usuario,comienzo,finalizacion)
+		$sql = "INSERT INTO hospedajes (id_hospedaje,nombre_hospedaje,descripcion_hospedaje,direccion_hospedaje,capacidad_hospedaje,nombre_tipo_hospedaje,id_usuario,estado_hospedaje)
 			VALUES (NULL, '" . $_POST["nombre"] . "', '" . $_POST['descripcionHospedaje'] . "', '" . $_POST['direccionHospedaje'] . "', '" . $_POST['capacidadHospedaje'] ."',
-			'" . $_POST['tiposHospedaje'] . "', '" . $_SESSION['session_username'] . "', '" . $_POST['comienzo'] . "','" . $_POST['finalizacion'] . "')";
-		$mdb->query($sql);
+			'" . $_POST['tiposHospedaje'] . "', '" . $_SESSION['session_username'] . "', 0)";
+		$result=$mdb->query($sql);
 		$sql= "SELECT * FROM hospedajes ORDER BY id_hospedaje DESC LIMIT 1";
 		$result =  $mdb->query($sql);
 		$result =  mysqli_fetch_assoc($result);
@@ -189,7 +175,7 @@
 			}
 		
 		}
-		header("location: mis_hospedajes.php");
+		header("location:mis_hospedajes.php");
 	}
 ?>
 

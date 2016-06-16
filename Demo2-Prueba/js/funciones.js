@@ -30,7 +30,7 @@ $(document).ready(function () {
     });
 	 $("#form-alta").submit( function () {
 		
-		if ( validarName() && validarFechas() )
+		if ( validarName() )
 		{	
 			return true;
 			/*$('#email').val("");

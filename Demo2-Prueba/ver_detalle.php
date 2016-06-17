@@ -192,6 +192,7 @@ opacity: 1;
 		<p>Tipo de Hospedaje: <?php echo $hospedaje["nombre_tipo_hospedaje"];?></p>
 		<p>Descripcion: <?php echo $hospedaje["descripcion_hospedaje"];?></p>
 		<p>Capacidad: <?php echo $hospedaje["capacidad_hospedaje"];?> Personas</p>
+		<p>Lugar del Hospedaje: <?php echo $hospedaje['nombre_lugar'];?></p>
 		<p>Direccion: <?php echo $hospedaje["direccion_hospedaje"];?>  </p>
 		<?php
 			if (isset($_SESSION['session_username'])){

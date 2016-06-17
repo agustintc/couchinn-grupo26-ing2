@@ -99,6 +99,10 @@ ob_start();
 		}
 		$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
 		$result_tipos = $mdb->query($sql);
+		$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
+		$sql = "SELECT * FROM lugares";
+		$result_lugares = $mdb->query($sql);
+		
 	?>
 	<?php
 		function mostrar_imagenes($hospedaje){
@@ -135,6 +139,22 @@ ob_start();
 						value="<?php echo ($hospedaje['nombre_hospedaje']);?>">
 				</div>
 				<div class="col-sm-8" id="ErrorName"></div>
+			</div>
+			<div class="form-group row">
+				<label  class="col-sm-3 form-control-label" for="lugares">Lugar del Hospedaje</label>
+					<div class="col-sm-6">
+						<select class="form-control" id="nombreLugares" name="nombreLugares">
+						<optgroup label="Seleccione un tipo de hospedaje">
+						<?php
+							while ($lugares = mysqli_fetch_assoc($result_lugares)){
+								$nombre_lugar = $lugares['nombre'];
+						?>
+							<option required <?php if ($nombre_lugar == $hospedaje['nombre_lugar']) {?>selected="selected"<?php } ?>><?php echo $nombre_lugar;?></option>
+							<?php
+							}
+							?>
+						</select>
+					</div>
 			</div>
 			<div class="form-group row">
 				<label for="direccionHospedaje" class="col-sm-3 form-control-label">Direccion del Hospedaje</label>
@@ -227,7 +247,7 @@ ob_start();
 			}
 		}
 		$sql = "UPDATE hospedajes SET nombre_hospedaje = '".$_POST['nombre']."', descripcion_hospedaje = '" .$_POST['descripcionHospedaje']."',
-			direccion_hospedaje = '".$_POST['direccionHospedaje']."', capacidad_hospedaje = '".$_POST['capacidadHospedaje']."',
+			nombre_lugar = '" . $_POST['nombreLugares'] . "', direccion_hospedaje = '".$_POST['direccionHospedaje']."', capacidad_hospedaje = '".$_POST['capacidadHospedaje']."',
 			nombre_tipo_hospedaje = '".$_POST['tiposHospedaje']."' WHERE id_hospedaje = ".$_POST['id'] ;
 		$result=$mdb->query($sql);
 		if ($result != 0){

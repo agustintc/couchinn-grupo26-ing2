@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-06-2016 a las 22:21:07
+-- Tiempo de generación: 17-06-2016 a las 19:11:11
 -- Versión del servidor: 10.1.10-MariaDB
 -- Versión de PHP: 5.6.15
 
@@ -30,6 +30,7 @@ CREATE TABLE `hospedajes` (
   `id_hospedaje` int(11) NOT NULL,
   `nombre_hospedaje` text NOT NULL,
   `descripcion_hospedaje` text NOT NULL,
+  `nombre_lugar` text NOT NULL,
   `direccion_hospedaje` text NOT NULL,
   `capacidad_hospedaje` text NOT NULL,
   `nombre_tipo_hospedaje` text NOT NULL,
@@ -41,10 +42,43 @@ CREATE TABLE `hospedajes` (
 -- Volcado de datos para la tabla `hospedajes`
 --
 
-INSERT INTO `hospedajes` (`id_hospedaje`, `nombre_hospedaje`, `descripcion_hospedaje`, `direccion_hospedaje`, `capacidad_hospedaje`, `nombre_tipo_hospedaje`, `id_usuario`, `estado_hospedaje`) VALUES
-(13, 'aspokd', 'pokas', 'pok', '1', 'Depto', 'ayudante@hotmail.com', 1),
-(14, 'oasjdi', 'pokaspok', '2', '1', 'Depto', 'ayudante@hotmail.com', 0),
-(22, 'asd', 'aksjpk', 'pokdwq', '2', 'Casa', 'ayudante@hotmail.com', 0);
+INSERT INTO `hospedajes` (`id_hospedaje`, `nombre_hospedaje`, `descripcion_hospedaje`, `nombre_lugar`, `direccion_hospedaje`, `capacidad_hospedaje`, `nombre_tipo_hospedaje`, `id_usuario`, `estado_hospedaje`) VALUES
+(13, 'PEPE', 'la peor', '', 'pok', '1', 'Depto', 'ayudante@hotmail.com', 1),
+(22, 'PE', 'La mejor', '', 'pokdwq', '1', 'Casa', 'ayudante@hotmail.com', 0),
+(23, 'asodkj', 'OPKD', '', 'OPK', '2', 'Depto', 'ayudante@hotmail.com', 0),
+(24, 'kdas', 'odakspo', 'Mar de Ajo', 'okpo', '1', 'Depto', 'z@hotmail.com', 0),
+(25, 'kdas', 'odakspo', 'Mar del Plata', 'okpo', '1', 'Depto', 'z@hotmail.com', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `lugares`
+--
+
+CREATE TABLE `lugares` (
+  `id_lugar` int(11) NOT NULL,
+  `nombre` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `lugares`
+--
+
+INSERT INTO `lugares` (`id_lugar`, `nombre`) VALUES
+(1, 'Mar del Plata'),
+(2, 'Las Toninas'),
+(3, 'Mar de Ajo'),
+(4, 'Villa Gesell'),
+(5, 'Santa Clara del Mar'),
+(6, 'San Bernardo'),
+(7, 'Necochea'),
+(8, 'Puerto Madryn'),
+(9, 'Florencio Varela'),
+(10, 'Berazategui'),
+(11, 'La Plata'),
+(12, 'Gonnet'),
+(13, 'Villa Elisa'),
+(14, 'Trelew');
 
 -- --------------------------------------------------------
 
@@ -68,7 +102,8 @@ INSERT INTO `pagos` (`id_pago`, `email_usuario`, `saldo_pago`, `fecha_pago`) VAL
 (26, 'virginia@hotmail.com', '60', '2016-06-04'),
 (27, 'hola@hotmail.com', '60', '2016-06-04'),
 (28, 'ayudante@hotmail.com', '60', '2016-06-04'),
-(29, 'torres@hotmail.com', '60', '2016-06-07');
+(29, 'torres@hotmail.com', '60', '2016-06-07'),
+(30, 'z@hotmail.com', '60', '2016-06-17');
 
 -- --------------------------------------------------------
 
@@ -141,15 +176,16 @@ CREATE TABLE `reservas` (
 --
 
 INSERT INTO `reservas` (`id_reserva`, `comienzo`, `finalizacion`, `estado`, `id_huesped`, `id_hospedaje`, `comentario`) VALUES
-(8, '2016-06-11', '2016-06-12', 1, 'jorge@hotmail.com', 13, ''),
-(9, '2016-06-07', '2016-06-11', 1, 'virginia@hotmail.com', 13, ''),
-(10, '2016-06-05', '2016-06-12', 1, 'virginia@hotmail.com', 13, 'sos puto\r\n'),
+(8, '2016-06-11', '2016-06-12', 2, 'jorge@hotmail.com', 13, ''),
+(9, '2016-06-07', '2016-06-11', 1, 'ayudante@hotmail.com', 13, ''),
+(10, '2016-06-05', '2016-06-12', 1, 'ayudante@hotmail.com', 13, 'sos puto\r\n'),
 (11, '2016-06-05', '2016-06-23', 1, 'jorge@hotmail.com', 13, ''),
-(12, '2016-06-10', '2016-06-23', 2, 'virginia@hotmail.com', 13, ''),
-(13, '2016-06-02', '2016-06-08', 0, 'virginia@hotmail.com', 13, ''),
-(14, '2016-06-01', '2016-06-02', 0, 'jorge@hotmail.com', 13, ''),
-(15, '2016-05-09', '2016-05-25', 0, 'jorge@hotmail.com', 13, ''),
-(16, '2016-06-05', '2016-06-19', 1, 'jorge@hotmail.com', 13, '');
+(12, '2016-06-10', '2016-06-23', 1, 'virginia@hotmail.com', 13, ''),
+(13, '2016-06-02', '2016-06-08', 2, 'ayudante@hotmail.com', 13, ''),
+(14, '2016-06-01', '2016-06-02', 1, 'jorge@hotmail.com', 13, 'kk'),
+(15, '2016-05-09', '2016-05-25', 1, 'ayudante@hotmail.com', 13, 'asda\r\n'),
+(16, '2016-06-05', '2016-06-19', 1, 'jorge@hotmail.com', 13, ''),
+(17, '2016-06-04', '2016-06-11', 1, 'jorge@hotmail.com', 13, '');
 
 -- --------------------------------------------------------
 
@@ -228,7 +264,9 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `apellido_usuario`, `ema
 (31, 'a', 'a', 'hola@hotmail.com', '123456', 'asd', '2', 0, '', 0),
 (32, 'adf', 'asdf', 'comun@hotmail.com', '123456', 'zdgv', '1', 0, '', 0),
 (33, 'a', 'a', 'torres@hotmail.com', '123456', 'asdfs', '2', 0, '', NULL),
-(34, 'dañsl', 'pokpok', 'a@gmail.com', '123456', 'okfpsad', '1', 0, '', NULL);
+(34, 'dañsl', 'pokpok', 'a@gmail.com', '123456', 'okfpsad', '1', 0, '', NULL),
+(35, 'aoksd', 'opkas', 'm@hotmail.com', '123456', 'opkaspo', '1', 0, '', 0),
+(36, 'LALA', 'aksd', 'z@hotmail.com', '123456', 'iojdaosij', '2', 0, '', 0);
 
 --
 -- Índices para tablas volcadas
@@ -239,6 +277,12 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `apellido_usuario`, `ema
 --
 ALTER TABLE `hospedajes`
   ADD PRIMARY KEY (`id_hospedaje`);
+
+--
+-- Indices de la tabla `lugares`
+--
+ALTER TABLE `lugares`
+  ADD PRIMARY KEY (`id_lugar`);
 
 --
 -- Indices de la tabla `pagos`
@@ -290,12 +334,17 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `hospedajes`
 --
 ALTER TABLE `hospedajes`
-  MODIFY `id_hospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_hospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT de la tabla `lugares`
+--
+ALTER TABLE `lugares`
+  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
@@ -310,7 +359,7 @@ ALTER TABLE `pregunta_respuesta`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
@@ -325,7 +374,7 @@ ALTER TABLE `tipos_hospedajes`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

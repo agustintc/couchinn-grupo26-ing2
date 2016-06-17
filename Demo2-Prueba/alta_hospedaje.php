@@ -1,3 +1,6 @@
+<?php
+ob_start();
+?>
 <html>
 <title>Alta de Hospedaje</title>
 <head>
@@ -85,8 +88,9 @@
 <?php	
 	
 	$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
-	$result= $mdb->query($sql);
-	
+	$result_tipos_hospedajes = $mdb->query($sql);
+	$sql = "SELECT * FROM lugares";
+	$result_lugares = $mdb->query($sql);
 ?>
 	
 		<h1 align="center">Alta de Hospedaje</h1>
@@ -118,7 +122,7 @@
 						<select class="form-control" id="tiposHospedaje" name="tiposHospedaje" >
 						<optgroup label="Seleccione un tipo de hospedaje">
 						<?php
-							while ($tipos = mysqli_fetch_assoc($result)){
+							while ($tipos = mysqli_fetch_assoc($result_tipos_hospedajes)){
 								$nombre = $tipos['nombre_tipo_hospedaje'];
 						?>
 							<option required  value="<?php echo $nombre;?>"><?php echo $nombre;?></option>
@@ -133,6 +137,22 @@
 				<div class="col-sm-6">
 					<textarea class="form-control" id="descripcionHospedaje" name="descripcionHospedaje" rows="3" required></textarea>
 				</div>
+			</div>
+			<div class="form-group row">
+				<label  class="col-sm-3 form-control-label" for="lugares">Tipos de Hospedajes</label>
+					<div class="col-sm-6">
+						<select class="form-control" id="nombreLugares" name="nombreLugares" >
+						<optgroup label="Seleccione un lugar">
+						<?php
+							while ($lugares = mysqli_fetch_assoc($result_lugares)){
+								$nombre = $lugares['nombre'];
+						?>
+							<option required  value="<?php echo $nombre;?>"><?php echo $nombre;?></option>
+							<?php
+							}
+							?>
+						</select>
+					</div>
 			</div>
 			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label" for="imagenesHospedaje">Imagenes del Hospedaje:</label>
@@ -166,9 +186,11 @@
 				}
 		}
 		
-		$sql = "INSERT INTO hospedajes (id_hospedaje,nombre_hospedaje,descripcion_hospedaje,direccion_hospedaje,capacidad_hospedaje,nombre_tipo_hospedaje,id_usuario,estado_hospedaje)
-			VALUES (NULL, '" . $_POST["nombre"] . "', '" . $_POST['descripcionHospedaje'] . "', '" . $_POST['direccionHospedaje'] . "', '" . $_POST['capacidadHospedaje'] ."',
-			'" . $_POST['tiposHospedaje'] . "', '" . $_SESSION['session_username'] . "', 0)";
+		$sql = "INSERT INTO hospedajes (id_hospedaje,nombre_hospedaje,descripcion_hospedaje,nombre_lugar,direccion_hospedaje,
+				capacidad_hospedaje,nombre_tipo_hospedaje,id_usuario,estado_hospedaje)
+				VALUES (NULL, '" . $_POST["nombre"] . "', '" . $_POST['descripcionHospedaje'] . "', '" . $_POST['nombreLugares'] . "',
+				'" . $_POST['direccionHospedaje'] . "', '" . $_POST['capacidadHospedaje'] ."',
+				'" . $_POST['tiposHospedaje'] . "', '" . $_SESSION['session_username'] . "', 0)";
 		$result=$mdb->query($sql);
 		$sql= "SELECT * FROM hospedajes ORDER BY id_hospedaje DESC LIMIT 1";
 		$result =  $mdb->query($sql);
@@ -196,3 +218,6 @@
 
 </body>
 </html>
+<?php
+ob_end_flush();
+?>

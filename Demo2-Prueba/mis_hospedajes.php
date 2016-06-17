@@ -35,6 +35,7 @@
 					}
 					else {
 						if(($_SESSION["tipo"])==3){
+							header("location:acceso-indebido.php");
 						?>
 							<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
 						<?php	
@@ -46,43 +47,44 @@
 			 header("location:acceso-indebido.php");
 		}
 		
-	
-	if ($usuario['tipo_usuario']=='1')
-	{?>
+	?>
 	<ul>
-		<li><a href="inicio.php">Inicio</a></li>
-		<li><a href="perfil.php">Perfil</a> </li>
-		<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-		<li><a class="active" href="">Mis Hospedajes</a></li>
-		<li><a href="premium.php">Premium</a></li>
-		<li><a href="logout.php">Cerrar Sesion</a> </li>
-	</ul>
-	<?php
-	}
-	else if($usuario['tipo_usuario']=='2')
-	{?>
-	<ul>
-		<li><a href="inicio.php">Inicio</a></li>
-		<li><a href="perfil.php">Perfil</a> </li>
-		<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-		<li><a href="mis_hospedajes.php" class="active" >Mis Hospedajes</a></li>
-		<li><a href="mis_reservas.php">Mis Reservas</a></li>
-		<li><a href="logout.php">Cerrar Sesion</a> </li>
-	</ul>
-	<?php
-		}
-		else {?>
-		<ul>
-			<li><a href="inicio.php">Inicio</a></li>
-			<li><a href="perfil.php">Perfil</a> </li>	
-			<li><a href="logout.php">Cerrar Sesion</a> </li>
-			<li><a href="alta_tipo_hospedaje.php">Alta Tipo de Hospedajes</a></li>
-			<li><a href="listar_tipo_hospedajes.php">Listar Tipo de Hospedajes</a></li>
-		</ul>
+		<?php
+		if (!isset($_SESSION['session_username'])){?>
+			<li><a class="active" href="inicio.php">Inicio</a></li>
+			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
+			<li><a href="registrar.php">Registrarse</a></li>
 		<?php
 		}
-?>
-
+		else{?>
+		<li><a href="inicio.php">Inicio</a></li>
+		<li><a href="perfil.php">Perfil</a></li>
+		<?php 
+			if($_SESSION['tipo'] == 3) {?>
+				<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>
+				<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+			else if($_SESSION['tipo']==1)
+			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a class="active" href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href='premium.php'>Premium</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+			else {?>
+				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a class="active" href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+		}
+		?>
+	
+	</ul>
 <?php
 
 	$sql = "SELECT * FROM Hospedajes WHERE id_usuario = '" . $_SESSION['session_username']. "'";

@@ -98,48 +98,46 @@ opacity: 1;
 		}
 	
 	
-	if ($tipo == '4'){
 	?>
 	<ul>
-	<li><a href="inicio.php">Inicio</a></li>
-	<li><a href="bienvenida.php">Iniciar Sesion</a> </li>
-	<li><a href="registrar.php">Registrarse</a> </li>
-	</ul>
-	<?php
-	}
-	if ($tipo == '1'){
-	?>
-	<ul> <li><a href="inicio.php">Inicio</a></li>
-	<li><a href="perfil.php">Perfil</a> </li>
-	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-	<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
-	<li><a href="premium.php">Premium</a></li>
-	<li><a href="logout.php">Cerrar Sesion</a> </li>
-	</ul>
-	<?php
-	}
-	if ($tipo == '2'){
-	?>
-	<ul>
-	<li><a href="inicio.php">Inicio</a></li>
-	<li><a href="perfil.php">Perfil</a> </li>
-	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-	<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
-	<li><a href="logout.php">Cerrar Sesion</a> </li>
-	</ul>
-	<?php
-	}
-	if ($tipo == '3'){
-	?>
-	<ul>
+		<?php
+		if (!isset($_SESSION['session_username'])){?>
+			<li><a class="active" href="inicio.php">Inicio</a></li>
+			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
+			<li><a href="registrar.php">Registrarse</a></li>
+		<?php
+		}
+		else{?>
 		<li><a href="inicio.php">Inicio</a></li>
-		<li><a href="perfil.php">Perfil</a> </li>
-		<li><a href="alta_tipo_hospedaje.php">Alta Tipo de Hospedaje</a></li>
-		<li><a href="listar_tipo_hospedajes.php"> Listar Tipo de Hospedajes</a></li>
-		<li><a href="logout.php">Cerrar Sesion</a> </li>
+		<li><a href="perfil.php">Perfil</a></li>
+		<?php 
+			if($_SESSION['tipo'] == 3) {?>
+				<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>
+				<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+			else if($_SESSION['tipo']==1)
+			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href='premium.php'>Premium</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+			else {?>
+				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="logout.php">Cerrar Sesion</a> </li>
+			<?php
+			}
+		}
+		?>
+	
 	</ul>
 	<?php
-	}
+	
 	$id = $_GET['id'];
 	$sql="SELECT * FROM hospedajes WHERE id_hospedaje = $id";
 	$result= $mdb->query($sql);

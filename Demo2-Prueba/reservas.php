@@ -35,8 +35,10 @@
 					}
 					else {
 						if(($_SESSION["tipo"])==3){
+							 header("location:acceso-indebido.php");
 						?>
 							<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
+							
 						<?php	
 						}
 					}	

@@ -33,16 +33,23 @@ ob_start();
 					<?php	
 			}
 			if(($_SESSION["tipo"])==3){
+							 header("location:acceso-indebido.php");
 						?>
 							<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
 						<?php	
 			}
 		}?>
 		<ul>
+		<?php
+		if (!isset($_SESSION['session_username'])){?>
+			<li><a class="active" href="inicio.php">Inicio</a></li>
+			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
+			<li><a href="registrar.php">Registrarse</a></li>
+		<?php
+		}
+		else{?>
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a></li>
-		<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-		<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 		<?php 
 			if($_SESSION['tipo'] == 3) {?>
 				<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>
@@ -51,14 +58,23 @@ ob_start();
 			<?php
 			}
 			else if($_SESSION['tipo']==1)
-			{?>	<li><a href='premium.php'>Premium</a></li>
+			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}
 			else {?>
+				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
-			}?>
+			}
+		}
+		?>
+	
 	</ul>
 	<?php
 		require_once('conexion.php');
@@ -67,6 +83,20 @@ ob_start();
 		$sql = "SELECT * FROM hospedajes WHERE  id_hospedaje = ".$_GET['id'] ;
 		$result=$mdb->query($sql);
 		$hospedaje= mysqli_fetch_assoc($result);
+		if ($hospedaje['estado_hospedaje'] == 1){
+			?>
+			<h1 style="text-align:center;">Usted no puede modificar el hospedaje porque ha sido borrado</h1>
+			<?php
+			die();
+		}
+		$sql = "SELECT * FROM tipos_hospedajes WHERE nombre_tipo_hospedaje = '" . $hospedaje['nombre_tipo_hospedaje'] . "'";
+		$result = $mdb->query($sql);
+		$tipo_hospedaje = mysqli_fetch_assoc($result);
+		if ($tipo_hospedaje['estado_tipo_hospedaje'] == 1){?>
+			<h1 style="text-align:center;">Usted no puede modificar el hospedaje porque el tipo de hospedaje ha sido eliminado</h1>
+			<?php
+			die();
+		}
 		$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
 		$result_tipos = $mdb->query($sql);
 	?>
@@ -137,22 +167,6 @@ ob_start();
 					</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-3 form-control-label" for="comienzo">Comienzo</label>
-				<div class="col-sm-6">
-					<input type="date" class="form-control" name="comienzo" id="comienzo" required
-						value="<?php echo ($hospedaje['comienzo']);?>">
-				</div>
-				<div class="col-sm-8" id="ErrorFecha"></div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-3 form-control-label" for="finalizacion">Terminacion</label>
-				<div class="col-sm-6">
-					<input type="date" class="form-control" name="finalizacion" id="finalizacion" required
-						value="<?php echo ($hospedaje['finalizacion']);?>">
-				</div>
-				<div class="col-sm-8" id="ErrorFecha"></div>
-			</div>
-			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label" for="descripcionHospedaje">Descripcion del Hospedaje</label>
 				<div class="col-sm-6">
 					<textarea class="form-control" id="descripcionHospedaje" name="descripcionHospedaje" rows="3" required><?php echo ($hospedaje['descripcion_hospedaje']);?></textarea>
@@ -177,20 +191,24 @@ ob_start();
 </div>
 <?php
 	if (isset($_POST['enviar'])){	
+		if ($_FILES['file']['size'][0] != 0){
 		$allowed = array("jpg", "jpeg", "png","JPG","JPEG","PNG");
-		for($i=0; $i<count($_FILES['file']['name']); $i++) {
-			$tmpFilePath = $_FILES['file']['tmp_name'][$i];
-			$filename = $_FILES['file']['name'][$i];
-			$ext = pathinfo($filename, PATHINFO_EXTENSION);
-			if(!in_array($ext, $allowed)){?>
-				<script>
-					$("#ErrorSubida").text("Error. Formatos validos:  .jpg/.png/.gif");
-					$("#ErrorSubida").css('color','#d32e12');
-				</script>
-				<?php
-				die();
-			}
+				for($i=0; $i<count($_FILES['file']['name']); $i++) {
+					$tmpFilePath = $_FILES['file']['tmp_name'][$i];
+					$filename = $_FILES['file']['name'][$i];
+					$ext = pathinfo($filename, PATHINFO_EXTENSION);
+					echo $_FILES['file']['size'][$i];
+					if(!in_array($ext, $allowed)){?>
+						<script>
+							$("#ErrorSubida").text("Error. Formatos validos:  .jpg/.png/.gif");
+							$("#ErrorSubida").css('color','#d32e12');
+						</script>
+						<?php
+					die();
+					}
+				}
 		}
+	
 		$hospedaje=mysqli_fetch_assoc($result);
 		$dir = "imagenes/hospedajes/" . $_POST['id'];
 		$directory="imagenes/hospedajes/" . $_POST['id'];
@@ -210,8 +228,7 @@ ob_start();
 		}
 		$sql = "UPDATE hospedajes SET nombre_hospedaje = '".$_POST['nombre']."', descripcion_hospedaje = '" .$_POST['descripcionHospedaje']."',
 			direccion_hospedaje = '".$_POST['direccionHospedaje']."', capacidad_hospedaje = '".$_POST['capacidadHospedaje']."',
-			nombre_tipo_hospedaje = '".$_POST['tiposHospedaje']."', comienzo = '".$_POST['comienzo']."', finalizacion='".$_POST['finalizacion']."' 
-			WHERE id_hospedaje = ".$_POST['id'] ;
+			nombre_tipo_hospedaje = '".$_POST['tiposHospedaje']."' WHERE id_hospedaje = ".$_POST['id'] ;
 		$result=$mdb->query($sql);
 		if ($result != 0){
 			$pathfile = "imagenes/hospedajes/" . $_POST['id'];

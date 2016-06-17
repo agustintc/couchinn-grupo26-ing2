@@ -25,6 +25,7 @@
 					}
 					else {
 						if(($_SESSION["tipo"])==3){
+							header("location:acceso-indebido.php");
 						?>
 							<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
 						<?php	
@@ -71,6 +72,14 @@
 			die();
 		}
 		else{
+			$hospedaje = mysqli_fetch_assoc($result);
+			if ($hospedaje['estado_hospedaje'] == 1){
+				?>
+				<div><h1 style="text-align:center;">El hospedaje no ha podido ser borrado porque no existe</h1></div>
+				<div style="text-align:center;"><a href="mis_hospedajes.php">Volver</a></div>
+				<?php
+			die();
+			}
 			$sql= "SELECT * FROM RESERVAS WHERE id_hospedaje = " . $_GET['id'];
 			$result = $mdb->query($sql);
 			$total= mysqli_num_rows($result);

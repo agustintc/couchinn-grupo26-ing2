@@ -35,6 +35,7 @@
 					}
 					else {
 						if(($_SESSION["tipo"])==3){
+							 header("location:acceso-indebido.php");
 						?>
 							<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
 						<?php	
@@ -99,16 +100,21 @@
 <?php
 	if (isset($_POST['enviar'])){
 		
+		$sql = "SELECT id_hospedaje FROM reservas WHERE id_reserva = '" . $_GET['id']. "'";
+		$result = $mdb->query($sql);
+		$hospedaje = mysqli_fetch_assoc($result);
 		$sql = "UPDATE reservas SET estado = 1, comentario = '" . $_POST['comentario'] . "' WHERE id_reserva = '" . $_GET['id']. "'";
 		$result= $mdb->query($sql);
 		
 		if($result){?>
 			
-			<h1 style="text-align:center;">Reserva rechazada exitosamente!</h1>
-		<?php
+			<h1 style="text-align:center;">Reserva rechazada exitosamente!</h1>			
+			<div style="text-align:center;"><a href=reservas.php?id=<?php echo $hospedaje['id_hospedaje'];?>>Volver</a></div>
+			<?php
 		}
 		else{?>
 			<h1 style="text-align:center;">Error al rechazar la reserva!</h1>
+			<div style="text-align:center;"><a href=reservas.php?id=<?php echo $hospedaje['id_hospedaje'];?>>Volver</a></div>
 		<?php
 		}
 	}

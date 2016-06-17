@@ -26,6 +26,7 @@
 					}
 					else {
 						if(($_SESSION["tipo"])==3){
+							header("location:acceso-indebido.php");
 						?>
 							<h2 style ="font-size:15px;font-weight: bold;font-family:Arial;text-align:left;">Bienvenido, <?php echo $_SESSION['nombre'];?>, usted es administrador</h2>
 						<?php	
@@ -44,28 +45,42 @@
 	$result= $mdb->query($sql);
 	$usuario = mysqli_fetch_assoc($result);
 
-?>
-<ul>
+?><ul>
+		<?php
+		if (!isset($_SESSION['session_username'])){?>
+			<li><a class="active" href="inicio.php">Inicio</a></li>
+			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
+			<li><a href="registrar.php">Registrarse</a></li>
+		<?php
+		}
+		else{?>
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a></li>
-		<li><a class="active" href="alta_hospedaje.php">Alta de Hospedaje</a></li>
-		<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 		<?php 
-			if($usuario['tipo_usuario'] == 3) {?>
+			if($_SESSION['tipo'] == 3) {?>
 				<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>
 				<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}
-			else if($usuario['tipo_usuario']==1)
-			{?>	<li><a href='premium.php'>Premium</a></li>
+			else if($_SESSION['tipo']==1)
+			{?>	<li><a class="active" href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}
 			else {?>
+				<li><a class="active" href="alta_hospedaje.php">Alta de Hospedaje</a></li>
+				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
+				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
-			}?>
+			}
+		}
+		?>
+	
 	</ul>
 <?php	
 	
@@ -94,7 +109,7 @@
 			<div class="form-group row">
 				<label for="capacidadHospedaje" class="col-sm-3 form-control-label">Capacidad</label>
 				<div class="col-sm-6">
-					<input class="form-control" type="number" min="1" max="15" id="capacidadHospedaje" name="capacidadHospedaje" required>
+					<input class="form-control" type="number" min="1" max="300" id="capacidadHospedaje" name="capacidadHospedaje" required>
 				</div>
 			</div>
 			<div class="form-group row">

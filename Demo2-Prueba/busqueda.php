@@ -16,7 +16,16 @@
 	$sql= "SELECT * FROM USUARIOS WHERE email_usuario = '" . $_SESSION['session_username']. "'";
 	$result= $mdb->query($sql);
 	$usuario = mysqli_fetch_assoc($result);
-	
+	if(isset($_SESSION["session_username"])){
+			if (isset($_SESSION['session_username'])){
+			$query = "SELECT * FROM usuarios WHERE email_usuario = '" . $_SESSION['session_username']. "'";
+			$result_query = $mdb->query($query);
+			$tipo = (mysqli_fetch_assoc($result_query)['tipo_usuario']);
+			}
+		}
+		else{
+				$tipo = '4';
+			}
 	?>
 	<header></header>
 	<?php
@@ -100,12 +109,6 @@
 				<div class="col-sm-8" id="ErrorName"></div>
 			</div>
 			<div class="form-group row">
-				<label for="lugarHospedaje" class="col-sm-3 form-control-label">Lugar del Hospedaje</label>
-				<div class="col-sm-6">
-					<input type="text" class="form-control" id="descripcion_hospedaje" name="descripcion_hospedaje" placeholder="Lugar del Hospedaje">
-				</div>
-			</div>
-			<div class="form-group row">
 				<label for="capacidadHospedaje" class="col-sm-3 form-control-label">Capacidad</label>
 				<div class="col-sm-6">
 					<input class="form-control" type="number" id="capacidad_hospedaje" name="capacidad_hospedaje">
@@ -114,7 +117,20 @@
 			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label" for="hospedajes">Tipos de Hospedajes</label>
 					<div class="col-sm-6">
-						<input type="text" class="form-control" id="nombre_tipo_hospedaje" name="nombre_tipo_hospedaje" >
+							<select  class="form-control" id="nombre_tipo_hospedaje"  name="nombre_tipo_hospedaje" >
+							<?php
+							$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
+							$result_tipos = $mdb->query($sql);
+							while ($tipos_hospedajes = mysqli_fetch_assoc($result_tipos)){
+								$nombre_tipo = $tipos_hospedajes['nombre_tipo_hospedaje'];
+							?>
+							<option ><?php echo $nombre_tipo;?></option>
+							<?php
+							}
+							?>
+							<option >Todos</option>
+							</select> 
+						
 					</div>	
 			</div>
 			<div class="form-group row">
@@ -138,8 +154,10 @@
 			
 <?php
 if(isset($_POST['enviar'])) {
-	
-    $campos = array('nombre_hospedaje', 'capacidad_hospedaje','descripcion_hospedaje','nombre_tipo_hospedaje','nombre_lugar');
+	if($_POST['nombre_tipo_hospedaje']=='Todos'){
+		unset($_POST['nombre_tipo_hospedaje']);
+	}
+    $campos = array('nombre_hospedaje', 'capacidad_hospedaje','descripcion_hospedaje','nombre_tipo_hospedaje','nombre_lugar','estado_hospedaje');
     $condiciones = array();
 
     foreach($campos as $campo){
@@ -157,17 +175,154 @@ if(isset($_POST['enviar'])) {
     }
 	
     $result = $mdb->query($query);
-	while ($hospedajes = mysqli_fetch_assoc($result)){
-		
-		echo $hospedajes['nombre_hospedaje'] .  '  capacidad  ';
-		echo $hospedajes['capacidad_hospedaje'];
-		?>
-		<br>
-		<?php		
-		
-	}
+	$_POST['comienzo']='2016-06-01';
+	$_POST['finalizacion']='2016-06-02';
+	?>
+	<table class="table table-hover">
+		<thead>
+		<tr>
+		<th scope="row">Nombre de Hospedaje</th>
+		<th scope="row">Descripcion</th>
+		</tr>
+		<thead>
+		<?php
+	while($hospedaje=mysqli_fetch_assoc($result)){
+			if(isset($_POST['comienzo'])&& isset($_POST['finalizacion'])){
+				$nosuperpone = true;
+				$comienzo = $_POST['comienzo'];
+				$finalizacion = $_POST['finalizacion'];
+				$sql = "SELECT * FROM reservas WHERE id_hospedaje = '" . $hospedaje['id_hospedaje']. "'";
+				$result_reservas= $mdb->query($sql);
+				if ($result){
+					while($reservas=mysqli_fetch_assoc($result_reservas) ){
+						if 
+						((($reservas['comienzo'] >= $comienzo && $reservas['finalizacion'] <= $finalizacion) || 
+						(($reservas['comienzo'] >= $comienzo) && ($reservas['comienzo'] <= $finalizacion)) || 
+						($comienzo == $reservas['comienzo'] || $comienzo == $reservas['finalizacion']) ||
+						($reservas['finalizacion'] >= $comienzo && $reservas['finalizacion'] <= $finalizacion)) || 
+						(($reservas['comienzo'] <= $comienzo && $reservas['finalizacion'] >= $finalizacion)))
+						{ 
+						$nosuperpone=false;
+						echo "entra2";
+						}
+						else{
+							echo "entra";
+						}
+					}
+				}	
+				if($nosuperpone==true){
+					echo "entra3";
+					if ($hospedaje['estado_hospedaje'] == 0){	
+					?>
+					<tbody>
+					<tr>
+					<th> <?php echo $hospedaje['nombre_hospedaje'];?></th>
+					<th> <?php echo $hospedaje['descripcion_hospedaje'];?></th>
+					<th>
+					<?php
+					if ($tipo == 1 || $tipo == 4){
+						$directory="imagenes/logo/";
+					}
+					else{
+						$directory="imagenes/hospedajes/" .$hospedaje['id_hospedaje']."";
+					}
+					if (!file_exists($directory)){
+						$directory="imagenes/logo/";
+					}
+					$isDirEmpty = !(new \FilesystemIterator($directory))->valid();
+					if (! $isDirEmpty){
+					$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+							?>
+							<div class="col-sm-2 col-md-4 img-hover">
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>			
+						</div>
+							<?php
+					}
+					else{
+						$directory="imagenes/logo/";
+						$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+						?>
+								<div class="col-sm-2 col-md-4 img-hover">
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>	
+						</div>
+						<?php
+					}
+					?>
+					<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
+					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></a></th>
+					</tr>
+					</tbody>
+					<?php
+					}
+				}					
+			}	
+			else{
+				echo "entra4";
+				if ($hospedaje['estado_hospedaje'] == 0){	
+					?>
+					<tbody>
+					<tr>
+					<th> <?php echo $hospedaje['nombre_hospedaje'];?></th>
+					<th> <?php echo $hospedaje['descripcion_hospedaje'];?></th>
+					<th>
+					<?php
+					if ($tipo == 1 || $tipo == 4){
+						$directory="imagenes/logo/";
+					}
+					else{
+						$directory="imagenes/hospedajes/" .$hospedaje['id_hospedaje']."";
+					}
+					if (!file_exists($directory)){
+						$directory="imagenes/logo/";
+					}
+					$isDirEmpty = !(new \FilesystemIterator($directory))->valid();
+					if (! $isDirEmpty){
+						$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+							?>
+							<div class="col-sm-2 col-md-4 img-hover">
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>			
+						</div>
+							<?php
+					}
+					else{
+						$directory="imagenes/logo/";
+						$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+						?>
+								<div class="col-sm-2 col-md-4 img-hover">
+							<div class="thumbnail">
+							<img src="<?php echo $directory . '/' . $scanned_directory[2] ; ?>" height=340px; width=500px"></img>
+							</div>	
+						</div>
+						<?php
+					}
+				
 	
+					?>
+					<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
+					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></a></th>
+					</tr>
+					</tbody>
+			
+	
+	<?php
+				}
+	}
 }
+		?>
+		</table>
+	
+	
+	
+
+		<?php	
+}		
+	
 ?>
 </body>
 </html>

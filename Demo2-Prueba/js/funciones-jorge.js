@@ -52,7 +52,11 @@ $(document).ready(function () {
 		return false;		
 		
 		});
-    
+    $("#reservaHosp").submit(function(){
+		if(validarFechas())
+		{return true;}
+		return false;
+		});
 });
 
 //Funcion de Validacion de Campos de Formulario de Registro de Usuario
@@ -186,6 +190,23 @@ function validarRepeatPassword ()
     
 }
 
+function validarFechas(){
+	
+	var fechaComienzo = $("#fechaIng").val();
+	var fechaFinalizacion = $("#fechaSal").val();
+
+	if ((fechaComienzo !== fechaFinalizacion) && (fechaComienzo < fechaFinalizacion) && ( ((new Date()).toJSON().slice(0,10)) <= fechaComienzo) ){
+	
+		return true;
+	
+	}
+	else{
+		$("#errorFecha").text("Error. La fechas son invalidas");
+        $("#errorFecha").css('color','#d32e12');
+		return false;
+	}
+	
+}
 
 // ^[A-Za-z\d]+ // ^[A-Za-z\d]{6,20} //ExpresionPasword
 //^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$ //expresion Email

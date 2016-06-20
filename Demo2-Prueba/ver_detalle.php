@@ -208,7 +208,7 @@ opacity: 1;
 				}
 				else{
 					if ($tipo == 1 || $tipo == 2){?>
-						<a href=""><input type="button" value="Reservar"></a>
+						<a href=reservar-hospedaje.php?id=<?php echo $_GET['id']?>><input type="button" value="Reservar"></a>
 						<?php
 					}
 				}

@@ -170,6 +170,7 @@ if(isset($_POST['enviar'])) {
 	if($_POST['nombre_tipo_hospedaje']=='Todos'){
 		unset($_POST['nombre_tipo_hospedaje']);
 	}
+	$cantidad=0;
     $campos = array('nombre_hospedaje', 'capacidad_hospedaje','descripcion_hospedaje','nombre_tipo_hospedaje','nombre_lugar','estado_hospedaje');
     $condiciones = array();
 
@@ -224,6 +225,7 @@ if(isset($_POST['enviar'])) {
 				if($nosuperpone==true){
 					//echo "entra3";
 					if ($hospedaje['estado_hospedaje'] == 0){	
+					$cantidad=1;
 					?>
 					<tbody>
 					<tr>
@@ -274,6 +276,7 @@ if(isset($_POST['enviar'])) {
 			else{
 				//echo "entra4";
 				if ($hospedaje['estado_hospedaje'] == 0){	
+					$cantidad=1;
 					?>
 					<tbody>
 					<tr>
@@ -313,18 +316,21 @@ if(isset($_POST['enviar'])) {
 						<?php
 					}
 				
-	
+					
 					?>
 					<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
 					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></a></th>
 					</tr>
+					
 					</tbody>
 			
 	
 	<?php
 				}
 	}
+	
 }
+		
 		?>
 		</table>
 	
@@ -332,8 +338,13 @@ if(isset($_POST['enviar'])) {
 	
 
 		<?php	
+		if($cantidad==0){
+			?>
+						<h2 style ="font-size:30px;font-weight: bold;font-family:Arial;text-align:center;" >no se encontro ningun hospedaje que cumpla las caracteristicas</h2>
+					<?php	
+						}	
 }		
-	
+
 ?>
 </body>
 </html>

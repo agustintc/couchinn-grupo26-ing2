@@ -145,8 +145,21 @@
 						<input type="text" class="form-control" id="nombre_lugar" name="nombre_lugar" >
 					</div>
 			</div>
-			
-			<input type="submit" id="enviar" name="enviar" value="Buscar!">
+			<div class="form-group row">
+				<label  class="col-sm-3 form-control-label">Fecha Inicio</label>
+				<div class="col-sm-6">
+					<input type="date" class="form-control" id="comienzo" name="comienzo" >
+				</div>
+				<div class="col-sm-8" id="ErrorName"></div>
+			</div>
+				<div class="form-group row">
+				<label  class="col-sm-3 form-control-label">Fecha Finalizacion</label>
+				<div class="col-sm-6">
+					<input type="date" class="form-control" id="finalizacion" name="finalizacion" >
+				</div>
+				<div class="col-sm-8" id="ErrorName"></div>
+			</div>
+			<input type="submit" id="enviar" name="enviar" value="Buscar">
 		</form>
 	</div>
 </div>
@@ -175,8 +188,6 @@ if(isset($_POST['enviar'])) {
     }
 	
     $result = $mdb->query($query);
-	$_POST['comienzo']='2016-06-01';
-	$_POST['finalizacion']='2016-06-02';
 	?>
 	<table class="table table-hover">
 		<thead>
@@ -203,15 +214,15 @@ if(isset($_POST['enviar'])) {
 						(($reservas['comienzo'] <= $comienzo && $reservas['finalizacion'] >= $finalizacion)))
 						{ 
 						$nosuperpone=false;
-						echo "entra2";
+						//echo "entra2";
 						}
 						else{
-							echo "entra";
+							//echo "entra";
 						}
 					}
 				}	
 				if($nosuperpone==true){
-					echo "entra3";
+					//echo "entra3";
 					if ($hospedaje['estado_hospedaje'] == 0){	
 					?>
 					<tbody>
@@ -261,7 +272,7 @@ if(isset($_POST['enviar'])) {
 				}					
 			}	
 			else{
-				echo "entra4";
+				//echo "entra4";
 				if ($hospedaje['estado_hospedaje'] == 0){	
 					?>
 					<tbody>

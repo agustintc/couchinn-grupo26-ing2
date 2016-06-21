@@ -115,7 +115,17 @@
 			<div style="text-align:center;"><a href=mis_hospedajes.php>Volver</a></div>
 			<?php
 		}
-
+		// Aca se crea las calificaciones para usuario y hospedajes
+		// recuperar la reserva con $_GET['id'];
+		//$sql="SELECT * FROM reservas WHERE id_hospedaje=".$_GET['id'];
+		//$result = $mdb->query($sql);
+		//$reserva = mysqli_fetch_assoc($result);
+		
+		//$sql=INSERT INTO calificaciones_hospedajes(id_calificaciones,hospedaje_calificado,valoracion,comentario,email_calificador) VALUES (null,$reserva['id_hospedaje'],0,'',$reserva['id_huesped']);
+		// $result = $mdb->query($sql);
+		
+		//$sql="INSERT INTO calificaciones_usuarios(id_calificaciones,usuario_calificado,valoracion,comentario, email_calificador) VALUES (null,'".$reserva['id_huesped']."',0,'','".$_SESSION['session_username']."')";
+		//$result = $mdb->query($sql);
 	}
 	else{
 		echo "Error";

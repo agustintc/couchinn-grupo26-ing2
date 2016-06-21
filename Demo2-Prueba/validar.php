@@ -57,7 +57,19 @@ if(!empty($_POST['mail']) && !empty($_POST['password']))
 						{
 							header("location: cambiar-contrasenia.php");
 							}
-
+						$sql= "SELECT * FROM calificaciones_hospedajes WHERE email_calificador = '" . $_SESSION['session_username']. "' and valoracion = 0";
+						$result = $mdb ->query($sql);
+						$total= mysqli_num_rows($result);
+						$sql= "SELECT * FROM calificaciones_usuarios WHERE email_calificador = '". $_SESSION['session_username']."' and valoracion = 0";
+						$result = $mdb ->query($sql);
+						$total= $total + mysqli_num_rows($result);
+						//$user=mysqli_fetch_assoc($result); 	
+						if($total != 0)
+						{ ?>
+						<script type="text/javascript">
+						alert("Tiene Calificaciones Pendientes. Por Favor Complete Sus Calificaciones asi Conocemos tu Experiencia!!!");
+						</script>	
+						<?php }
 ?>
 		
 						<script type="text/javascript">

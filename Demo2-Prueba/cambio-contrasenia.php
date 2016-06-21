@@ -95,9 +95,9 @@ else {
 </ul> 
 <div id="noLink">
 	<?php 
-	echo $email;
+	echo 'Usuario: '.$email;
 	echo '<br>';
-	echo $passTemporal;
+	echo 'Contrase&ntilde;a Temporal: '.$passTemporal;
 	?>
 	</div>
 	

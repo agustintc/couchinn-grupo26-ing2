@@ -82,6 +82,8 @@ session_start();
 	</ul>
 <?php
 		require("listar_hospedajes.php");	
+		require("chequear_reservas.php");
+		chequear_reservas();
 ?>
 </body>
 </html>

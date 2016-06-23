@@ -118,7 +118,7 @@ if (isset($_SESSION['session_username'])){
 	if($total==0)
 	{ echo '<h1> Calificaciones a Hospedajes:</h1><h2> No tienes Calificaciones Realizadas </h2>';}
 	else {
-		echo  '</table> <h1> Calificaciones a Hospedajes</h1>	<table class=table>	<thead>	<tr> <th scope="row">Usuario Calificado</th> <th scope="row">Calificacion</th> <th scope="row"> Comentario</th>	</tr></thead>';
+		echo  '</table> <h1> Calificaciones a Hospedajes</h1>	<table class=table>	<thead>	<tr> <th scope="row">Hospedaje Calificado</th> <th scope="row">Calificacion</th> <th scope="row"> Comentario</th>	</tr></thead>';
 		 echo '<tbody>';
 		while($calif=mysqli_fetch_assoc($result)){
 		echo '<tr>';	

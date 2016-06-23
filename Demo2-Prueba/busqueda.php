@@ -104,21 +104,27 @@
 			<div class="form-group row">
 				<label for="hospedaje" class="col-sm-3 form-control-label">Nombre del Hospedaje</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="nombre_hospedaje" name="nombre_hospedaje" placeholder="Nombre del Hospedaje">
+					<input type="text" class="form-control"  value="<?php if(isset($_POST['enviar'])){ echo $_POST['nombre_hospedaje'];}?>" id="nombre_hospedaje" name="nombre_hospedaje" placeholder="Nombre del Hospedaje">
 				</div>
 				<div class="col-sm-8" id="ErrorName"></div>
 			</div>
 			<div class="form-group row">
 				<label for="capacidadHospedaje" class="col-sm-3 form-control-label">Capacidad</label>
 				<div class="col-sm-6">
-					<input class="form-control" type="number" id="capacidad_hospedaje" name="capacidad_hospedaje">
+					<input class="form-control" type="number" value="<?php if(isset($_POST['enviar'])){ echo $_POST['capacidad_hospedaje'];}?>" id="capacidad_hospedaje" min="1" max="99" name="capacidad_hospedaje">
 				</div>
 			</div>
 			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label" for="hospedajes">Tipos de Hospedajes</label>
 					<div class="col-sm-6">
 							<select  class="form-control" id="nombre_tipo_hospedaje"  name="nombre_tipo_hospedaje" >
+							<?php if(isset($_POST['nombre_tipo_hospedaje'])){
+								?>
+								<option ><?php  echo $_POST['nombre_tipo_hospedaje'];?></option><?php
+							}?>
+							<option >Todos</option>
 							<?php
+							
 							$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
 							$result_tipos = $mdb->query($sql);
 							while ($tipos_hospedajes = mysqli_fetch_assoc($result_tipos)){
@@ -127,8 +133,8 @@
 							<option ><?php echo $nombre_tipo;?></option>
 							<?php
 							}
+							
 							?>
-							<option >Todos</option>
 							</select> 
 						
 					</div>	
@@ -136,28 +142,27 @@
 			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label" for="descripcionHospedaje">Descripcion del Hospedaje</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="descripcion_hospedaje" name="descripcion_hospedaje" rows="3" >
+					<textarea class="form-control" id="descripcion_hospedaje"   name="descripcion_hospedaje" rows="3" ><?php if(isset($_POST['enviar'])){ echo $_POST['descripcion_hospedaje'];}?></textarea>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label" for="lugares">Lugar del Hospedaje</label>
 					<div class="col-sm-6">
-						<input type="text" class="form-control" id="nombre_lugar" name="nombre_lugar" >
+						<input type="text" class="form-control" id="nombre_lugar" value="<?php if(isset($_POST['enviar'])){ echo $_POST['nombre_lugar'];}?>" name="nombre_lugar" >
 					</div>
 			</div>
 			<div class="form-group row">
 				<label  class="col-sm-3 form-control-label">Fecha Inicio</label>
 				<div class="col-sm-6">
-					<input type="date" class="form-control" id="comienzo" name="comienzo" >
+					<input type="date" class="form-control" id="comienzo" value="<?php if(isset($_POST['enviar'])){ echo $_POST['comienzo'];}?>" name="comienzo" >
 				</div>
-				<div class="col-sm-8" id="ErrorName"></div>
 			</div>
 				<div class="form-group row">
 				<label  class="col-sm-3 form-control-label">Fecha Finalizacion</label>
 				<div class="col-sm-6">
-					<input type="date" class="form-control" id="finalizacion" name="finalizacion" >
+					<input type="date" class="form-control" id="finalizacion" value="<?php if(isset($_POST['enviar'])){ echo $_POST['finalizacion'];}?>" name="finalizacion" >
 				</div>
-				<div class="col-sm-8" id="ErrorName"></div>
+				<div class="col-sm-8" id="ErrorFecha"></div>
 			</div>
 			<input type="submit" id="enviar" name="enviar" value="Buscar">
 		</form>

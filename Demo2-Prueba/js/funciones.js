@@ -28,6 +28,14 @@ $(document).ready(function () {
           return false;
     
     });
+	$("#form-busqueda").submit(function () {
+        if (validarFechass())
+        {
+          return true;
+        
+        }
+          return false;
+	});
 	 $("#form-alta").submit( function () {
 		
 		if ( validarName() )
@@ -170,6 +178,25 @@ function validarFechas(){
 	
 }
 
+function validarFechass(){
+	
+		var fechaComienzo = $("#comienzo").val();
+		var fechaFinalizacion = $("#finalizacion").val();
+		if(fechaComienzo=="" && fechaFinalizacion==""){
+			return true;
+		}
+		if ((fechaComienzo !== fechaFinalizacion) && (fechaComienzo < fechaFinalizacion) && ( ((new Date()).toJSON().slice(0,10)) <= fechaComienzo) ){
+	
+			return true;
+	
+		}
+		else{
+			$("#ErrorFecha").text("Error. La fechas son invalidas");
+			$("#ErrorFecha").css('color','#d32e12');
+			return false;
+		}
+	
+}
 
 // ^[A-Za-z\d]+ // ^[A-Za-z\d]{6,20} //ExpresionPasword
 //^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$ //expresion Email

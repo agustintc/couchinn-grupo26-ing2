@@ -5,6 +5,9 @@
 	    <link href="boots/css/bootstrap.min.css" rel="stylesheet">
 
 	<link rel="stylesheet" TYPE="text/css" href="style/style.css">
+<style>
+
+</style>
 </head>
 <body>
 	<?php
@@ -99,9 +102,9 @@
 	
 	<h1 align="center">Busqueda de Hospedaje</h1>
 	<div style="text-align:center;" align="center">
-	<div class="container">
+	<div class="container" >
 		<form action="" method="POST" id="form-busqueda" name="form-busqueda">
-			<div class="form-group row">
+			<div class="form-group row" >
 				<label for="hospedaje" class="col-sm-3 form-control-label">Nombre del Hospedaje</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control"  value="<?php if(isset($_POST['enviar'])){ echo $_POST['nombre_hospedaje'];}?>" id="nombre_hospedaje" name="nombre_hospedaje" placeholder="Nombre del Hospedaje">

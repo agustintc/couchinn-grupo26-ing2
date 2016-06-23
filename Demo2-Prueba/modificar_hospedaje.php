@@ -61,6 +61,7 @@ ob_start();
 			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
@@ -69,6 +70,7 @@ ob_start();
 				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}
@@ -214,6 +216,14 @@ ob_start();
 		if ($_FILES['file']['size'][0] != 0){
 		$allowed = array("jpg", "jpeg", "png","JPG","JPEG","PNG");
 				for($i=0; $i<count($_FILES['file']['name']); $i++) {
+					if ($_FILES['file']['size'][$i] > 8388608){?>
+						<script>
+							$("#ErrorSubida").text("Error. Tamaño maximo 8 MB ");
+							$("#ErrorSubida").css('color','#d32e12');
+						</script>
+						<?php
+						die();
+					}
 					$tmpFilePath = $_FILES['file']['tmp_name'][$i];
 					$filename = $_FILES['file']['name'][$i];
 					$ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -236,6 +246,14 @@ ob_start();
 		//$folder = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
 		//$size = (iterator_count($folder));
 		if (isset($_POST['images'])){
+			if ($_FILES['file']['size'][0] == 0){?>
+					<script>
+						$("#ErrorSubida").text("Error. Debe de subir por lo menos una imagen");
+						$("#ErrorSubida").css('color','#d32e12');
+						</script>
+					<?php
+					die();
+			}
 			$array = $_POST['images'];	
 			while (($archivo = $dirint->read()) !== false){
 				if ($archivo !== '.' && $archivo !== '..'){

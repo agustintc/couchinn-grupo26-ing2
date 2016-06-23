@@ -54,6 +54,14 @@
 
 		
 	<ul>
+		<?php
+		if (!isset($_SESSION['session_username'])){?>
+			<li><a class="active" href="inicio.php">Inicio</a></li>
+			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
+			<li><a href="registrar.php">Registrarse</a></li>
+		<?php
+		}
+		else{?>
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a class="active" href="perfil.php">Perfil</a></li>
 		<?php 
@@ -67,6 +75,7 @@
 			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
@@ -75,10 +84,11 @@
 				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}
-		
+		}
 		?>
 	
 	</ul>

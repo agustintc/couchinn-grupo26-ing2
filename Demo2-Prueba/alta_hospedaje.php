@@ -51,7 +51,7 @@ ob_start();
 ?><ul>
 		<?php
 		if (!isset($_SESSION['session_username'])){?>
-			<li><a class="active" href="inicio.php">Inicio</a></li>
+			<li><a href="inicio.php">Inicio</a></li>
 			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
 			<li><a href="registrar.php">Registrarse</a></li>
 		<?php
@@ -70,6 +70,7 @@ ob_start();
 			{?>	<li><a class="active" href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
@@ -78,6 +79,7 @@ ob_start();
 				<li><a class="active" href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
+				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}
@@ -139,7 +141,7 @@ ob_start();
 				</div>
 			</div>
 			<div class="form-group row">
-				<label  class="col-sm-3 form-control-label" for="lugares">Tipos de Hospedajes</label>
+				<label  class="col-sm-3 form-control-label" for="lugares">Lugar del Hospedaje</label>
 					<div class="col-sm-6">
 						<select class="form-control" id="nombreLugares" name="nombreLugares" >
 						<optgroup label="Seleccione un lugar">

@@ -248,7 +248,7 @@ opacity: 1;
 						}
 					}	
 
-					$sql = "SELECT * FROM pregunta_respuesta   WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."'";
+					$sql = "SELECT * FROM pregunta_respuesta   WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."' ORDER  BY  id DESC";
 					$result=$mdb->query($sql);
 					while($pregunta=mysqli_fetch_assoc($result)){
 							if($pregunta['id_inquilino']==$_SESSION['session_username']){
@@ -316,7 +316,7 @@ opacity: 1;
 
 		}
 		else{
-									$sql = "SELECT * FROM pregunta_respuesta WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."'";
+									$sql = "SELECT * FROM pregunta_respuesta WHERE id_hospedaje = '".$hospedaje['id_hospedaje']."' ORDER  BY  id DESC";
 									$result=$mdb->query($sql);
 		
 								while($pregunta=mysqli_fetch_assoc($result)){

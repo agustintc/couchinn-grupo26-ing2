@@ -1,9 +1,11 @@
 <?php
-
 	session_start();
 	require ("conexion.php");
-	
 	$mdb = connectDB();
+	$sql = "select  id_calificaciones, hospedaje_calificado, valoracion, comentario, email_calificador, nombre_hospedaje from calificaciones_hospedajes AS ch INNER JOIN hospedajes AS h ON ( ch.hospedaje_calificado = h.id_hospedaje ) where id_calificaciones =".$_GET['id'];
+	$result = $mdb->query($sql);
+	$calificacion = mysqli_fetch_assoc($result);
+	
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -11,20 +13,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-	<title>Mis Calificaciones</title>
+	<title>Calificar Usuario</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta name="generator" content="Geany 1.24" />
 		<link rel="stylesheet" TYPE="text/css" href="style/style.css">
-	    <!-- Bootstrap core CSS -->
-    <link href="boots/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Bootstrap core CSS
+    <link href="boots/css/bootstrap.min.css" rel="stylesheet"> -->
     
         <!-- JavaScript --> 
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script  type="text/javascript" src="js/funciones-jorge.js"></script>
 </head>
-<header>
-</header>
 
+<body>
+	
+<header></header>	
 <?php
 if (isset($_SESSION['session_username'])){
 			if(($_SESSION["tipo"])==2){
@@ -91,31 +94,29 @@ if (isset($_SESSION['session_username'])){
 		?>
 	
 	</ul>
-
-<body>
 	
-	
-	<table class=table>
-	<tbody>
-     	<tr>
-		<th>Calificaciones a Usuarios</th>
-		<th><a href="calificaciones-usuarios.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones a Hospedajes</th>
-		<th><a href="calificaciones-hospedajes.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones Recibidas</th>
-		<th><a href="#"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones a Mis Hospedajes</th>
-		<th><a href="#"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-        
- </tbody> 
- </table>
+		<form method="post" class="form" id="calUsuario" name="calUsuario" action="calificar-hospedaje-backend.php">
+		<fieldset>
+			<legend>Calificar a Hospedaje</legend>	
+			<input name="id" type="hidden" value= "<?php echo $_GET['id'] ?>">
+			<label> Hospedaje a Calificar: <?php echo $calificacion['nombre_hospedaje'] ?></label>	
+			<label> Calificacion: </label> 
+			<select name="calificacion">
+				<option value="0">Sin Calificar</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			<label> Comentario: </label>	
+			<textarea rows="4" cols="50" name="comentario" placeholder="Escriba un Comentario..."> </textarea>
+			<div id="errorDescTipo"></div>
+			</br>
+			<input type="button" value="Limpiar" onClick="this.form.reset()">
+			<input type="submit" name="Guardar" value="Guardar">
+		</fieldset>
+	</form>
 	
 </body>
 

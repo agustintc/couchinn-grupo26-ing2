@@ -94,7 +94,7 @@ if (isset($_SESSION['session_username'])){
 	
 	</ul>
 	<?php
-		$sql="select * from calificaciones_usuarios where valoracion= 0 and email_calificador ='".$_SESSION['session_username']."'";
+		$sql="select * from calificaciones_usuarios where finalizacion <= CURDATE( ) and valoracion= 0 and email_calificador ='".$_SESSION['session_username']."'";
 		$result= $mdb->query($sql);
 		$total =mysqli_num_rows($result);
 		if($total!=0)
@@ -112,12 +112,13 @@ if (isset($_SESSION['session_username'])){
 		echo '</tbody> ';
 	}
 	$sql="select * from calificaciones_usuarios where valoracion<>0 and email_calificador ='".$_SESSION['session_username']."'";	
-	echo  '</table> <h1> Calificaciones a Usuarios</h1>	<table class=table>	<thead>	<tr> <th scope="row">Usuario Calificado</th> <th scope="row">Calificacion</th> <th scope="row"> Comentario</th>	</tr></thead>';
+	
 	$result= $mdb->query($sql);
 	$total =mysqli_num_rows($result);
-	if($total=0)
-	{ echo '<h2> No tienes Calificaciones Realizadas </h2>';}
+	if($total==0)
+	{ echo '<h1> Calificaciones a Usuarios:</h1> <h2> No tienes Calificaciones Realizadas </h2>';}
 	else {
+		echo  '</table> <h1> Calificaciones a Usuarios</h1>	<table class=table>	<thead>	<tr> <th scope="row">Usuario Calificado</th> <th scope="row">Calificacion</th> <th scope="row"> Comentario</th>	</tr></thead>';
 		 echo '<tbody>';
 		while($calif=mysqli_fetch_assoc($result)){
 		echo '<tr>';	

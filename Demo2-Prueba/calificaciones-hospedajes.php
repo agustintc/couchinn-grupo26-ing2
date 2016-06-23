@@ -1,6 +1,5 @@
 <?php
-
-	session_start();
+session_start();
 	require ("conexion.php");
 	
 	$mdb = connectDB();
@@ -11,10 +10,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-	<title>Mis Calificaciones</title>
+	<title>Calificar a Usuarios</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta name="generator" content="Geany 1.24" />
-		<link rel="stylesheet" TYPE="text/css" href="style/style.css">
+			<link rel="stylesheet" TYPE="text/css" href="style/style.css">
 	    <!-- Bootstrap core CSS -->
     <link href="boots/css/bootstrap.min.css" rel="stylesheet">
     
@@ -22,7 +21,10 @@
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script  type="text/javascript" src="js/funciones-jorge.js"></script>
 </head>
-<header>
+</head>
+
+<body>
+	<header>
 </header>
 
 <?php
@@ -91,31 +93,45 @@ if (isset($_SESSION['session_username'])){
 		?>
 	
 	</ul>
+	<?php
+		$sql="select  id_calificaciones, hospedaje_calificado, valoracion, comentario, email_calificador, nombre_hospedaje from calificaciones_hospedajes AS ch INNER JOIN hospedajes AS h ON ( ch.hospedaje_calificado = h.id_hospedaje ) where finalizacion <= CURDATE( ) and valoracion= 0 and email_calificador ='".$_SESSION['session_username']."'";
+		$result= $mdb->query($sql);
+		$total =mysqli_num_rows($result);
+		if($total!=0)
+		{
+		echo '<h1> Calificaciones Pendientes a Hospedajes: '.$total.'</h1>';
+		echo '<table class=table> <thead><tr><th scope="row">Hospedaje para Calificar</th><th scope="row">Calificacion</th></tr></thead>';
+		 echo '<tbody>';
+		  while($calif=mysqli_fetch_assoc($result)){
+			echo '<tr>
+		<th>'.$calif['nombre_hospedaje'].'</th>
+		<th> Sin Calificar</th>
+		<th><a href=calificar-hospedaje.php?id='.$calif['id_calificaciones'].'><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Calificar</span></button></a></th>								
+		</tr>';		
+		}
+		echo '</tbody> </table>';
+	}
+	$sql="select  id_calificaciones, hospedaje_calificado, valoracion, comentario, email_calificador, nombre_hospedaje from calificaciones_hospedajes AS ch INNER JOIN hospedajes AS h ON ( ch.hospedaje_calificado = h.id_hospedaje ) where valoracion<>0 and email_calificador ='".$_SESSION['session_username']."'";	
 
-<body>
+	$result= $mdb->query($sql);
+	$total =mysqli_num_rows($result);
+	if($total==0)
+	{ echo '<h1> Calificaciones a Hospedajes:</h1><h2> No tienes Calificaciones Realizadas </h2>';}
+	else {
+		echo  '</table> <h1> Calificaciones a Hospedajes</h1>	<table class=table>	<thead>	<tr> <th scope="row">Usuario Calificado</th> <th scope="row">Calificacion</th> <th scope="row"> Comentario</th>	</tr></thead>';
+		 echo '<tbody>';
+		while($calif=mysqli_fetch_assoc($result)){
+		echo '<tr>';	
+		echo '<th>'.$calif['nombre_hospedaje'].'</th>';
+		echo '<th>'.$calif['valoracion'].'</th>';
+		echo '<th>'.$calif['comentario'].'</th>';
+		echo '</tr>';
+		}
+		echo '</tbody> ';
+	}
 	
-	
-	<table class=table>
-	<tbody>
-     	<tr>
-		<th>Calificaciones a Usuarios</th>
-		<th><a href="calificaciones-usuarios.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones a Hospedajes</th>
-		<th><a href="calificaciones-hospedajes.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones Recibidas</th>
-		<th><a href="#"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones a Mis Hospedajes</th>
-		<th><a href="#"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-        
- </tbody> 
- </table>
+	?>
+
 	
 </body>
 

@@ -122,18 +122,28 @@
 								?>
 								<option ><?php  echo $_POST['nombre_tipo_hospedaje'];?></option><?php
 							}?>
-							<option >Todos</option>
+							<?php if(isset($_POST['nombre_tipo_hospedaje'])&& $_POST['nombre_tipo_hospedaje']=="Todos" ){
+							?>
 							<?php
+							}
+							else {
+								?><option >Todos</option><?php
+							}
+							
 							
 							$sql= "SELECT * FROM tipos_hospedajes WHERE estado_tipo_hospedaje = 0";
 							$result_tipos = $mdb->query($sql);
 							while ($tipos_hospedajes = mysqli_fetch_assoc($result_tipos)){
 								$nombre_tipo = $tipos_hospedajes['nombre_tipo_hospedaje'];
 							?>
-							<option ><?php echo $nombre_tipo;?></option>
+							<?php if(isset($_POST['nombre_tipo_hospedaje'])&& $_POST['nombre_tipo_hospedaje']==$nombre_tipo ){
+							?>
 							<?php
 							}
-							
+							else {
+								?><option ><?php echo $nombre_tipo;?></option><?php
+							}
+							}
 							?>
 							</select> 
 						

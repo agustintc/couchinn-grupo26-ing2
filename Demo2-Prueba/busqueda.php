@@ -103,7 +103,7 @@
 	</ul>
 	
 	<h1 align="center">Busqueda de Hospedaje</h1>
-	<div style="text-align:center;" align="center">
+	<div  id="form1" style="text-align:center;" align="center">
 	<div class="container" >
 		<form action="" method="POST" id="form-busqueda" name="form-busqueda">
 			<div class="form-group row" >
@@ -180,11 +180,24 @@
 				<div class="col-sm-8" id="ErrorFecha"></div>
 			</div>
 			<input type="submit" id="enviar" name="enviar" value="Buscar">
+
 		</form>
 	</div>
 </div>
+			<input type="submit" id="buton" name="buton"/>
+<div id="a" name="a">apdsj</div>
 
-			
+<?php
+if (isset($_POST['buton'])){
+		echo "hola";
+
+	?>
+	<script>
+	$(".a").hide();
+	</script>
+	<?php
+}
+?>
 <?php
 if(isset($_POST['enviar'])) {
 	if($_POST['nombre_tipo_hospedaje']=='Todos'){

@@ -218,14 +218,6 @@ ob_start();
 		if ($_FILES['file']['size'][0] != 0){
 		$allowed = array("jpg", "jpeg", "png","JPG","JPEG","PNG");
 				for($i=0; $i<count($_FILES['file']['name']); $i++) {
-					if ($_FILES['file']['size'][$i] > 8388608){?>
-						<script>
-							$("#ErrorSubida").text("Error. Tamaño maximo 8 MB ");
-							$("#ErrorSubida").css('color','#d32e12');
-						</script>
-						<?php
-						die();
-					}
 					$tmpFilePath = $_FILES['file']['tmp_name'][$i];
 					$filename = $_FILES['file']['name'][$i];
 					$ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -245,10 +237,11 @@ ob_start();
 		$dir = "imagenes/hospedajes/" . $_POST['id'];
 		$directory="imagenes/hospedajes/" . $_POST['id'];
 		$dirint = dir($directory);		
-		//$folder = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
-		//$size = (iterator_count($folder));
+		$folder = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
+		$size = (iterator_count($folder));
+		echo $size;
 		if (isset($_POST['images'])){
-			if ($_FILES['file']['size'][0] == 0){?>
+			if (($_FILES['file']['size'][0] == 0) && ($size == count($_POST['images']))){?>
 					<script>
 						$("#ErrorSubida").text("Error. Debe de subir por lo menos una imagen");
 						$("#ErrorSubida").css('color','#d32e12');

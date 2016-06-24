@@ -47,6 +47,7 @@ session_start();
 			<li><a class="active" href="inicio.php">Inicio</a></li>
 			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
 			<li><a href="registrar.php">Registrarse</a></li>
+			<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 		<?php
 		}
 		else{?>

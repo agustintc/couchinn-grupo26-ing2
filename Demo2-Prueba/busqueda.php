@@ -16,9 +16,7 @@
 	require ("conexion.php");
 	
 	$mdb = connectDB();
-	$sql= "SELECT * FROM USUARIOS WHERE email_usuario = '" . $_SESSION['session_username']. "'";
-	$result= $mdb->query($sql);
-	$usuario = mysqli_fetch_assoc($result);
+	
 	if(isset($_SESSION["session_username"])){
 			if (isset($_SESSION['session_username'])){
 			$query = "SELECT * FROM usuarios WHERE email_usuario = '" . $_SESSION['session_username']. "'";
@@ -55,17 +53,16 @@
 					}	
 				}		
 		}
-		else{
-			 header("location:acceso-indebido.php");
-		}
+		
 		
 ?>
 <ul>
 		<?php
 		if (!isset($_SESSION['session_username'])){?>
-			<li><a class="active" href="inicio.php">Inicio</a></li>
+			<li><a href="inicio.php">Inicio</a></li>
 			<li><a href="bienvenida.php">Iniciar Sesion</a></li>
 			<li><a href="registrar.php">Registrarse</a></li>
+			<li><a class="active" href="busqueda.php">Buscar Hospedaje</a></li>
 		<?php
 		}
 		else{?>
@@ -103,7 +100,7 @@
 	</ul>
 	
 	<h1 align="center">Busqueda de Hospedaje</h1>
-	<div  id="form1" style="text-align:center;" align="center">
+	<div style="text-align:center;" align="center">
 	<div class="container" >
 		<form action="" method="POST" id="form-busqueda" name="form-busqueda">
 			<div class="form-group row" >
@@ -180,24 +177,10 @@
 				<div class="col-sm-8" id="ErrorFecha"></div>
 			</div>
 			<input type="submit" id="enviar" name="enviar" value="Buscar">
-
 		</form>
 	</div>
 </div>
-			<input type="submit" id="buton" name="buton"/>
-<div id="a" name="a">apdsj</div>
-
-<?php
-if (isset($_POST['buton'])){
-		echo "hola";
-
-	?>
-	<script>
-	$(".a").hide();
-	</script>
-	<?php
-}
-?>
+	
 <?php
 if(isset($_POST['enviar'])) {
 	if($_POST['nombre_tipo_hospedaje']=='Todos'){

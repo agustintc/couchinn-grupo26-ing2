@@ -17,6 +17,7 @@ $mdb = connectDB();
 	<li><a  href="inicio.php">Inicio</a></li>
 	<li><a class="active" href="bienvenida.php">Iniciar Sesion</a> </li>
 	<li><a href="registrar.php">Registrarse</a> </li>
+	<li><a href="busqueda.php">Buscar Hospedaje</a></li>
 </ul>	
 
 

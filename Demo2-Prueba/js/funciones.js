@@ -36,6 +36,14 @@ $(document).ready(function () {
         }
           return false;
 	});
+	$("#ganancias").submit(function () {
+        if (validarFechasss())
+        {
+          return true;
+        
+        }
+          return false;
+	});
 	 $("#form-alta").submit( function () {
 		
 		if ( validarName() )
@@ -186,6 +194,27 @@ function validarFechass(){
 			return true;
 		}
 		if ((fechaComienzo !== fechaFinalizacion) && (fechaComienzo < fechaFinalizacion) && ( ((new Date()).toJSON().slice(0,10)) <= fechaComienzo) ){
+	
+			return true;
+	
+		}
+		else{
+			$("#ErrorFecha").text("Error. La fechas son invalidas");
+			$("#ErrorFecha").css('color','#d32e12');
+			return false;
+		}
+	
+}
+function validarFechasss(){
+		var fecha=((new Date().toJSON().slice(0,10)));
+		var fechaComienzo = $("#comienzo").val();
+		var fechaFinalizacion = $("#finalizacion").val();
+		if(fechaComienzo=="" || fechaFinalizacion==""){
+			$("#ErrorFecha").text("Error. Ingrese fechas");
+			$("#ErrorFecha").css('color','#d32e12');
+			return false;
+		}
+		if ( (fechaComienzo <= fechaFinalizacion) ){
 	
 			return true;
 	

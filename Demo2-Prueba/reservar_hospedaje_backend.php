@@ -11,16 +11,27 @@ $result=$mdb->query($sql);
 $total= mysqli_num_rows($result);
 if ($total == 0)
 {
+	$sql="SELECT * FROM reservas WHERE estado = 0 and id_huesped='".$_SESSION['session_username']."' and id_hospedaje=".$_POST['id']." and finalizacion >='".$_POST['fechaIng']."' and comienzo <='".$_POST['fechaSal']."'";
+	$result=$mdb->query($sql);
+	$total= mysqli_num_rows($result);
+	if($total==0){
 	$sql="insert into reservas (id_reserva, comienzo, finalizacion, estado, id_huesped, id_hospedaje, comentario) values (null,'".$_POST['fechaIng']."','".$_POST['fechaSal']."',0,'".$_SESSION['session_username']."',".$_POST['id'].",' ')";
 	//echo $sql;
 	$result=$mdb->query($sql);
 	$mensajeReserva = "Su Reserva ha sido Registrada Exitosamente";
 	$reservaExitosa = true;
-	}
-else {
+    }
+    else {
+		$mensajeReserva = "Usted Ya Tiene una Reserva Pendiente con las fechas Ingresadas";
+	$reservaExitosa = true;
+		}
+}
+
+else 
+{
 	$mensajeReserva = "El Hospedaje No se encuentra Disponible en las Fechas que usted desea";
 	$reservaExitosa = false;
-	}	
+}	
 
 
 //echo $total;
@@ -96,8 +107,6 @@ if (isset($_SESSION['session_username'])){
 			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
-				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
-				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
@@ -106,8 +115,6 @@ if (isset($_SESSION['session_username'])){
 				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
-				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
-				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}

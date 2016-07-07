@@ -219,8 +219,9 @@ if(isset($_POST['enviar'])) {
 				$nosuperpone = true;
 				$comienzo = $_POST['comienzo'];
 				$finalizacion = $_POST['finalizacion'];
-				$sql = "SELECT * FROM reservas WHERE id_hospedaje = '" . $hospedaje['id_hospedaje']. "'";
+				$sql = "SELECT * FROM reservas WHERE id_hospedaje = '" . $hospedaje['id_hospedaje']. "' and estado=2";
 				$result_reservas= $mdb->query($sql);
+				
 				if ($result){
 					while($reservas=mysqli_fetch_assoc($result_reservas) ){
 						if 
@@ -238,6 +239,7 @@ if(isset($_POST['enviar'])) {
 						}
 					}
 				}	
+			
 				if($nosuperpone==true){
 					//echo "entra3";
 					if ($hospedaje['estado_hospedaje'] == 0){	

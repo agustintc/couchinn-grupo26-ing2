@@ -96,7 +96,7 @@ if (isset($_SESSION['session_username'])){
 	<?php
 	
 	//$sql="select  id_calificaciones, hospedaje_calificado, valoracion, comentario, email_calificador, nombre_hospedaje, id_usuario from calificaciones_hospedajes AS ch INNER JOIN hospedajes AS h ON ( ch.hospedaje_calificado = h.id_hospedaje ) where valoracion<>0 and id_usuario ='".$_SESSION['session_username']."'";	
-	$sql="SELECT r.id_reserva, r.id_huesped,h.id_hospedaje,h.nombre_hospedaje,h.nombre_lugar,h.id_usuario,ch.id_calificaciones, ch.hospedaje_calificado, ch.valoracion  FROM reservas as r inner join hospedajes as h on(r.id_hospedaje=h.id_hospedaje) inner join calificaciones_hospedajes as ch on (h.id_hospedaje=ch.hospedaje_calificado) where r.estado=3 and r.id_huesped ='".$_SESSION['session_username']."'";
+	$sql="SELECT r.id_reserva, r.id_huesped,h.id_hospedaje,h.nombre_hospedaje,h.nombre_lugar,h.id_usuario,ch.id_calificaciones, ch.hospedaje_calificado, ch.valoracion  FROM reservas as r inner join hospedajes as h on(r.id_hospedaje=h.id_hospedaje) inner join calificaciones_hospedajes as ch on (h.id_hospedaje=ch.hospedaje_calificado) where r.estado=3 and r.id_huesped ='".$_SESSION['session_username']."' ORDER BY r.finalizacion DESC ";
 	$result= $mdb->query($sql);
 	$total =mysqli_num_rows($result);
 	if($total==0)

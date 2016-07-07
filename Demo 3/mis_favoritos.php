@@ -1,5 +1,3 @@
-
-
 <?php
 
 require_once('conexion.php');
@@ -10,10 +8,9 @@ session_start();
 
 <head>
 
-
-<link rel="stylesheet" TYPE="text/css" href="style/style.css">
-<title> Inicio </title>
-
+   <link href="boots/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" TYPE="text/css" href="style/style.css">
+	<link rel="stylesheet" TYPE="text/css" href="style/style.css">
 </head>
 <body>
 		<header></header>
@@ -51,7 +48,7 @@ session_start();
 		<?php
 		}
 		else{?>
-		<li><a class="active" href="inicio.php">Inicio</a></li>
+		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a></li>
 		<?php 
 			if($_SESSION['tipo'] == 3) {?>
@@ -65,7 +62,7 @@ session_start();
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
-				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
+				<li><a class="active" href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
@@ -76,7 +73,7 @@ session_start();
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
-				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
+				<li><a class="active" href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
@@ -85,10 +82,57 @@ session_start();
 		?>
 	
 	</ul>
-<?php
-		require("listar_hospedajes.php");	
-		require("chequear_reservas.php");
-		chequear_reservas();
-?>
+	
+
+	<?php
+	
+		$sql = "SELECT * FROM FAVORITOS WHERE id_usuario = '" . $_SESSION['session_username'] . "'";
+		$result = $mdb->query($sql);
+		
+		if ($result){
+			$total = mysqli_num_rows($result);
+			if ($total != 0){
+		?>
+		<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="row">Nombre del Hospedaje</th>
+						<th scope="row">Borrar Favorito</th>
+						<th scope="row">Ver detalle</th>
+						
+					</tr>
+				<thead>
+				<?php
+				while($favoritos=mysqli_fetch_assoc($result)){
+					$sql = "SELECT * FROM hospedajes WHERE id_hospedaje = '" . $favoritos['id_hospedaje'] . "'";
+					$result_hospedaje = $mdb->query($sql);
+					$hospedaje = mysqli_fetch_assoc($result_hospedaje);
+					
+				?>
+					<tbody>
+						<tr>
+							<th><?php echo $hospedaje['nombre_hospedaje'];?></th>
+							<th><a href=marcar_favorito.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
+							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></a></th>
+							<th><a href=ver_detalle.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
+							<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button></a></th>
+						</tr>
+					</tbody>
+				<?php
+				}
+				?>
+			</table>
+		<?php
+			}
+				else{
+			?> 
+				<h1 style="text-align:center;"> Aun no tiene ningun hospedaje como favorito </h1>
+			<?php
+			}
+	
+		}
+		
+	?>
+<body>
 </body>
 </html>

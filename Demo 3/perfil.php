@@ -76,6 +76,7 @@
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
+				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
@@ -86,6 +87,7 @@
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
+				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php

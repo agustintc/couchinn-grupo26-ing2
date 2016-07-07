@@ -1,6 +1,5 @@
 <?php
-
-	session_start();
+session_start();
 	require ("conexion.php");
 	
 	$mdb = connectDB();
@@ -11,10 +10,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-	<title>Mis Calificaciones</title>
+	<title>Calificar a Usuarios</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta name="generator" content="Geany 1.24" />
-		<link rel="stylesheet" TYPE="text/css" href="style/style.css">
+			<link rel="stylesheet" TYPE="text/css" href="style/style.css">
 	    <!-- Bootstrap core CSS -->
     <link href="boots/css/bootstrap.min.css" rel="stylesheet">
     
@@ -22,7 +21,10 @@
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script  type="text/javascript" src="js/funciones-jorge.js"></script>
 </head>
-<header>
+</head>
+
+<body>
+	<header>
 </header>
 
 <?php
@@ -74,8 +76,6 @@ if (isset($_SESSION['session_username'])){
 			{?>	<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
-				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
-				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a class="active" href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
@@ -85,8 +85,6 @@ if (isset($_SESSION['session_username'])){
 				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
-				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
-				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a class="active" href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
@@ -95,32 +93,30 @@ if (isset($_SESSION['session_username'])){
 		?>
 	
 	</ul>
+	<?php
+	$sql="select * from calificaciones_usuarios where valoracion<>0 and usuario_calificado ='".$_SESSION['session_username']."'";	
+	
+	$result= $mdb->query($sql);
+	$total =mysqli_num_rows($result);
+	if($total==0)
+	{ echo '<h1> Calificaciones Recibidas:</h1> <h2> No tienes Calificaciones Realizadas </h2>';}
+	else {
+		echo  '</table> <h1> Calificaciones Recibidas:</h1>	<table class=table>	<thead>	<tr> <th scope="row">Usuario Calificador</th> <th scope="row">Calificacion</th> <th scope="row"> Comentario</th>	</tr></thead>';
+		 echo '<tbody>';
+		while($calif=mysqli_fetch_assoc($result)){
+		echo '<tr>';	
+		echo '<th>'.$calif['email_calificador'].'</th>';
+		echo '<th>'.$calif['valoracion'].'</th>';
+		echo '<th>'.$calif['comentario'].'</th>';
+		echo '</tr>';
+		}
+		echo '</tbody> </table>';
+	}
+	
+	?>
 
-<body>
-	
-	
-	<table class=table>
-	<tbody>
-     	<tr>
-		<th>Calificaciones a Usuarios</th>
-		<th><a href="calificaciones-usuarios.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones a Hospedajes</th>
-		<th><a href="calificaciones-hospedajes.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones Recibidas</th>
-		<th><a href="calificaciones-recibidas.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-		<tr>
-		<th>Calificaciones a Mis Hospedajes</th>
-		<th><a href="calificaciones-mis-hospedajes.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
-        
- </tbody> 
- </table>
 	
 </body>
 
 </html>
+

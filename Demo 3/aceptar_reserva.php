@@ -85,7 +85,8 @@
 		}
 ?>
 <?php
-	$sql = "UPDATE reservas SET estado = 2 WHERE id_reserva = '" . $_GET['id']. "'";
+	$fecha_actual=date("Y-m-d");
+	$sql = "UPDATE reservas SET estado = 2 ,fecha_aceptado='" . $fecha_actual. "' WHERE id_reserva = '" . $_GET['id']. "'";
 	$result= $mdb->query($sql);
 	if($result){
 		$sql = "SELECT * FROM reservas WHERE id_reserva = '" . $_GET['id'] . "'";

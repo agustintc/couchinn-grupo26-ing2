@@ -44,6 +44,14 @@ $(document).ready(function () {
         }
           return false;
 	});
+	$("#solicitudesa").submit(function () {
+        if (validarFechasss())
+        {
+          return true;
+        
+        }
+          return false;
+	});
 	 $("#form-alta").submit( function () {
 		
 		if ( validarName() )

@@ -122,6 +122,7 @@ opacity: 1;
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
+				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href='premium.php'>Premium</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
@@ -132,6 +133,7 @@ opacity: 1;
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
 				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
+				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
@@ -145,9 +147,10 @@ opacity: 1;
 	$id = $_GET['id'];
 	$sql="SELECT * FROM hospedajes WHERE id_hospedaje = $id";
 	$result= $mdb->query($sql);
-	
-	$hospedaje=mysqli_fetch_assoc($result)
-		
+	$hospedaje=mysqli_fetch_assoc($result);
+	$sql="SELECT * FROM favoritos WHERE id_hospedaje = '" . $_GET['id']. "' and id_usuario = '" . $_SESSION['session_username']. "'";
+	$result= $mdb->query($sql);
+	$total= mysqli_num_rows($result);
 	
 ?>
 	<h1 align="center"><?php echo $hospedaje['nombre_hospedaje'];?></h1>
@@ -198,6 +201,15 @@ opacity: 1;
 		<p>Capacidad: <?php echo $hospedaje["capacidad_hospedaje"];?> Personas</p>
 		<p>Lugar del Hospedaje: <?php echo $hospedaje['nombre_lugar'];?></p>
 		<p>Direccion: <?php echo $hospedaje["direccion_hospedaje"];?>  </p>
+		<?php 
+			if (($hospedaje['id_usuario'] != $_SESSION['session_username']) && ($_SESSION['tipo_usuario'] == 2 || $_SESSION['tipo'] == 1)){?>
+				<p>Marcar como favorito <a href=marcar_favorito.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
+				<button type="button" class="btn btn-default"><span class=" <?php echo ($total == 0) ? "glyphicon glyphicon-star-empty" :
+				 "glyphicon glyphicon-star";?>"
+				></span></button></a></p>
+			<?php
+			}
+		?>
 		<?php
 			if (isset($_SESSION['session_username'])){
 				if ($hospedaje['id_usuario'] == $_SESSION['session_username']){

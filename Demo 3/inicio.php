@@ -87,7 +87,7 @@ session_start();
 	</ul>
 	<form id="ordenar" class="form" name "ordenar action="" method="Post">
 
-			<legend>Ordenar</legend>
+		
 			<select  class="form-control" id="criterio"  name="criterio" >
 							<?php if(isset($_POST['criterio'])){
 								?>

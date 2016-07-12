@@ -7,10 +7,38 @@
 <body>
 
 <?php
-
 		require_once('conexion.php');
 		$mdb = connectDB();
-		$sql = "SELECT * FROM tipos_hospedajes INNER JOIN hospedajes ON tipos_hospedajes.nombre_tipo_hospedaje=hospedajes.nombre_tipo_hospedaje";
+	if(isset($_POST['enviar'])){
+		 if($_POST['criterio']=="Puntaje"){
+        $sql = "SELECT id_hospedaje, nombre_hospedaje, descripcion_hospedaje, nombre_lugar, direccion_hospedaje, capacidad_hospedaje, h.nombre_tipo_hospedaje, id_usuario, estado_hospedaje, id_tipo_hospedaje,th.estado_tipo_hospedaje, IFNULL( ROUND( AVG( valoracion ) , 2 ) , 0 ) AS prom
+		FROM hospedajes AS h
+		INNER JOIN tipos_hospedajes AS th ON ( h.nombre_tipo_hospedaje = th.nombre_tipo_hospedaje ) 
+		LEFT JOIN calificaciones_hospedajes AS ch ON ( id_hospedaje = hospedaje_calificado ) 
+		WHERE h.estado_hospedaje =0
+		AND th.estado_tipo_hospedaje =0
+		GROUP BY id_hospedaje
+		ORDER BY prom DESC ";
+		 }
+       if($_POST['criterio']=="Alfabetico"){
+           $sql = "SELECT * FROM tipos_hospedajes INNER JOIN hospedajes ON tipos_hospedajes.nombre_tipo_hospedaje=hospedajes.nombre_tipo_hospedaje ORDER BY  hospedajes.nombre_hospedaje ";
+		}
+        if($_POST['criterio']=="Capacidad"){
+         $sql = "SELECT * FROM tipos_hospedajes INNER JOIN hospedajes ON tipos_hospedajes.nombre_tipo_hospedaje=hospedajes.nombre_tipo_hospedaje ORDER BY  hospedajes.capacidad_hospedaje DESC";
+        }
+		}
+	else {
+		$sql = "SELECT id_hospedaje, nombre_hospedaje, descripcion_hospedaje, nombre_lugar, direccion_hospedaje, capacidad_hospedaje, h.nombre_tipo_hospedaje, id_usuario, estado_hospedaje, id_tipo_hospedaje,th.estado_tipo_hospedaje, IFNULL( ROUND( AVG( valoracion ) , 2 ) , 0 ) AS prom
+		FROM hospedajes AS h
+		INNER JOIN tipos_hospedajes AS th ON ( h.nombre_tipo_hospedaje = th.nombre_tipo_hospedaje ) 
+		LEFT JOIN calificaciones_hospedajes AS ch ON ( id_hospedaje = hospedaje_calificado ) 
+		WHERE h.estado_hospedaje =0
+		AND th.estado_tipo_hospedaje =0
+		GROUP BY id_hospedaje
+		ORDER BY prom DESC ";
+		
+		
+	}
 		$mdb->set_charset('utf8');
 		$result=$mdb->query($sql);
 		if(isset($_SESSION["session_username"])){
@@ -39,6 +67,7 @@
 					<tr>
 					<th> <?php echo $hospedaje['nombre_hospedaje'];?></th>
 					<th> <?php echo $hospedaje['descripcion_hospedaje'];?></th>
+
 					<th>
 					<?php
 					if ($tipo == 1 || $tipo == 4){

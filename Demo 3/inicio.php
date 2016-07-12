@@ -85,7 +85,45 @@ session_start();
 		?>
 	
 	</ul>
+	<form id="ordenar" class="form" name "ordenar action="" method="Post">
+
+			<legend>Ordenar</legend>
+			<select  class="form-control" id="criterio"  name="criterio" >
+							<?php if(isset($_POST['criterio'])){
+								?>
+								<option ><?php  echo $_POST['criterio'];?></option><?php
+							}?>
+							<?php if(isset($_POST['criterio'])&& $_POST['criterio']=="Puntaje" ){
+							?>
+							<?php
+							}
+							else {
+								?><option >Puntaje</option><?php
+							}
+							?>
+							<?php if(isset($_POST['criterio'])&& $_POST['criterio']=="Alfabetico" ){
+							?>
+							<?php
+							}
+							else {
+								?><option >Alfabetico</option><?php
+							}
+							?>
+							<?php if(isset($_POST['criterio'])&& $_POST['criterio']=="Capacidad" ){
+							?>
+							<?php
+							}
+							else {
+								?><option >Capacidad</option><?php
+							}
+							?>
+							
+							</select> 
+			<input type="submit" id="enviar" name="enviar" value="Ordenar">
+	
+</form>	
 <?php
+
 		require("listar_hospedajes.php");	
 		require("chequear_reservas.php");
 		chequear_reservas();

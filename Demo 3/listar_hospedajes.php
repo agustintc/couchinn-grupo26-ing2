@@ -9,7 +9,7 @@
 <?php
 		require_once('conexion.php');
 		$mdb = connectDB();
-	if(isset($_POST['enviar'])){
+	if(isset($_POST['ordenar'])){
 		 if($_POST['criterio']=="Puntaje"){
         $sql = "SELECT id_hospedaje, nombre_hospedaje, descripcion_hospedaje, nombre_lugar, direccion_hospedaje, capacidad_hospedaje, h.nombre_tipo_hospedaje, id_usuario, estado_hospedaje, id_tipo_hospedaje,th.estado_tipo_hospedaje, IFNULL( ROUND( AVG( valoracion ) , 2 ) , 0 ) AS prom
 		FROM hospedajes AS h
@@ -21,10 +21,24 @@
 		ORDER BY prom DESC ";
 		 }
        if($_POST['criterio']=="Alfabetico"){
-           $sql = "SELECT * FROM tipos_hospedajes INNER JOIN hospedajes ON tipos_hospedajes.nombre_tipo_hospedaje=hospedajes.nombre_tipo_hospedaje ORDER BY  hospedajes.nombre_hospedaje ";
+		   $sql = "SELECT id_hospedaje, nombre_hospedaje, descripcion_hospedaje, nombre_lugar, direccion_hospedaje, capacidad_hospedaje, h.nombre_tipo_hospedaje, id_usuario, estado_hospedaje, id_tipo_hospedaje,th.estado_tipo_hospedaje, IFNULL( ROUND( AVG( valoracion ) , 2 ) , 0 ) AS prom
+		FROM hospedajes AS h
+		INNER JOIN tipos_hospedajes AS th ON ( h.nombre_tipo_hospedaje = th.nombre_tipo_hospedaje ) 
+		LEFT JOIN calificaciones_hospedajes AS ch ON ( id_hospedaje = hospedaje_calificado ) 
+		WHERE h.estado_hospedaje =0
+		AND th.estado_tipo_hospedaje =0
+		GROUP BY id_hospedaje
+		ORDER BY  h.nombre_hospedaje";
 		}
         if($_POST['criterio']=="Capacidad"){
-         $sql = "SELECT * FROM tipos_hospedajes INNER JOIN hospedajes ON tipos_hospedajes.nombre_tipo_hospedaje=hospedajes.nombre_tipo_hospedaje ORDER BY  hospedajes.capacidad_hospedaje DESC";
+		 $sql = "SELECT id_hospedaje, nombre_hospedaje, descripcion_hospedaje, nombre_lugar, direccion_hospedaje, capacidad_hospedaje, h.nombre_tipo_hospedaje, id_usuario, estado_hospedaje, id_tipo_hospedaje,th.estado_tipo_hospedaje, IFNULL( ROUND( AVG( valoracion ) , 2 ) , 0 ) AS prom
+		FROM hospedajes AS h
+		INNER JOIN tipos_hospedajes AS th ON ( h.nombre_tipo_hospedaje = th.nombre_tipo_hospedaje ) 
+		LEFT JOIN calificaciones_hospedajes AS ch ON ( id_hospedaje = hospedaje_calificado ) 
+		WHERE h.estado_hospedaje =0
+		AND th.estado_tipo_hospedaje =0
+		GROUP BY id_hospedaje
+		ORDER BY  h.capacidad_hospedaje DESC ";
         }
 		}
 	else {
@@ -57,6 +71,8 @@
 		<tr>
 		<th scope="row">Nombre de Hospedaje</th>
 		<th scope="row">Descripcion</th>
+		<th scope="row">Puntaje</th>
+		<th scope="row">Capacidad</th>
 		</tr>
 		<thead>
 		<?php
@@ -67,6 +83,8 @@
 					<tr>
 					<th> <?php echo $hospedaje['nombre_hospedaje'];?></th>
 					<th> <?php echo $hospedaje['descripcion_hospedaje'];?></th>
+					<th> <?php echo $hospedaje['prom'];?></th>
+					<th> <?php echo $hospedaje['capacidad_hospedaje'];?></th>
 
 					<th>
 					<?php

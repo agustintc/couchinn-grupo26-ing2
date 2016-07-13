@@ -176,16 +176,54 @@
 				</div>
 				<div class="col-sm-8" id="ErrorFecha"></div>
 			</div>
+			<div class="form-group row">
+			<label  class="col-sm-3 form-control-label" for="hospedajes">Ordenar por:</label>
+			<div class="col-sm-6">
+			<select  class="form-control" id="criterio"  name="criterio" >
+							<?php if(isset($_POST['criterio'])){
+								?>
+								<option ><?php  echo $_POST['criterio'];?></option><?php
+							}?>
+							<?php if(isset($_POST['criterio'])&& $_POST['criterio']=="Puntaje" ){
+							?>
+							<?php
+							}
+							else {
+								?><option >Puntaje</option><?php
+							}
+							?>
+							<?php if(isset($_POST['criterio'])&& $_POST['criterio']=="Alfabetico" ){
+							?>
+							<?php
+							}
+							else {
+								?><option >Alfabetico</option><?php
+							}
+							?>
+							<?php if(isset($_POST['criterio'])&& $_POST['criterio']=="Capacidad" ){
+							?>
+							<?php
+							}
+							else {
+								?><option >Capacidad</option><?php
+							}
+							?>
+							
+							</select> 
+							</div>
+							</div>
 			<input type="submit" id="enviar" name="enviar" value="Buscar">
 		</form>
-	</div>
-</div>
+		
+	
 	
 <?php
 if(isset($_POST['enviar'])) {
 	if($_POST['nombre_tipo_hospedaje']=='Todos'){
 		unset($_POST['nombre_tipo_hospedaje']);
 	}
+	
+	
 	$cantidad=0;
     $campos = array('nombre_hospedaje', 'capacidad_hospedaje','descripcion_hospedaje','nombre_tipo_hospedaje','nombre_lugar','estado_hospedaje');
     $condiciones = array();
@@ -197,23 +235,59 @@ if(isset($_POST['enviar'])) {
         }
     }
 
-    $query = "SELECT * FROM hospedajes ";
+    
+	
+	if(isset($_POST['enviar'])){
+		  $query = "SELECT id_hospedaje, nombre_hospedaje, descripcion_hospedaje, nombre_lugar, direccion_hospedaje, capacidad_hospedaje, h.nombre_tipo_hospedaje, id_usuario, estado_hospedaje, id_tipo_hospedaje,th.estado_tipo_hospedaje, IFNULL( ROUND( AVG( valoracion ) , 2 ) , 0 ) AS prom
+		FROM hospedajes AS h
+		INNER JOIN tipos_hospedajes AS th ON ( h.nombre_tipo_hospedaje = th.nombre_tipo_hospedaje ) 
+		LEFT JOIN calificaciones_hospedajes AS ch ON ( id_hospedaje = hospedaje_calificado ) ";
+		
+	}
+	
 	
     if(count($condiciones) > 0) {
-		
-        $query .= "WHERE " . implode (' AND ', $condiciones);
+       
+		if($_POST['criterio']=="Puntaje"){
+        $query .= "WHERE " . implode (' AND ', $condiciones) ."GROUP BY id_hospedaje ". "ORDER BY prom DESC";
+		 }
+       if($_POST['criterio']=="Alfabetico"){
+		   $query .= "WHERE " . implode (' AND ', $condiciones) ."GROUP BY id_hospedaje ". "ORDER BY h.nombre_hospedaje ";
+		}
+        if($_POST['criterio']=="Capacidad"){
+		 $query .= "WHERE " . implode (' AND ', $condiciones) ."GROUP BY id_hospedaje ". "ORDER BY h.capacidad_hospedaje DESC";
+        }
+	}
+	else {
+		if($_POST['criterio']=="Puntaje"){
+        $query .= "GROUP BY id_hospedaje ". "ORDER BY prom DESC";
+		 }
+       if($_POST['criterio']=="Alfabetico"){
+		   $query .= "GROUP BY id_hospedaje ". "ORDER BY h.nombre_hospedaje ";
+		}
+        if($_POST['criterio']=="Capacidad"){
+		 $query .= "GROUP BY id_hospedaje ". "ORDER BY h.capacidad_hospedaje DESC";
     }
-	
+	}
+		
+		
+    
+
     $result = $mdb->query($query);
+	
 	?>
 	<table class="table table-hover">
 		<thead>
 		<tr>
 		<th scope="row">Nombre de Hospedaje</th>
 		<th scope="row">Descripcion</th>
+		<th scope="row">Puntaje</th>
+		<th scope="row">Capacidad</th>
 		</tr>
 		<thead>
 		<?php
+	if($result!=null){
+		
 	while($hospedaje=mysqli_fetch_assoc($result)){
 			if(isset($_POST['comienzo'])&& isset($_POST['finalizacion'])){
 				$nosuperpone = true;
@@ -242,13 +316,15 @@ if(isset($_POST['enviar'])) {
 			
 				if($nosuperpone==true){
 					//echo "entra3";
-					if ($hospedaje['estado_hospedaje'] == 0){	
+					if ($hospedaje['estado_hospedaje'] == 0 && $hospedaje['estado_tipo_hospedaje'] == 0){	
 					$cantidad=1;
 					?>
 					<tbody>
 					<tr>
 					<th> <?php echo $hospedaje['nombre_hospedaje'];?></th>
 					<th> <?php echo $hospedaje['descripcion_hospedaje'];?></th>
+					<th> <?php echo $hospedaje['prom'];?></th>
+					<th> <?php echo $hospedaje['capacidad_hospedaje'];?></th>
 					<th>
 					<?php
 					if ($tipo == 1 || $tipo == 4){
@@ -293,13 +369,15 @@ if(isset($_POST['enviar'])) {
 			}	
 			else{
 				//echo "entra4";
-				if ($hospedaje['estado_hospedaje'] == 0){	
+				if ($hospedaje['estado_hospedaje'] == 0 && $hospedaje['estado_tipo_hospedaje'] == 0){	
 					$cantidad=1;
 					?>
 					<tbody>
 					<tr>
 					<th> <?php echo $hospedaje['nombre_hospedaje'];?></th>
 					<th> <?php echo $hospedaje['descripcion_hospedaje'];?></th>
+					<th> <?php echo $hospedaje['prom'];?></th>
+					<th> <?php echo $hospedaje['capacidad_hospedaje'];?></th>
 					<th>
 					<?php
 					if ($tipo == 1 || $tipo == 4){
@@ -345,10 +423,11 @@ if(isset($_POST['enviar'])) {
 	
 	<?php
 				}
+				
 	}
 	
 }
-		
+	}		
 		?>
 		</table>
 	

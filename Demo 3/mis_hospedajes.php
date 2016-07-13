@@ -111,6 +111,8 @@
 				<thead>
 				<?php
 				while($hospedaje=mysqli_fetch_assoc($result)){
+					
+					if ($hospedaje['estado_hospedaje'] != 2){
 				?>
 					<tbody>
 						<tr>
@@ -126,6 +128,7 @@
 						</tr>
 					</tbody>
 				<?php
+					}
 				}
 				?>
 			</table>

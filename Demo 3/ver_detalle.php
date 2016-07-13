@@ -151,6 +151,7 @@ opacity: 1;
 	$sql="SELECT * FROM favoritos WHERE id_hospedaje = '" . $_GET['id']. "' and id_usuario = '" . $_SESSION['session_username']. "'";
 	$result= $mdb->query($sql);
 	$total= mysqli_num_rows($result);
+	echo $total;
 	
 ?>
 	<h1 align="center"><?php echo $hospedaje['nombre_hospedaje'];?></h1>
@@ -202,7 +203,7 @@ opacity: 1;
 		<p>Lugar del Hospedaje: <?php echo $hospedaje['nombre_lugar'];?></p>
 		<p>Direccion: <?php echo $hospedaje["direccion_hospedaje"];?>  </p>
 		<?php 
-			if (($hospedaje['id_usuario'] != $_SESSION['session_username']) && ($_SESSION['tipo_usuario'] == 2 || $_SESSION['tipo'] == 1)){?>
+			if (($hospedaje['id_usuario'] != $_SESSION['session_username']) && ($_SESSION['tipo'] == 2 || $_SESSION['tipo'] == 1)){?>
 				<p>Marcar como favorito <a href=marcar_favorito.php?id=<?php echo $hospedaje["id_hospedaje"];?>>
 				<button type="button" class="btn btn-default"><span class=" <?php echo ($total == 0) ? "glyphicon glyphicon-star-empty" :
 				 "glyphicon glyphicon-star";?>"

@@ -103,8 +103,9 @@
 			$result = $mdb->query($sql);
 			$total= mysqli_num_rows($result);
 			if ($total == 0){
-				echo "hola";
-				$sql="DELETE FROM hospedajes WHERE id_hospedaje = ".$_GET['id'];
+				$sql="UPDATE hospedajes SET estado_hospedaje = '2' WHERE id_hospedaje= " .$_GET['id'];
+				$result=$mdb->query($sql);
+				$sql="DELETE FROM favoritos WHERE id_hospedaje = " . $_GET['id'];
 				$result=$mdb->query($sql);
 			}
 			else{
@@ -121,8 +122,10 @@
 				}
 				else{
 				
-					$sql="DELETE FROM hospedajes WHERE id_hospedaje = ".$_GET['id'];
-					$result=$mdb->query($sql);
+				$sql="UPDATE hospedajes SET estado_hospedaje = '2' WHERE id_hospedaje= " .$_GET['id'];
+				$result=$mdb->query($sql);
+				$sql="DELETE FROM favoritos WHERE id_hospedaje = " . $_GET['id'];
+				$result=$mdb->query($sql);
 				}
 			}
 		}

@@ -126,7 +126,9 @@ session_start();
 
 		require("listar_hospedajes.php");	
 		require("chequear_reservas.php");
+		require("chequear_hospedajes.php");
 		chequear_reservas();
+		chequear_hospedajes();
 ?>
 </body>
 </html>

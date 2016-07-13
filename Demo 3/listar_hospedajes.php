@@ -9,7 +9,7 @@
 <?php
 		require_once('conexion.php');
 		$mdb = connectDB();
-	if(isset($_POST['ordenar'])){
+	if(isset($_POST['enviar'])){
 		 if($_POST['criterio']=="Puntaje"){
         $sql = "SELECT id_hospedaje, nombre_hospedaje, descripcion_hospedaje, nombre_lugar, direccion_hospedaje, capacidad_hospedaje, h.nombre_tipo_hospedaje, id_usuario, estado_hospedaje, id_tipo_hospedaje,th.estado_tipo_hospedaje, IFNULL( ROUND( AVG( valoracion ) , 2 ) , 0 ) AS prom
 		FROM hospedajes AS h

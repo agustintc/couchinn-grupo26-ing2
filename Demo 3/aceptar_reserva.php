@@ -124,13 +124,15 @@
 		//$result = $mdb->query($sql);
 		//$reserva = mysqli_fetch_assoc($result);
 		
-		$sql="INSERT INTO calificaciones_hospedajes(id_calificaciones,hospedaje_calificado,valoracion,comentario,finalizacion,email_calificador) VALUES (null,".$reserva['id_hospedaje'].",0,'','".$reserva['finalizacion']."','".$reserva['id_huesped']."')";
-		//echo $sqlc;
+		$sql="INSERT INTO calificaciones_hospedajes(id_calificaciones,hospedaje_calificado,valoracion,comentario,finalizacion,email_calificador,nro_reserva) VALUES (null,".$reserva['id_hospedaje'].",0,'','".$reserva['finalizacion']."','".$reserva['id_huesped']."',".$reserva['id_reserva'].")";
+		//echo $sql;
 		$result = $mdb->query($sql);
+		//var_dump($result);
 		$sql="INSERT INTO calificaciones_usuarios(id_calificaciones,usuario_calificado,valoracion,comentario,finalizacion,email_calificador) VALUES (null,'".$reserva['id_huesped']."',0,'','".$reserva['finalizacion']."','".$_SESSION['session_username']."')";
 		//$sql="INSERT INTO calificaciones_usuarios(id_calificaciones,usuario_calificado,valoracion,comentario,finalizacion, email_calificador) VALUES (null,'".$reserva['id_huesped']."',0,'','".$reserva['finalizacion']."','".$_SESSION['session_username']."')";
 		//echo $sql;
 		$result = $mdb->query($sql);//
+		//var_dump($result);
 	}
 	else{
 		echo "Error";

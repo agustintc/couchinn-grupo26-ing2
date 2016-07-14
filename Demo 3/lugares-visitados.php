@@ -69,6 +69,8 @@ if (isset($_SESSION['session_username'])){
 			if($_SESSION['tipo'] == 3) {?>
 				<li><a href='alta_tipo_hospedaje.php'>Alta Tipo de Hospedajes</a></li>
 				<li><a href='listar_tipo_hospedajes.php'>Listar Tipo de Hospedajes</a></li>
+				<li><a href="ganancias.php">Ganancias</a> </li>
+				<li><a href="solicitudesaceptadas.php">Solicitudes Aceptadas</a> </li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>
 			<?php
 			}
@@ -88,8 +90,6 @@ if (isset($_SESSION['session_username'])){
 				<li><a href="alta_hospedaje.php">Alta de Hospedaje</a></li>
 				<li><a href="mis_hospedajes.php">Mis Hospedajes</a></li>
 				<li><a href="mis_reservas.php">Mis Reservas</a></li>
-				<li><a href="busqueda.php">Buscar Hospedaje</a></li>
-				<li><a href="mis_favoritos.php">Mis Favoritos</a></li>
 				<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 				<li><a class="active" href="lugares-visitados.php">Lugares Visitados</a></li>
 				<li><a href="logout.php">Cerrar Sesion</a> </li>

@@ -153,7 +153,7 @@ opacity: 1;
 	$sql="SELECT * FROM favoritos WHERE id_hospedaje = '" . $_GET['id']. "' and id_usuario = '" . $_SESSION['session_username']. "'";
 	$result= $mdb->query($sql);
 	$total= mysqli_num_rows($result);
-	//echo $total;
+	echo $total;
 	
 ?>
 	<h1 align="center"><?php echo $hospedaje['nombre_hospedaje'];?></h1>

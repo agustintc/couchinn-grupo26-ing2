@@ -96,19 +96,21 @@ if (isset($_SESSION['session_username'])){
 	<?php
 	
 	//$sql="select  id_calificaciones, hospedaje_calificado, valoracion, comentario, email_calificador, nombre_hospedaje, id_usuario from calificaciones_hospedajes AS ch INNER JOIN hospedajes AS h ON ( ch.hospedaje_calificado = h.id_hospedaje ) where valoracion<>0 and id_usuario ='".$_SESSION['session_username']."'";	
-	$sql="SELECT r.id_reserva, r.id_huesped,h.id_hospedaje,h.nombre_hospedaje,h.nombre_lugar,h.id_usuario,ch.id_calificaciones, ch.hospedaje_calificado, ch.valoracion  FROM reservas as r inner join hospedajes as h on(r.id_hospedaje=h.id_hospedaje) inner join calificaciones_hospedajes as ch on (h.id_hospedaje=ch.hospedaje_calificado) where r.estado=3 and r.id_huesped ='".$_SESSION['session_username']."' ORDER BY r.finalizacion DESC ";
+	$sql="SELECT r.id_reserva, r.id_huesped,r.comienzo,r.finalizacion,h.id_hospedaje,h.nombre_hospedaje,h.nombre_lugar,h.id_usuario,ch.id_calificaciones, ch.hospedaje_calificado,ch.email_calificador, ch.valoracion  FROM reservas as r inner join hospedajes as h on(r.id_hospedaje=h.id_hospedaje) inner join calificaciones_hospedajes as ch on (h.id_hospedaje=ch.hospedaje_calificado) where r.estado=3 and r.id_huesped ='".$_SESSION['session_username']."' and ch.email_calificador = '".$_SESSION['session_username']."' ORDER BY r.finalizacion DESC ";
 	$result= $mdb->query($sql);
 	$total =mysqli_num_rows($result);
 	if($total==0)
 	{ echo '<h1> Lugares Visitados:</h1><h2> No tienes Lugares Visitados </h2>';}
 	else {
-		echo  '</table> <h1> Lugares Visitados</h1>	<table class=table>	<thead>	<tr> <th scope="row">Nombre Hospedaje</th> <th scope="row">Nombre Lugar</th><th scope="row">Dueño</th></th> <th scope="row"> Detalle Hospedaje </th><th scope="row">Calificacion </th>	</tr></thead>';
+		echo  '</table> <h1> Lugares Visitados</h1>	<table class=table>	<thead>	<tr> <th scope="row">Nombre Hospedaje</th> <th scope="row">Nombre Lugar</th><th scope="row">Dueño</th></th> <th scope="row">Fecha de Entrada </th> <th scope="row">Fecha de Salida</th><th scope="row"> Detalle Hospedaje </th><th scope="row">Calificacion </th>	</tr></thead>';
 		 echo '<tbody>';
 		while($lugar=mysqli_fetch_assoc($result)){
 		echo '<tr>';	
 		echo '<th>'.$lugar['nombre_hospedaje'].'</th>';
 		echo '<th>'.$lugar['nombre_lugar'].'</th>';
 		echo '<th>'.$lugar['id_usuario'].'</th>';
+		echo '<th>'.$lugar['comienzo'].'</th>';
+		echo '<th>'.$lugar['finalizacion'].'</th>';	
 		echo"<th><a href=ver_detalle.php?id=".$lugar['id_hospedaje']."><button type='button' class='btn btn-default btn-lg'><span aria-hidden='true'>Detalle Hospedaje</span></button></a></th>";
 		if($lugar['valoracion']==0)
 		{
@@ -116,7 +118,7 @@ if (isset($_SESSION['session_username'])){
 			}
 		else{
 			echo '<th>'.$lugar['valoracion'].'</th>';
-			}
+			}			
 		echo '</tr>';
 		}
 		echo '</tbody> ';

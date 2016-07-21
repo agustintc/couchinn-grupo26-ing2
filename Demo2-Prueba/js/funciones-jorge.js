@@ -57,6 +57,11 @@ $(document).ready(function () {
 		{return true;}
 		return false;
 		});
+	$("#formCal").submit(function(){
+		if(validarCalificacion()&&validarComentario() )
+		{return true;}
+		return false;	
+	});	
 });
 
 //Funcion de Validacion de Campos de Formulario de Registro de Usuario
@@ -206,7 +211,42 @@ function validarFechas(){
 		return false;
 	}
 	
+	
 }
+
+function validarCalificacion()
+	{
+		var valor = $('#calificacion').val();
+		//alert(valor);
+		if (valor != '0')
+		{
+			 $("#errorCal").text("");
+			return true;
+			}
+		else {
+			 $("#errorCal").text("Debe Selecionar Una Calificacion...");
+			  $("#errorCal").css('color','#d32e12');
+			return false;
+		}	
+	
+	}
+function validarComentario()
+{
+	 var text = $('#comentario').val();
+    var exprText = /^[A-Za-z\d]{1,50}/;
+    //alert(text);
+    if ((text!=="") && (text.match(exprText))) {
+        
+        $("#errorComentario").text("");
+        //alert("treu");
+        return true;
+    }
+    else {
+        $("#errorComentario").text("Error. Debe Escribir un Comentario")
+        $("#errorComentario").css('color','#d32e12');
+        return false;
+    }
+}	
 
 // ^[A-Za-z\d]+ // ^[A-Za-z\d]{6,20} //ExpresionPasword
 //^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$ //expresion Email

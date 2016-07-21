@@ -95,13 +95,13 @@ if (isset($_SESSION['session_username'])){
 	
 	</ul>
 	
-		<form method="post" class="form" id="calUsuario" name="calUsuario" action="calificar-usuario-backend.php">
+		<form method="post" class="form" id="formCal" name="calUsuario" action="calificar-usuario-backend.php">
 		<fieldset>
 			<legend>Calificar a Usuario</legend>	
 			<input name="id" type="hidden" value= "<?php echo $_GET['id'] ?>">
 			<label> Usuario a Calificar: <?php echo $calificacion['usuario_calificado'] ?></label>	
 			<label> Calificacion: </label> 
-			<select name="calificacion">
+			<select id="calificacion" name="calificacion">
 				<option value="0">Sin Calificar</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
@@ -109,9 +109,10 @@ if (isset($_SESSION['session_username'])){
 				<option value="4">4</option>
 				<option value="5">5</option>
 			</select>
+			<div id="errorCal"></div>
 			<label> Comentario: </label>	
-			<textarea rows="4" cols="50" name="comentario" placeholder="Escriba un Comentario..."> </textarea>
-			<div id="errorDescTipo"></div>
+			<textarea rows="4" cols="50" name="comentario" id="comentario" placeholder="Escriba un Comentario..."></textarea>
+			<div id="errorComentario"></div>
 			</br>
 			<input type="button" value="Limpiar" onClick="this.form.reset()">
 			<input type="submit" name="Guardar" value="Guardar">

@@ -105,14 +105,14 @@ if (isset($_SESSION['session_username'])){
 		<th>Calificaciones a Hospedajes</th>
 		<th><a href="calificaciones-hospedajes.php"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
 		</tr>
-		<tr>
+		<!--<tr>
 		<th>Calificaciones Recibidas</th>
 		<th><a href="#"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
 		</tr>
 		<tr>
 		<th>Calificaciones a Mis Hospedajes</th>
 		<th><a href="#"><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Ver</span></button></a></th>								
-		</tr>
+		</tr> -->
         
  </tbody> 
  </table>

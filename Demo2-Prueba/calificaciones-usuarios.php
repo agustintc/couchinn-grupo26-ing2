@@ -109,7 +109,7 @@ if (isset($_SESSION['session_username'])){
 		<th><a href=calificar-usuario.php?id='.$calif['id_calificaciones'].'><button type= "button" class="btn btn-default btn-lg"><span aria-hidden="true">Calificar</span></button></a></th>								
 		</tr>';		
 		}
-		echo '</tbody> ';
+		echo '</tbody> </table>';
 	}
 	$sql="select * from calificaciones_usuarios where valoracion<>0 and email_calificador ='".$_SESSION['session_username']."'";	
 	
@@ -127,7 +127,7 @@ if (isset($_SESSION['session_username'])){
 		echo '<th>'.$calif['comentario'].'</th>';
 		echo '</tr>';
 		}
-		echo '</tbody> ';
+		echo '</tbody> </table>';
 	}
 	
 	?>

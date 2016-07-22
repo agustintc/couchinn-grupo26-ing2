@@ -8,6 +8,7 @@ if(isset($_SESSION['session_username']))
 		<ul>
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a> </li>
+		<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 		<li><a href="logout.php">Cerrar Session</a> </li> 
 		<li><a href="premiun.php">Premiun</a> </li> </ul>';
 		}
@@ -17,6 +18,7 @@ if(isset($_SESSION['session_username']))
 		<ul>
 		<li><a href="inicio.php">Inicio</a></li>
 		<li><a href="perfil.php">Perfil</a> </li>
+		<li><a href="mis-calificaciones.php">Mis Calificaciones</a></li>
 		<li><a href="logout.php">Cerrar Session</a> </li> </ul>';
 	}
 	else if ($_SESSION['tipo']==3)

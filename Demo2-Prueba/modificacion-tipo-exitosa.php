@@ -78,7 +78,7 @@ else {header("location: acceso-indebido.php");}
 		<li><a href="logout.php">Cerrar Session</a> </li>
 </ul> 
 	<div id="noLink">
-		Modificacion Exitosa
+		Modificacion Exitosa <br>
 		<a href="inicio.php">Volver al Inicio </a>
 	</div>
 </body>

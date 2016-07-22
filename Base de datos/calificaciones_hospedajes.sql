@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2016 a las 05:07:10
+-- Tiempo de generación: 22-07-2016 a las 04:38:16
 -- Versión del servidor: 5.6.24
 -- Versión de PHP: 5.5.24
 
@@ -31,8 +31,16 @@ CREATE TABLE IF NOT EXISTS `calificaciones_hospedajes` (
   `hospedaje_calificado` int(11) NOT NULL,
   `valoracion` text NOT NULL,
   `comentario` text NOT NULL,
+  `finalizacion` date NOT NULL,
   `email_calificador` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `calificaciones_hospedajes`
+--
+
+INSERT INTO `calificaciones_hospedajes` (`id_calificaciones`, `hospedaje_calificado`, `valoracion`, `comentario`, `finalizacion`, `email_calificador`) VALUES
+(1, 22, '3', 'adada', '2016-07-01', 'jorge@hotmail.com');
 
 --
 -- Índices para tablas volcadas
@@ -52,7 +60,7 @@ ALTER TABLE `calificaciones_hospedajes`
 -- AUTO_INCREMENT de la tabla `calificaciones_hospedajes`
 --
 ALTER TABLE `calificaciones_hospedajes`
-  MODIFY `id_calificaciones` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_calificaciones` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
